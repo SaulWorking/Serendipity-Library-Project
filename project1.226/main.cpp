@@ -1,21 +1,14 @@
-#include "cashier.cpp"
-#include "inventory.cpp"
-#include "report.cpp"
+#include <iostream>
+#include "mainmenu.cpp"
 
+using namespace std;
 
 int main(){
 
-int userInut;
+mainMenu();
 
 
 
-
-
-inventoryCheck();
-
-double userPayment = userTransaction();
-
-cout << "\n\n\n\nYou pay " << fixed << setprecision(2) << userPayment << endl;
 
 
 

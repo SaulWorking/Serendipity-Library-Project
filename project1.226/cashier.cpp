@@ -21,45 +21,52 @@ using namespace std;
 
 
 
-double userTransaction(){
+void userTransaction(){
 
-const double salesTax = 1.06;
+const double salesTax = 0.06;
 double totalPrice, bookPrice;
 int bookQuantity;
 string userDate, bookISBN, bookTitle;
+
+cout << "Serenpidity Booksellers" << endl;
+cout << "Cashier Action\n\n";
+
 
 
 cout <<" The date: " << endl;
 getline(cin, userDate);
 
-cout << "\nbbook Quantity : " << endl;
+cout << "\n BOOK Quantity : " << endl;
 cin >> bookQuantity;
 cin.ignore();
 
-cout << "\nbookISBN" << endl;
-cin >> bookISBN;
-cin.ignore();
+cout << "\nbook ISBN:" << endl;
+getline(cin, bookISBN);
+
+cout << "\nbook Title:" << endl;
+getline(cin, bookTitle);
 
 
-
-cout << "\nbookTitel" << endl;
-cin >> bookTitle;
-cin.ignore();
-
-
-cout << "\nbookPrice" << endl;
+cout << "\nbook Price: " << endl;
 cin >> bookPrice;
 
-totalPrice = (bookPrice * bookQuantity) * salesTax;
+totalPrice = (bookPrice * bookQuantity);
 
 cout << "\n\nDate: " << userDate << "\n\n";
-cout  << "Qty\tISBN\t\t\tTitle\t\tPrice\tTotal"<<endl;
-for (int i =0; i<75; i++){
+cout  << left<< setw(5) << "Qty" << setw(20) << "ISBN" << setw(40) << "Title" << setw(10) << "Price"  << setw(3) << "Total"<< endl;
+
+
+for (int i =0; i<85; i++){
     cout << "_";
 }
-cout << left << "\n" << bookQuantity << "\t" << bookISBN << "\t\t\t" << bookTitle <<"\t\t$ " << bookPrice << "\t$ " << totalPrice;
+cout << '\n' << setw(4)  <<left <<fixed <<setprecision(2)  << bookQuantity << setw(20) << bookISBN << setw(40) << bookTitle  <<" $"  <<setw(9) << bookPrice << "$"  << totalPrice << endl;
+cout << "\n\n\n";
+cout << setw(61)  << "\t\tSubtotal" << "$" << totalPrice << endl; 
+cout << setw(61)  << "\t\tTax" <<  "$" << totalPrice * salesTax << endl;
+cout << setw(61)  << "\t\tTotal" << "$" << totalPrice + (totalPrice * salesTax) << endl;
+
+cout << "\n\nThank you for shopping at Serendipity\n\n" << endl;
 
 
-
-    return totalPrice;
+    return;
 }
