@@ -1,6 +1,7 @@
 #include <fstream>
 #include <string>
 #include <iostream>
+#include <iomanip>
 using namespace std;
 //ifstream -> you read
 //ofstream -> you write
@@ -9,7 +10,8 @@ void inventoryCheck(){
 std::ofstream writeFile;
 std::ifstream readFile;
 
- cout << " Serendipity Booksellers Inventory Database "  << endl;
+ cout << " Serendipity Booksellers" << endl;
+ cout << setw(4) << " " << "Inventory Database "  << endl;
  cout << "1.	Look Up a Book"  << endl;
  cout << "2.	Add a Book"  << endl;
  cout << "3.	Edit a Book’s Record"  << endl;
@@ -35,6 +37,8 @@ switch(userChoice){
         break;
 
     case 5:
+
+ // mainMenu(); 
         break;
     default:
 

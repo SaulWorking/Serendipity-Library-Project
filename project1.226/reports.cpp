@@ -39,7 +39,8 @@ listWholesaleValue();
 
         break;
     case 3:
-listRetailValue();
+
+// listRetailValue();
         break;
     case 4:
 
