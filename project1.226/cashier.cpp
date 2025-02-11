@@ -14,26 +14,28 @@ double totalPrice, bookPrice;
 int bookQuantity;
 string userDate, bookISBN, bookTitle;
 
-cout << "Serenpidity Booksellers" << endl;
-cout << "Cashier Action\n\n";
+cout << setw(20) << " " <<"Serenpidity Booksellers" << endl;
+cout << setw(25) << " " << "Cashier Module\n";
 
 
 
-cout <<" The date: " << endl;
+cout << setw(15) << " " << "Date:"; 
 getline(cin, userDate);
 
-cout << "\n BOOK Quantity : " << endl;
+
+
+cout << setw(15) << " " << "Quantity:" ;
 cin >> bookQuantity;
 cin.ignore();
 
-cout << "\nbook ISBN:" << endl;
+cout << setw(15) << " " <<"ISBN:";
 getline(cin, bookISBN);
 
-cout << "\nbook Title:" << endl;
+cout << setw(15) << " " <<"Title:";
 getline(cin, bookTitle);
 
 
-cout << "\nbook Price: " << endl;
+cout << setw(15) << " " <<"Price:";
 cin >> bookPrice;
 
 totalPrice = (bookPrice * bookQuantity);

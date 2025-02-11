@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <iomanip>
 using namespace std;
 
 void listInventory();
@@ -12,14 +13,15 @@ void reportInfo(){
 
 
 
-cout << "Serendipity Booksellers Reports\n";
-cout << " 1.	Inventory Listing\n";
-cout << " 2.	Inventory Wholesale Value\n";
-cout << " 3.	Inventory Retail Value\n";
-cout << " 4.	Listing by Quantity\n";
-cout << " 5.	Listing by Cost\n";
-cout << " 6.	Listing by Age\n";
-cout <<" 7.	Return to Main Menu\n";
+cout << setw(20) << " " << "Serendipity Booksellers\n";
+cout << setw(25) << " " << "Reports\n";
+cout << setw(15) << " " << "1.	Inventory Listing\n";
+cout << setw(15) << " " << "2.	Inventory Wholesale Value\n";
+cout << setw(15) << " " <<" 3.	Inventory Retail Value\n";
+cout << setw(15) << " " <<" 4.	Listing by Quantity\n";
+cout << setw(15) << " " <<" 5.	Listing by Cost\n";
+cout << setw(15) << " " <<" 6.	Listing by Age\n";
+cout << setw(15) << " " <<" 7.	Return to Main Menu\n";
 
 cout << "Enter Your Choice:\n";
 
