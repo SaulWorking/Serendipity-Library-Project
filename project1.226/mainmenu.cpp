@@ -5,15 +5,15 @@
 
 using namespace std;
 
-int mainMenu();
-void optionCheck(int);
+void mainMenu(int &);
+void optionCheck();
 
 
 int main(){
 
 int userOption{0};
 
-userOption = mainMenu();
+mainMenu(userOption);
 
 
 optionCheck(userOption);
@@ -25,6 +25,7 @@ optionCheck(userOption);
 
 
 
+// workr on tis
 
 
 
@@ -39,10 +40,8 @@ optionCheck(userOption);
 
 
 
+void mainMenu(int &userChoice){
 
-int mainMenu(){
-
-int userChoice;
 double userPay;
 
 
@@ -56,17 +55,22 @@ cout << setw(15) << " " << "4.	Exit" << endl;
 cout << '\n' << setw(15) << ' ' << "Enter your choice: ";
 
 
-cin >> userChoice;
-cin.ignore();
 
-while(userChoice <=0 || userChoice >=5){
+    while(userChoice <1 || userChoice >5){
 
-    cout << "\nPlease enter a valid number.";
-    cin >> userChoice;
-}
+        cin >> userChoice;
+    
+
+        if(userChoice <1 || userChoice >5){
+                cout << "\nPlease enter a valid number 1-4. ";
+                    
+        mainMenu(userChoice);
+
+        }
 
 
-    return userChoice;
+    }
+
 }
 
 
@@ -77,13 +81,38 @@ while(userChoice <=0 || userChoice >=5){
 
 void optionCheck(int userChoice){
 
-if(userChoice == 1)
+
+switch(userChoice){
+
+    case 1:
+
+    cout << '\n' << setw(15) << ' ' << "You selected item 1\n";
+
     userTransaction();
-if(userChoice == 2)
+
+    break;
+
+    case 2:
+    cout <<'\n' << setw(15) << ' ' <<  "You selected item 2\n";
+
     inventoryCheck();
-if(userChoice == 3)
+
+    break;
+
+    case 3:
+    cout << '\n' << setw(15) << ' ' << "You selected item 3\n";
     reportInfo();
-if(userChoice == 4)
-    cout << '\n' << setw(23) << "Bye bye!";
+
+    break;
+
+    case 4:
+    cout << '\n' << setw(15) << " " << "You selected item 4\n";
+
+    break;
+
+
+}
+
+  
 
 }

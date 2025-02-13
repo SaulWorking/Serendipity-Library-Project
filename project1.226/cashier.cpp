@@ -21,6 +21,7 @@ cout << setw(25) << " " << "Cashier Module\n";
 
 cout << setw(15) << " " << "Date:"; 
 getline(cin, userDate);
+cin.ignore();
 
 
 

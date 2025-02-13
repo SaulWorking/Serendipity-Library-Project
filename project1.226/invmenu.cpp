@@ -9,6 +9,8 @@ void inventoryCheck(){
 
 std::ofstream writeFile;
 std::ifstream readFile;
+int userChoice;
+
 
  cout << setw(20) << " " << " Serendipity Booksellers" << endl;
  cout << setw(23) << " " << "Inventory Database\n"  << endl;
@@ -19,39 +21,57 @@ std::ifstream readFile;
  cout << setw(15) << " " << "5.	Return to the Main Menu"  << endl;
 
 
+cout << setw(15) << " " << "Enter your choice: ";
 
 
-int userChoice;
-cin >> userChoice;
-cin.ignore();
+while(userChoice <1 || userChoice >5){
+    cin >> userChoice;
+
+    if(userChoice <1 || userChoice >5){
+
+        cout << '\n' << setw(15) << "Enter a number 1-5: \n";
+
+    }
+
+}
+
+
 
 switch(userChoice){
 
     case 1:
 
+    cout << '\n' << setw(15) << "You selected item 1";
 
         break;
     case 2:
+    cout << '\n' << setw(15) << "You selected item 2";
 
         break;
     case 3:
+        cout << '\n' << setw(15) << "You selected item 3";
+
         break;
     case 4:
+        cout << '\n' << setw(15) << "You selected item 4";
+
         break;
 
     case 5:
+    cout << '\n' << setw(15) << "You selected item 5";
 
- // mainMenu(); 
         break;
-    default:
-
-    cout << "Restart. "<<endl;
 
 }
 
 
     return;
 }
+
+
+
+
+
 
 void bookLookup();
 void bookAdd();

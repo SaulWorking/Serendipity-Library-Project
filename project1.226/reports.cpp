@@ -10,6 +10,8 @@ void listRetailValue();
 
 void reportInfo(){
 
+int userChoice;
+double userPay;
 
 
 
@@ -23,40 +25,57 @@ cout << setw(15) << " " <<" 5.	Listing by Cost\n";
 cout << setw(15) << " " <<" 6.	Listing by Age\n";
 cout << setw(15) << " " <<" 7.	Return to Main Menu\n";
 
-cout << "Enter Your Choice:\n";
+cout << "Enter Your Choice: ";
 
-int userChoice;
-double userPay;
-cin >> userChoice;
-cin.ignore();
+while(userChoice < 1 || userChoice >7){
+
+    cin >> userChoice;
+    
+    if(userChoice < 1 || userChoice >7){
+    cout << '\n' << setw(15) << "Please enter a number in the range 1 - 7. ";
+
+
+    }
+}
+
+
+
 switch(userChoice){
 
     case 1:
 listInventory();
 
+    cout << '\n' << setw(15) << "you have item 1\n";
+
         break;
     case 2:
 
 listWholesaleValue();
+    cout << '\n' << setw(15) << "you have item 2\n";
 
         break;
     case 3:
 
 // listRetailValue();
+    cout << '\n' << setw(15) << "you have item 3\n";
+
         break;
     case 4:
+    cout << '\n' << setw(15) << "you have item 4\n";
 
         break;
     case 5:
+    cout << '\n' << setw(15) << "you have item 5\n";
 
         break;
     case 6:
+    cout << '\n' << setw(15) << "you have item 6\n";
 
         break;
     case 7:
+    cout << '\n' << setw(15) << "you have item 7\n";
 
         break;
-    default:
 
     cout << "Restart. "<<endl;
 
@@ -145,6 +164,7 @@ char ignoreChar = ',';
 while(getline(readFile, reportWord, ignoreChar)){
 
         ignoreChar = ',';
+
     if(wordCounter==8){
         cout << reportWord << endl;
     }
