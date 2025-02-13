@@ -7,7 +7,6 @@ using namespace std;
 void listInventory();
 void listWholesaleValue();
 void listRetailValue();
-
 void reportInfo(){
 
 int userChoice;
@@ -25,15 +24,16 @@ cout << setw(15) << " " <<" 5.	Listing by Cost\n";
 cout << setw(15) << " " <<" 6.	Listing by Age\n";
 cout << setw(15) << " " <<" 7.	Return to Main Menu\n";
 
-cout << "Enter Your Choice: ";
+cout << setw(15) << " " << "Enter Your Choice: ";
 
 while(userChoice < 1 || userChoice >7){
 
     cin >> userChoice;
     
     if(userChoice < 1 || userChoice >7){
-    cout << '\n' << setw(15) << "Please enter a number in the range 1 - 7. ";
-
+    cout << '\n' << setw(15) << "Please enter a number in the range 1 - 7.\n\n";
+    
+    reportInfo();
 
     }
 }
@@ -43,20 +43,17 @@ while(userChoice < 1 || userChoice >7){
 switch(userChoice){
 
     case 1:
-listInventory();
 
     cout << '\n' << setw(15) << "you have item 1\n";
 
         break;
     case 2:
 
-listWholesaleValue();
     cout << '\n' << setw(15) << "you have item 2\n";
 
         break;
     case 3:
 
-// listRetailValue();
     cout << '\n' << setw(15) << "you have item 3\n";
 
         break;
@@ -74,21 +71,12 @@ listWholesaleValue();
         break;
     case 7:
     cout << '\n' << setw(15) << "you have item 7\n";
+    
+    
 
-        break;
-
-    cout << "Restart. "<<endl;
+break;
 
 }
-
-
-
-
-
-
-
-
-
     return;
 }
 

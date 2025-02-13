@@ -9,10 +9,13 @@ using namespace std;
 
 void userTransaction(){
 
+
+
 const double salesTax = 0.06;
 double totalPrice, bookPrice;
 int bookQuantity;
 string userDate, bookISBN, bookTitle;
+char userRepeat{' '};
 
 cout << setw(20) << " " <<"Serenpidity Booksellers" << endl;
 cout << setw(25) << " " << "Cashier Module\n";
@@ -54,8 +57,16 @@ cout << setw(61)  << "\t\tSubtotal" << "$" << totalPrice << endl;
 cout << setw(61)  << "\t\tTax" <<  "$" << totalPrice * salesTax << endl;
 cout << setw(61)  << "\t\tTotal" << "$" << totalPrice + (totalPrice * salesTax) << endl;
 
-cout << "\n\nThank you for shopping at Serendipity\n\n" << endl;
+cout << "\n\n" << setw(15) << " " << "Thank you for shopping at Serendipity\n\n" << endl;
+cout << "\n" << setw(15) << " " << "Do you have another transaction? (Y/N): ";
+cin >> userRepeat;
 
+    if(userRepeat == 'y' || userRepeat == 'Y'){
+        cout << '\n';
+        userTransaction();
+    }else{
+        cout << '\n' << setw(15) << ' ' << "Goodbye!";
+    }
 
     return;
 }
