@@ -58,7 +58,7 @@ cin >> userChoice;
 cout << "\n\n";
 
 
-   /* while(userChoice != 4){
+   while(userChoice != 4){
 
        if(userChoice <1 || userChoice >4){
 
@@ -77,7 +77,7 @@ cout << "\n\n";
 
 
     } 
-*/
+
 
         
 
