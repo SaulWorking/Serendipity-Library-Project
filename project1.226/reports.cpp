@@ -80,6 +80,32 @@ break;
     return;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void listInventory(){
 ifstream readFile;
 readFile.open("report.txt");
