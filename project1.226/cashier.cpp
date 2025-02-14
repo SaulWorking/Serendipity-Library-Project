@@ -3,7 +3,16 @@
 #include <iomanip>
 
 using namespace std;
+void userTransaction();
 
+
+int main(){
+
+
+userTransaction();
+    return 0;
+
+}
 
 
 
@@ -24,7 +33,7 @@ cout << setw(25) << " " << "Cashier Module\n";
 
 cout << setw(15) << " " << "Date:"; 
 getline(cin, userDate);
-cin.ignore();
+
 
 
 

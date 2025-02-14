@@ -7,15 +7,80 @@ using namespace std;
 void listInventory();
 void listWholesaleValue();
 void listRetailValue();
-void reportInfo(){
+void reportInfo(int &);
+void itemCheck();
+
+
+int main(){
 
 int userChoice;
-double userPay;
+
+reportInfo(userChoice);
+
+
+    return 0;
+}
+
+
+
+
+
+void itemCheck(int userInput){
+
+    switch(userInput){
+
+        case 1:
+
+        cout << '\n' << setw(15) << "you selected item 1\n";
+
+            break;
+        case 2:
+
+        cout << '\n' << setw(15) << "you selected item 2\n";
+
+            break;
+        case 3:
+
+        cout << '\n' << setw(15) << "you selected item 3\n";
+
+            break;
+
+
+
+        case 4:
+        cout << '\n' << setw(15) << "you selected item 4\n";
+
+            break;
+        case 5:
+        cout << '\n' << setw(15) << "you selected item 5\n";
+
+            break;
+        case 6:
+        cout << '\n' << setw(15) << "you selected item 6\n";
+
+                
+            break;
+        case 7:
+        cout << '\n' << setw(15) << "you selected item 7\n";
+        
+                
+        break;
+
+
+    }
+
+}
+
+
+
+
+void reportInfo(int &userChoice){
+
 
 
 
 cout << setw(20) << " " << "Serendipity Booksellers\n";
-cout << setw(25) << " " << "Reports\n";
+cout << setw(25) << " " << "Reports\n\n";
 cout << setw(15) << " " << "1.	Inventory Listing\n";
 cout << setw(15) << " " << "2.	Inventory Wholesale Value\n";
 cout << setw(15) << " " <<" 3.	Inventory Retail Value\n";
@@ -26,57 +91,36 @@ cout << setw(15) << " " <<" 7.	Return to Main Menu\n";
 
 cout << setw(15) << " " << "Enter Your Choice: ";
 
-while(userChoice < 1 || userChoice >7){
-
-    cin >> userChoice;
-    
-    if(userChoice < 1 || userChoice >7){
-    cout << '\n' << setw(15) << "Please enter a number in the range 1 - 7.\n\n";
-    
-    reportInfo();
-
-    }
-}
 
 
 
-switch(userChoice){
+cin >> userChoice;
 
-    case 1:
+cout << "\n\n";
 
-    cout << '\n' << setw(15) << "you have item 1\n";
 
-        break;
-    case 2:
+     while(userChoice != 7){
 
-    cout << '\n' << setw(15) << "you have item 2\n";
+       if(userChoice <1 || userChoice >7){
 
-        break;
-    case 3:
+                    cout << "\n\n\n" << setw(15) << " " << "Please enter a valid number 1-7.\n\n\n";
 
-    cout << '\n' << setw(15) << "you have item 3\n";
+        }
 
-        break;
-    case 4:
-    cout << '\n' << setw(15) << "you have item 4\n";
 
-        break;
-    case 5:
-    cout << '\n' << setw(15) << "you have item 5\n";
 
-        break;
-    case 6:
-    cout << '\n' << setw(15) << "you have item 6\n";
+        reportInfo(userChoice); 
 
-        break;
-    case 7:
-    cout << '\n' << setw(15) << "you have item 7\n";
-    
-    
 
-break;
 
-}
+
+
+
+
+    } 
+
+
+
     return;
 }
 
@@ -102,10 +146,10 @@ break;
 
 
 
+//functions for later
 
 
-
-
+/*
 void listInventory(){
 ifstream readFile;
 readFile.open("report.txt");
@@ -200,3 +244,7 @@ readFile.close();
 
     
 }
+
+*/
+
+

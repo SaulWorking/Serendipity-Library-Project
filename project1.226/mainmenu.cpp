@@ -1,17 +1,22 @@
 #include <iostream>
-#include "reports.cpp"
-#include "invmenu.cpp"
-#include "cashier.cpp"
+#include <iomanip>
+
+
+//#include "reports.cpp"
+//#include "invmenu.cpp"
+//#include "cashier.cpp"
 
 using namespace std;
 
-int mainMenu();
+void mainMenu(int &);
 void optionCheck(int);
 
 
 int main(){
 
-int userOption = mainMenu();
+int userOption{0};
+
+mainMenu(userOption);
 
 
 optionCheck(userOption);
@@ -35,31 +40,48 @@ optionCheck(userOption);
 
 
 
-int mainMenu(){
+void mainMenu(int &userChoice){
 
-int userChoice;
-double userPay;
 
 
 cout << setw(20) << " " << "Serendipity Booksellers " << endl;
-cout << setw(25) << " " << "Main Menu" << endl;
+cout << setw(25) << " " << "Main Menu" << "\n\n";
 cout << setw(15) << " " << "1.	Cashier Module" << endl;
 cout << setw(15) << " " << "2.	Inventory Database Module" << endl;
 cout << setw(15) << " " << "3.	Report Module" << endl;
 cout << setw(15) << " " << "4.	Exit" << endl;
 
-cout << '\n' << setw(15) << ' ' << "Enter your choice: ";
+cout << "\n\n" << setw(15) << ' ' << "Enter your choice: ";
 
 cin >> userChoice;
 
-    while(userChoice <1 || userChoice >5){
-    
-                cout << "\nPlease enter a valid number 1-4. ";
-                cin >> userChoice;
+cout << "\n\n";
+
+
+   /* while(userChoice != 4){
+
+       if(userChoice <1 || userChoice >4){
+
+                    cout << "\n\n\n" << setw(15) << " " << "Please enter a valid number 1-4.\n\n\n";
+
         }
 
+
+
+        mainMenu(userChoice); 
+
+
+
+
+
+
+
+    } 
+*/
+
         
-        return userChoice;
+
+        
 
 }
 
@@ -75,27 +97,27 @@ switch(userChoice){
 
     case 1:
 
-    cout << '\n' << setw(15) << ' ' << "You selected item 1\n\n";
+    cout << '\n' << setw(15) << ' ' << "You selected item 1\n\n\n";
 
-    userTransaction();
+   // userTransaction();
 
     break;
 
     case 2:
-    cout <<'\n' << setw(15) << ' ' <<  "You selected item 2\n\n";
+    cout <<'\n' << setw(15) << ' ' <<  "You selected item 2\n\n\n";
 
-    inventoryCheck();
+  //  inventoryCheck(userChoice);
 
     break;
 
     case 3:
-    cout << '\n' << setw(15) << ' ' << "You selected item 3\n\n";
-    reportInfo();
+    cout << '\n' << setw(15) << ' ' << "You selected item 3\n\n\n";
+  //  reportInfo(userChoice);
 
     break;
 
     case 4:
-    cout << '\n' << setw(15) << " " << "You selected item 4\n\n";
+    cout << '\n' << setw(15) << " " << "You selected item 4\n\n\n";
 
     break;
 

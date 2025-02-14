@@ -5,65 +5,88 @@
 using namespace std;
 //ifstream -> you read
 //ofstream -> you write
-void inventoryCheck(){
+void invChoice(int);
+void inventoryCheck(int &);
+
+
+int main(){
+
+int userChoice{0};
+
+inventoryCheck(userChoice);
+
+
+
+    return 0;
+}
+
+
+
+
+void invChoice(int userChoice){
+        switch(userChoice){
+
+            case 1:
+
+            cout << '\n' << setw(15) << "You selected item 1\n\n";
+
+                break;
+            case 2:
+            cout << '\n' << setw(15) << "You selected item 2\n\n";
+
+                break;
+            case 3:
+                cout << '\n' << setw(15) << "You selected item 3\n\n";
+
+                break;
+            case 4:
+                cout << '\n' << setw(15) << "You selected item 4\n\n";
+
+                break;
+
+            case 5:
+            cout << '\n' << setw(15) << "You selected item 5\n\n";
+
+                break;
+
+        }
+
+}
+void inventoryCheck(int &userChoice){
 
 std::ofstream writeFile;
 std::ifstream readFile;
-int userChoice;
 
 
  cout << setw(20) << " " << " Serendipity Booksellers" << endl;
- cout << setw(23) << " " << "Inventory Database\n"  << endl;
- cout << setw(15) << " " << "1.	Look Up a Book"  << endl;
- cout << setw(15) << " " << "2.       Add a Book"  << endl;
+ cout << setw(23) << " " << "Inventory Database\n\n";
+ cout << setw(15) << " " << "1.	Look Up a Book"        << endl;
+ cout << setw(15) << " " << "2.       Add a Book"      << endl;
  cout << setw(15) << " " << "3.	Edit a Book's Record"  << endl;
- cout << setw(15) << " " << "4.	Delete a Book"  << endl;
+ cout << setw(15) << " " << "4.	Delete a Book"         << endl;
  cout << setw(15) << " " << "5.	Return to the Main Menu"  << endl;
 
 
-cout << setw(15) << " " << "Enter your choice: ";
+cout << '\n' << setw(15) << " " << "Enter your choice: ";
 
-
-while(userChoice <1 || userChoice >5){
     cin >> userChoice;
 
-    if(userChoice <1 || userChoice >5){
-
-        cout << '\n' << setw(15) << "Enter a number 1-5: \n";
-
-    }
-
-}
+while(userChoice != 5){
+ 
 
 
+       if(userChoice <1 || userChoice >5){
 
-switch(userChoice){
+                    cout << "\n\n\n" << setw(15) << " " << "Please enter a valid number 1-5.\n\n\n";
 
-    case 1:
+        }
 
-    cout << '\n' << setw(15) << "You selected item 1";
 
-        break;
-    case 2:
-    cout << '\n' << setw(15) << "You selected item 2";
+            inventoryCheck(userChoice);
 
-        break;
-    case 3:
-        cout << '\n' << setw(15) << "You selected item 3";
-
-        break;
-    case 4:
-        cout << '\n' << setw(15) << "You selected item 4";
-
-        break;
-
-    case 5:
-    cout << '\n' << setw(15) << "You selected item 5";
-
-        break;
+   
 
 }
-
 
     return;
 }
@@ -71,9 +94,10 @@ switch(userChoice){
 
 
 
-
-
+// functions for later versions of project
+/*
 void bookLookup();
 void bookAdd();
 void bookEdit();
 void bookDelete();
+*/
