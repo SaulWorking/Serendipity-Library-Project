@@ -2,16 +2,16 @@
 #include <string>
 #include <iostream>
 #include <iomanip>
-using namespace std;
+#include "invmenu.h"
 
+
+using namespace std;
 
 //ifstream -> you read
 //ofstream -> you write
 
 
-
 void invMenu(){
-
 
 std::ofstream writeFile;
 std::ifstream readFile;
@@ -29,41 +29,55 @@ int userChoice;
 
 cout << '\n' << setw(15) << " " << "Enter your choice: ";
 
-    cin >> userChoice;
+        cin >> userChoice;
 
-while(userChoice != 5){
- 
+    while(userChoice <1 || userChoice >5){
+    
 
+                        cout << "\n" << setw(15) << " " << "Please enter a valid number 1-5: ";
 
-       if(userChoice <1 || userChoice >5){
-
-                    cout << "\n\n\n" << setw(15) << " " << "Please enter a valid number 1-5.\n\n\n";
-
-        }
+                    cin >> userChoice;
 
 
 
-   
+    }
 
+
+        invCheck(userChoice);
+
+
+    return;
 }
+
+
+void invCheck(int userChoice){
+
 
     switch(userChoice){
 
             case 1:
 
-            cout << '\n' << setw(15) << "You selected item 1\n\n";
 
+        lookUpBook(); 
+
+
+        invMenu();
                 break;
             case 2:
-            cout << '\n' << setw(15) << "You selected item 2\n\n";
+                addBook();
+        invMenu();
 
                 break;
             case 3:
-                cout << '\n' << setw(15) << "You selected item 3\n\n";
+
+            editBook();
+        invMenu();
 
                 break;
             case 4:
-                cout << '\n' << setw(15) << "You selected item 4\n\n";
+        
+                deleteBook();
+        invMenu();
 
                 break;
 
@@ -74,10 +88,32 @@ while(userChoice != 5){
 
         }
 
-
     return;
 }
 
 
+void lookUpBook(){
+
+            cout << '\n' << setw(15) << "You selected look Up book\n\n";
 
 
+
+}
+
+void addBook(){
+
+            cout << '\n' << setw(15) << "You selected add book\n\n";
+
+}
+
+void editBook(){
+            cout << '\n' << setw(15) << "You selected edit book\n\n";
+
+    
+}
+
+void deleteBook(){
+
+                cout << '\n' << setw(15) << "You selected delete  book\n\n";
+
+}

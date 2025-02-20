@@ -19,9 +19,6 @@ int userOption{0};
 mainMenu(userOption);
 
 
-
-
-
     return 0;
 }
 
@@ -54,12 +51,18 @@ while(userChoice < 1 || userChoice > 4){
                 cin >> userChoice; 
       }
 
-
-
         optionCheck(userChoice);
    
 
 }
+
+
+
+
+
+
+
+
 
 
 
@@ -73,29 +76,31 @@ switch(userChoice){
 
     case 1:
 
-    cout << '\n' << setw(15) << ' ' << "You selected item 1\n\n\n";
-
     cashier();
  
-    mainMenu(userChoice);
 
     break;
 
     case 2:
-    cout <<'\n' << setw(15) << ' ' <<  "You selected item 2\n\n\n";
 
-  //  inventoryCheck(userChoice);
+   invMenu();
+
+
+
+    
+
 
     break;
 
     case 3:
-    cout << '\n' << setw(15) << ' ' << "You selected item 3\n\n\n";
-  //  reportInfo(userChoice);
+
+    reports();
+
 
     break;
 
     case 4:
-    cout << '\n' << setw(15) << " " << "You selected item 4\n\n\n";
+    cout << '\n' << setw(15) << " " << "Goodbye!\n";
 
     break;
 

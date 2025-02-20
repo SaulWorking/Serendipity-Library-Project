@@ -5,6 +5,7 @@
 using namespace std;
 
 
+
 void cashier(){
 
 
@@ -18,26 +19,26 @@ cout << '\n' << setw(20) << " " <<"Serenpidity Booksellers" << endl;
 cout << setw(25) << " " << "Cashier Module\n";
 
 
-
+cin.ignore();
 cout << setw(15) << " " << "Date:"; 
 getline(cin, userDate);
-cin.ignore();
-
 
 
 cout << setw(15) << " " << "Quantity:" ;
 cin >> bookQuantity;
 cin.ignore();
 
+
 cout << setw(15) << " " <<"ISBN:";
 getline(cin, bookISBN);
+
 
 cout << setw(15) << " " <<"Title:";
 getline(cin, bookTitle);
 
-
 cout << setw(15) << " " <<"Price:";
 cin >> bookPrice;
+
 
 totalPrice = (bookPrice * bookQuantity);
 
@@ -69,9 +70,4 @@ cin >> userRepeat;
 
 
 }
-
-
-
-
-
 

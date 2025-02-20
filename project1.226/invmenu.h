@@ -1,2 +1,7 @@
 void invMenu();
-void invCheck(std::string);
+void invCheck(int);
+void lookUpBook();
+void addBook();
+void editBook();
+void deleteBook();
+

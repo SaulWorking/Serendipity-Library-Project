@@ -2,32 +2,19 @@
 #include <fstream>
 #include <string>
 #include <iomanip>
+#include "reports.h"
+
+
 using namespace std;
 
 
 
-void reports();
-void reportInfo(int &);
-void itemCheck(int);
+
 
 void reports(){
 
+
 int userChoice;
-
-reportInfo(userChoice);
-
-
-    return;
-}
-
-
-
-
-
-void reportInfo(int &userChoice){
-
-
-
 
 cout << setw(20) << " " << "Serendipity Booksellers\n";
 cout << setw(25) << " " << "Reports\n\n";
@@ -38,11 +25,7 @@ cout << setw(15) << " " <<" 4.	Listing by Quantity\n";
 cout << setw(15) << " " <<" 5.	Listing by Cost\n";
 cout << setw(15) << " " <<" 6.	Listing by Age\n";
 cout << setw(15) << " " <<" 7.	Return to Main Menu\n";
-
 cout << setw(15) << " " << "Enter Your Choice: ";
-
-
-
 
 cin >> userChoice;
 
@@ -51,62 +34,73 @@ cout << "\n\n";
 
      while(userChoice <1 || userChoice >7){
 
-      
+       cout << "\n" << setw(15) << " " << "Please enter a valid number 1-7.\n";
 
-                    cout << "\n" << setw(15) << " " << "Please enter a valid number 1-7.\n";
-
-                    cin >> userChoice;
+            cin >> userChoice;
         }
 
+        reportsCheck(userChoice);
 
-
-
-
-
+ 
     return;
 }
 
 
 
 
-void itemCheck(int userInput){
+
+
+
+
+
+
+void reportsCheck(int userInput){
 
     switch(userInput){
 
         case 1:
 
-        cout << '\n' << setw(15) << "you selected item 1\n";
+     repListing();        
 
+     reports();
             break;
         case 2:
 
-        cout << '\n' << setw(15) << "you selected item 2\n";
+ repWholesale();
+reports();
 
             break;
         case 3:
 
-        cout << '\n' << setw(15) << "you selected item 3\n";
+ repRetail();
+reports();
 
             break;
 
 
 
         case 4:
-        cout << '\n' << setw(15) << "you selected item 4\n";
+
+ repQty();
+ reports();
 
             break;
-        case 5:
-        cout << '\n' << setw(15) << "you selected item 5\n";
+
+         case 5:   
+
+ repCost();
+ reports();
 
             break;
         case 6:
-        cout << '\n' << setw(15) << "you selected item 6\n";
 
-                
+repAge();
+ reports();
+       
             break;
         case 7:
-        cout << '\n' << setw(15) << "you selected item 7\n";
-        
+         
+
                 
         break;
 
@@ -129,7 +123,32 @@ void itemCheck(int userInput){
 
 
 
+void repListing(){
 
+        cout << '\n' << setw(15) << "you selected Inventory Listing\n";
+
+
+}
+void repWholesale(){
+        cout << '\n' << setw(15) << "you selected Inventory Wholesale value\n";
+
+}
+void repRetail(){
+        cout << '\n' << setw(15) << "you selected Inventory retail value\n";
+
+}
+void repQty(){
+        cout << '\n' << setw(15) << "you selected Listing by quantity\n";
+
+}
+void repCost(){
+        cout << '\n' << setw(15) << "you selected  Listing by cost\n";
+
+}
+void repAge(){
+        cout << '\n' << setw(15) << "you selected Listing by age\n";
+
+}
 
 
 
