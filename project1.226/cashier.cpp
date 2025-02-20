@@ -14,14 +14,14 @@ int bookQuantity;
 string userDate, bookISBN, bookTitle;
 char userRepeat{' '};
 
-cout << setw(20) << " " <<"\nSerenpidity Booksellers" << endl;
+cout << '\n' << setw(20) << " " <<"Serenpidity Booksellers" << endl;
 cout << setw(25) << " " << "Cashier Module\n";
 
 
 
 cout << setw(15) << " " << "Date:"; 
 getline(cin, userDate);
-
+cin.ignore();
 
 
 

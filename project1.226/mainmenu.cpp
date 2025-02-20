@@ -33,7 +33,7 @@ mainMenu(userOption);
 
 void mainMenu(int &userChoice){
 
-
+cout << "\n\n\n";
 
 cout << setw(20) << " " << "Serendipity Booksellers " << endl;
 cout << setw(25) << " " << "Main Menu" << "\n\n";
@@ -48,13 +48,14 @@ cin >> userChoice;
 
 cout << "\n\n";
 
+while(userChoice < 1 || userChoice > 4){
+
+                    cout << "\n" << setw(15) << " " << "Please enter a valid number 1-4: ";
+
+                cin >> userChoice; 
+      }
 
 
-       if(userChoice <1 || userChoice >4){
-
-                    cout << "\n\n\n" << setw(15) << " " << "Please enter a valid number 1-4.\n\n\n";
-
-        }
 
         optionCheck(userChoice);
    
@@ -76,6 +77,8 @@ switch(userChoice){
     cout << '\n' << setw(15) << ' ' << "You selected item 1\n\n\n";
 
     cashier();
+ 
+    mainMenu(userChoice);
 
     break;
 
