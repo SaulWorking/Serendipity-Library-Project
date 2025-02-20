@@ -47,10 +47,6 @@ while(userChoice != 5){
 
 }
 
-
-
-
-
     switch(userChoice){
 
             case 1:

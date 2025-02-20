@@ -5,8 +5,10 @@
 using namespace std;
 
 
-void reportInfo(int &);
 
+void reports();
+void reportInfo(int &);
+void itemCheck(int);
 
 void reports(){
 
@@ -18,6 +20,51 @@ reportInfo(userChoice);
     return;
 }
 
+
+
+
+
+void reportInfo(int &userChoice){
+
+
+
+
+cout << setw(20) << " " << "Serendipity Booksellers\n";
+cout << setw(25) << " " << "Reports\n\n";
+cout << setw(15) << " " << "1.	Inventory Listing\n";
+cout << setw(15) << " " << "2.	Inventory Wholesale Value\n";
+cout << setw(15) << " " <<" 3.	Inventory Retail Value\n";
+cout << setw(15) << " " <<" 4.	Listing by Quantity\n";
+cout << setw(15) << " " <<" 5.	Listing by Cost\n";
+cout << setw(15) << " " <<" 6.	Listing by Age\n";
+cout << setw(15) << " " <<" 7.	Return to Main Menu\n";
+
+cout << setw(15) << " " << "Enter Your Choice: ";
+
+
+
+
+cin >> userChoice;
+
+cout << "\n\n";
+
+
+     while(userChoice <1 || userChoice >7){
+
+      
+
+                    cout << "\n" << setw(15) << " " << "Please enter a valid number 1-7.\n";
+
+                    cin >> userChoice;
+        }
+
+
+
+
+
+
+    return;
+}
 
 
 
@@ -67,61 +114,6 @@ void itemCheck(int userInput){
     }
 
 }
-
-
-
-
-void reportInfo(int &userChoice){
-
-
-
-
-cout << setw(20) << " " << "Serendipity Booksellers\n";
-cout << setw(25) << " " << "Reports\n\n";
-cout << setw(15) << " " << "1.	Inventory Listing\n";
-cout << setw(15) << " " << "2.	Inventory Wholesale Value\n";
-cout << setw(15) << " " <<" 3.	Inventory Retail Value\n";
-cout << setw(15) << " " <<" 4.	Listing by Quantity\n";
-cout << setw(15) << " " <<" 5.	Listing by Cost\n";
-cout << setw(15) << " " <<" 6.	Listing by Age\n";
-cout << setw(15) << " " <<" 7.	Return to Main Menu\n";
-
-cout << setw(15) << " " << "Enter Your Choice: ";
-
-
-
-
-cin >> userChoice;
-
-cout << "\n\n";
-
-
-     while(userChoice != 7){
-
-       if(userChoice <1 || userChoice >7){
-
-                    cout << "\n\n\n" << setw(15) << " " << "Please enter a valid number 1-7.\n\n\n";
-
-        }
-
-
-
-        reportInfo(userChoice); 
-
-
-
-
-
-
-
-    } 
-
-
-
-    return;
-}
-
-
 
 
 

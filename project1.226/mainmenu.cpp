@@ -2,10 +2,9 @@
 #include <iomanip>
 #include "cashier.h"
 #include "invmenu.h"
-
-//#include "reports.cpp"
-//#include "invmenu.cpp"
-//#include "cashier.cpp"
+#include "bookinfo.h"
+#include "reports.h"
+ 
 
 using namespace std;
 
