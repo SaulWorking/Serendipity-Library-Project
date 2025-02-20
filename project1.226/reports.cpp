@@ -4,11 +4,8 @@
 #include <iomanip>
 using namespace std;
 
-void listInventory();
-void listWholesaleValue();
-void listRetailValue();
+
 void reportInfo(int &);
-void itemCheck();
 
 
 void reports(){

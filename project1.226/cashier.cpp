@@ -1,23 +1,11 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
-
+#include "cashier.h"
 using namespace std;
-void userTransaction();
 
 
 void cashier(){
-
-
-userTransaction();
-    return;
-
-}
-
-
-
-void userTransaction(){
-
 
 
 const double salesTax = 0.06;
@@ -26,7 +14,7 @@ int bookQuantity;
 string userDate, bookISBN, bookTitle;
 char userRepeat{' '};
 
-cout << setw(20) << " " <<"Serenpidity Booksellers" << endl;
+cout << setw(20) << " " <<"\nSerenpidity Booksellers" << endl;
 cout << setw(25) << " " << "Cashier Module\n";
 
 
@@ -72,10 +60,18 @@ cin >> userRepeat;
 
     if(userRepeat == 'y' || userRepeat == 'Y'){
         cout << '\n';
-        userTransaction();
+        cashier();
     }else{
         cout << '\n' << setw(15) << ' ' << "Goodbye!";
     }
 
     return;
+
+
 }
+
+
+
+
+
+

@@ -3,28 +3,55 @@
 #include <iostream>
 #include <iomanip>
 using namespace std;
+
+
 //ifstream -> you read
 //ofstream -> you write
-void invChoice(int);
-void inventoryCheck(int &);
+
 
 
 void invMenu(){
 
-int userChoice{0};
 
-inventoryCheck(userChoice);
+std::ofstream writeFile;
+std::ifstream readFile;
+
+int userChoice;
+
+ cout << setw(20) << " " << " Serendipity Booksellers" << endl;
+ cout << setw(23) << " " << "Inventory Database\n\n";
+ cout << setw(15) << " " << "1.	Look Up a Book"        << endl;
+ cout << setw(15) << " " << "2.       Add a Book"      << endl;
+ cout << setw(15) << " " << "3.	Edit a Book's Record"  << endl;
+ cout << setw(15) << " " << "4.	Delete a Book"         << endl;
+ cout << setw(15) << " " << "5.	Return to the Main Menu"  << endl;
+
+
+cout << '\n' << setw(15) << " " << "Enter your choice: ";
+
+    cin >> userChoice;
+
+while(userChoice != 5){
+ 
+
+
+       if(userChoice <1 || userChoice >5){
+
+                    cout << "\n\n\n" << setw(15) << " " << "Please enter a valid number 1-5.\n\n\n";
+
+        }
 
 
 
-    return;
+   
+
 }
 
 
 
 
-void invChoice(int userChoice){
-        switch(userChoice){
+
+    switch(userChoice){
 
             case 1:
 
@@ -51,45 +78,10 @@ void invChoice(int userChoice){
 
         }
 
-}
-void inventoryCheck(int &userChoice){
-
-std::ofstream writeFile;
-std::ifstream readFile;
-
-
- cout << setw(20) << " " << " Serendipity Booksellers" << endl;
- cout << setw(23) << " " << "Inventory Database\n\n";
- cout << setw(15) << " " << "1.	Look Up a Book"        << endl;
- cout << setw(15) << " " << "2.       Add a Book"      << endl;
- cout << setw(15) << " " << "3.	Edit a Book's Record"  << endl;
- cout << setw(15) << " " << "4.	Delete a Book"         << endl;
- cout << setw(15) << " " << "5.	Return to the Main Menu"  << endl;
-
-
-cout << '\n' << setw(15) << " " << "Enter your choice: ";
-
-    cin >> userChoice;
-
-while(userChoice != 5){
- 
-
-
-       if(userChoice <1 || userChoice >5){
-
-                    cout << "\n\n\n" << setw(15) << " " << "Please enter a valid number 1-5.\n\n\n";
-
-        }
-
-
-            inventoryCheck(userChoice);
-
-   
-
-}
 
     return;
 }
+
 
 
 
