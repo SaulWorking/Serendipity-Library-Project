@@ -11,14 +11,14 @@ void reportInfo(int &);
 void itemCheck();
 
 
-int main(){
+void reports(){
 
 int userChoice;
 
 reportInfo(userChoice);
 
 
-    return 0;
+    return;
 }
 
 

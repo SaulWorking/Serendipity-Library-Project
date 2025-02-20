@@ -6,11 +6,11 @@ using namespace std;
 void userTransaction();
 
 
-int main(){
+void cashier(){
 
 
 userTransaction();
-    return 0;
+    return;
 
 }
 

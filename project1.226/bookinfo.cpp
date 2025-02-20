@@ -2,21 +2,9 @@
 #include <string>
 using namespace std;
 
-void bookInfo(string, string, string, string, string, string, string, string);
-
-
-int main(){
-
-bookInfo("ISBN", "Title", "Author", "publisher", "Dateadded", "Quantity", "WholesalePrice", "RetailPRice");
-
-
-    return 0;
-}
 
 
 void bookInfo(string ISBN, string Title, string Author, string Publisher, string Date, string Quanity, string WholesalePrice, string RetailPrice){
-
-
 
 cout << "Serendipity Booksellers Book Information " << endl;
 
@@ -29,9 +17,6 @@ cout << "Serendipity Booksellers Book Information " << endl;
  cout << "Wholesale Cost: " << WholesalePrice << endl;
  cout << "Retail Price: " << RetailPrice << endl;
 
-
-
-
-
     return;
 }
+

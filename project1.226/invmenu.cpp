@@ -9,7 +9,7 @@ void invChoice(int);
 void inventoryCheck(int &);
 
 
-int main(){
+void invMenu(){
 
 int userChoice{0};
 
@@ -17,7 +17,7 @@ inventoryCheck(userChoice);
 
 
 
-    return 0;
+    return;
 }
 
 
@@ -93,11 +93,3 @@ while(userChoice != 5){
 
 
 
-
-// functions for later versions of project
-/*
-void bookLookup();
-void bookAdd();
-void bookEdit();
-void bookDelete();
-*/
