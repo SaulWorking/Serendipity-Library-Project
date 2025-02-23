@@ -31,10 +31,9 @@ cin >> userChoice;
 
 cout << "\n\n";
 
-
      while(userChoice <1 || userChoice >7){
 
-       cout << "\n" << setw(15) << " " << "Please enter a valid number 1-7.\n";
+            cout << "\n" << setw(15) << " " << "Please enter a valid number 1-7.\n";
 
             cin >> userChoice;
         }
@@ -59,49 +58,32 @@ void reportsCheck(int userInput){
     switch(userInput){
 
         case 1:
-
      repListing();        
-
      reports();
             break;
         case 2:
-
- repWholesale();
-reports();
-
+    repWholesale();
+    reports();
             break;
         case 3:
-
- repRetail();
-reports();
-
+    repRetail();
+    reports();
             break;
-
-
-
         case 4:
-
- repQty();
- reports();
-
+    repQty();
+    reports();
             break;
 
          case 5:   
-
- repCost();
- reports();
-
+    repCost();
+    reports();
             break;
         case 6:
-
-repAge();
- reports();
-       
+    repAge();
+    reports();
             break;
         case 7:
-         
-
-                
+           
         break;
 
 

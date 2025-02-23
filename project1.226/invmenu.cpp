@@ -13,38 +13,30 @@ using namespace std;
 
 void invMenu(){
 
-std::ofstream writeFile;
-std::ifstream readFile;
+    std::ofstream writeFile;
+    std::ifstream readFile;
 
-int userChoice;
+    int userChoice;
 
- cout << setw(20) << " " << " Serendipity Booksellers" << endl;
- cout << setw(23) << " " << "Inventory Database\n\n";
- cout << setw(15) << " " << "1.	Look Up a Book"        << endl;
- cout << setw(15) << " " << "2.       Add a Book"      << endl;
- cout << setw(15) << " " << "3.	Edit a Book's Record"  << endl;
- cout << setw(15) << " " << "4.	Delete a Book"         << endl;
- cout << setw(15) << " " << "5.	Return to the Main Menu"  << endl;
-
-
-cout << '\n' << setw(15) << " " << "Enter your choice: ";
+    cout << setw(20) << " " << " Serendipity Booksellers" << endl;
+    cout << setw(23) << " " << "Inventory Database\n\n";
+    cout << setw(15) << " " << "1.	Look Up a Book"        << endl;
+    cout << setw(15) << " " << "2.       Add a Book"      << endl;
+    cout << setw(15) << " " << "3.	Edit a Book's Record"  << endl;
+    cout << setw(15) << " " << "4.	Delete a Book"         << endl;
+    cout << setw(15) << " " << "5.	Return to the Main Menu"  << endl;
+    cout << '\n' << setw(15) << " " << "Enter your choice: ";
 
         cin >> userChoice;
 
     while(userChoice <1 || userChoice >5){
     
+            cout << "\n" << setw(15) << " " << "Please enter a valid number 1-5: ";
+            cin >> userChoice;
 
-                        cout << "\n" << setw(15) << " " << "Please enter a valid number 1-5: ";
-
-                    cin >> userChoice;
-
-
-
-    }
-
+        }
 
         invCheck(userChoice);
-
 
     return;
 }
@@ -52,68 +44,44 @@ cout << '\n' << setw(15) << " " << "Enter your choice: ";
 
 void invCheck(int userChoice){
 
-
     switch(userChoice){
 
             case 1:
-
-
         lookUpBook(); 
-
-
         invMenu();
                 break;
             case 2:
-                addBook();
+        addBook();
         invMenu();
-
                 break;
             case 3:
-
-            editBook();
+        editBook();
         invMenu();
-
                 break;
             case 4:
-        
-                deleteBook();
+        deleteBook();
         invMenu();
-
                 break;
-
             case 5:
-            cout << '\n' << setw(15) << "You selected item 5\n\n";
-
                 break;
 
         }
-
     return;
 }
 
 
 void lookUpBook(){
-
             cout << '\n' << setw(15) << "You selected look Up book\n\n";
-
-
-
 }
 
 void addBook(){
-
             cout << '\n' << setw(15) << "You selected add book\n\n";
-
 }
 
 void editBook(){
             cout << '\n' << setw(15) << "You selected edit book\n\n";
-
-    
 }
 
 void deleteBook(){
-
-                cout << '\n' << setw(15) << "You selected delete  book\n\n";
-
+            cout << '\n' << setw(15) << "You selected delete  book\n\n";
 }

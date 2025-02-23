@@ -8,15 +8,16 @@
 
 using namespace std;
 
-void mainMenu(int &);
+void mainMenu(int);
 void optionCheck(int);
 
 
 int main(){
 
-int userOption{0};
 
-mainMenu(userOption);
+    int userOption{0};
+
+    mainMenu(userOption);
 
 
     return 0;
@@ -27,86 +28,57 @@ mainMenu(userOption);
 
 
 
-void mainMenu(int &userChoice){
+void mainMenu(int userChoice){
 
-cout << "\n\n\n";
+    cout << "\n\n\n";
+    cout << setw(20) << " " << "Serendipity Booksellers " << endl;
+    cout << setw(25) << " " << "Main Menu" << "\n\n";
+    cout << setw(15) << " " << "1.	Cashier Module" << endl;
+    cout << setw(15) << " " << "2.	Inventory Database Module" << endl;
+    cout << setw(15) << " " << "3.	Report Module" << endl;
+    cout << setw(15) << " " << "4.	Exit" << endl;
+    cout << "\n\n" << setw(15) << ' ' << "Enter your choice: ";
 
-cout << setw(20) << " " << "Serendipity Booksellers " << endl;
-cout << setw(25) << " " << "Main Menu" << "\n\n";
-cout << setw(15) << " " << "1.	Cashier Module" << endl;
-cout << setw(15) << " " << "2.	Inventory Database Module" << endl;
-cout << setw(15) << " " << "3.	Report Module" << endl;
-cout << setw(15) << " " << "4.	Exit" << endl;
+    cin >> userChoice;
+    
+    cout << "\n\n";
 
-cout << "\n\n" << setw(15) << ' ' << "Enter your choice: ";
+    while(userChoice < 1 || userChoice > 4){
+            cout << "\n" << setw(15) << " " << "Please enter a valid number 1-4: ";
 
-cin >> userChoice;
+            cin >> userChoice; 
+        }
 
-cout << "\n\n";
-
-while(userChoice < 1 || userChoice > 4){
-
-                    cout << "\n" << setw(15) << " " << "Please enter a valid number 1-4: ";
-
-                cin >> userChoice; 
-      }
-
-        optionCheck(userChoice);
-   
+            optionCheck(userChoice);
+    
 
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
 void optionCheck(int userChoice){
 
 
-switch(userChoice){
 
-    case 1:
+    switch(userChoice){
 
-    cashier();
- 
+        case 1:
+        cashier();
+        break;
 
-    break;
+        case 2:
+        invMenu();
+        break;
 
-    case 2:
+        case 3:
+        reports();
+        break;
 
-   invMenu();
-
-
-
-    
-
-
-    break;
-
-    case 3:
-
-    reports();
+        case 4:
+        cout << '\n' << setw(15) << " " << "Goodbye!\n";
+        break;
 
 
-    break;
-
-    case 4:
-    cout << '\n' << setw(15) << " " << "Goodbye!\n";
-
-    break;
-
-
-}
-
-  
+    }
 
 }
