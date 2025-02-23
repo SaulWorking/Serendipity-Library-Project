@@ -82,7 +82,6 @@ void invCheck(int userChoice){
                 break;
 
             case 5:
-            cout << '\n' << setw(15) << "You selected item 5\n\n";
 
                 break;
 
