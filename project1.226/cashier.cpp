@@ -19,10 +19,9 @@ void cashier(){
     cout << setw(25) << " " << "Cashier Module\n";
 
 
-    cin.ignore();
     cout << setw(15) << " " << "Date:"; 
+    cin.ignore();
     getline(cin, userDate);
-
 
     cout << setw(15) << " " << "Quantity:" ;
     cin >> bookQuantity;
@@ -60,8 +59,8 @@ void cashier(){
     cin >> userRepeat;
 
         if(userRepeat == 'y' || userRepeat == 'Y'){
-                cout << '\n';
-                cashier();
+            cin.ignore();
+                 cashier();
             }else{
                     cout << '\n' << setw(15) << ' ' << "Goodbye!";
                  }
