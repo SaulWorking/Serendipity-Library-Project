@@ -4,7 +4,7 @@ using namespace std;
 
 
 
-int bookInfo(string ISBN, string Title, string Author, string Publisher, string Date, string Quanity, string WholesalePrice, string RetailPrice){
+void bookInfo(string ISBN, string Title, string Author, string Publisher, string Date, string Quanity, string WholesalePrice, string RetailPrice){
 
     cout << "Serendipity Booksellers Book Information " << endl;
 
@@ -17,6 +17,6 @@ int bookInfo(string ISBN, string Title, string Author, string Publisher, string 
     cout << "Wholesale Cost: " << WholesalePrice << endl;
     cout << "Retail Price: " << RetailPrice << endl;
 
-        return 0;
+        return;
 }
 
