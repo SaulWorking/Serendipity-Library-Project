@@ -17,6 +17,6 @@ void bookInfo(string ISBN, string Title, string Author, string Publisher, string
     cout << "Wholesale Cost: " << WholesalePrice << endl;
     cout << "Retail Price: " << RetailPrice << endl;
 
-        return;
+        return; 
 }
 

@@ -11,14 +11,6 @@ using namespace std;
 void mainMenu(int);
 void optionCheck(int);
 
-string bookTitle[20];
-string isbn[20];
-string author[20];
-string dateAdded[20];
-string qtyOnHand[20];
-string wholeSale[20];
-string retail[20];
-
 
 
 int main(){

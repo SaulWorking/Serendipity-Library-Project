@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include <iomanip>
+#include <vector>
 #include "invmenu.h"
 
 
@@ -10,8 +11,20 @@ using namespace std;
 //ifstream -> you read
 //ofstream -> you write
 
+const int MAX_STORAGE = 20;
+
+string bookTitle[MAX_STORAGE];
+string isbn[MAX_STORAGE];
+string author[MAX_STORAGE];
+string dateAdded[MAX_STORAGE];
+string qtyOnHand[MAX_STORAGE];
+string wholeSale[MAX_STORAGE];
+string retail[MAX_STORAGE];
+
 
 void invMenu(){
+
+
 
     std::ofstream writeFile;
     std::ifstream readFile;
@@ -76,6 +89,31 @@ void lookUpBook(){
 
 void addBook(){
             cout << '\n' << setw(15) << "You selected add book\n\n";
+vector<int> storageIndex;
+
+ 
+    for(int i=0; i<MAX_STORAGE; i++){
+        if(i>=4 && i<=15){
+           bookTitle[i] = "Sigma\n";
+        }
+        if(bookTitle[i] == ""){
+            
+            
+            cout << "Slot available\n";
+            storageIndex.push_back(i);
+
+        }
+    cout << bookTitle[i] << i + 1 << endl;
+
+
+
+
+    }
+
+
+
+
+            
 }
 
 void editBook(){
