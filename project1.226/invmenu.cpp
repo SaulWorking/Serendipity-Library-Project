@@ -17,9 +17,9 @@ string bookTitle[MAX_STORAGE];
 string isbn[MAX_STORAGE];
 string author[MAX_STORAGE];
 string dateAdded[MAX_STORAGE];
-string qtyOnHand[MAX_STORAGE];
-string wholeSale[MAX_STORAGE];
-string retail[MAX_STORAGE];
+int qtyOnHand[MAX_STORAGE];
+double wholeSale[MAX_STORAGE];
+double retail[MAX_STORAGE];
 
 
 void invMenu(){
@@ -89,21 +89,65 @@ void lookUpBook(){
 
 void addBook(){
             cout << '\n' << setw(15) << "You selected add book\n\n";
-vector<int> storageIndex;
 
+int counter = 0;
+vector<int> indexList;
  
     for(int i=0; i<MAX_STORAGE; i++){
-        if(i>=4 && i<=15){
-           bookTitle[i] = "Sigma\n";
-        }
+
         if(bookTitle[i] == ""){
             
-            
-            cout << "Slot available\n";
-            storageIndex.push_back(i);
 
+            indexList.push_back(i);
+            counter++;
+            cout << "Slot available at index " << i << endl;
+ 
         }
-    cout << bookTitle[i] << i + 1 << endl;
+
+
+    }
+
+    if(counter <=0){
+        cout << "No more slots available.\n";
+        return;
+    }else{
+
+        cin.ignore();
+        cout <<"book: ";
+        getline(cin, bookTitle[indexList[indexList.size() -1]]);
+        cout <<"\nisbn: ";
+
+        getline(cin, isbn[indexList[indexList.size() -1]]);
+        cout<< "\nauthor: ";
+        getline(cin, author[indexList[indexList.size() -1]]);
+        cout << "\ndate: ";
+        getline(cin,  dateAdded[indexList[indexList.size() -1]]);
+
+
+        cout << "\nquantity: ";
+        cin >> qtyOnHand[indexList[indexList.size() -1]];
+        cout << "\nwholesale: ";
+        cin >> wholeSale[indexList[indexList.size() -1]];
+
+        cout << "\nretail: ";
+        cin >> retail[indexList[indexList.size() -1]];
+
+
+       cout << bookTitle[indexList[indexList.size() -1]] <<endl;
+       cout << isbn[indexList[indexList.size() -1]]<<endl;
+       cout << author[indexList[indexList.size() -1]]<<endl;
+       cout << dateAdded[indexList[indexList.size() -1]]<<endl;
+       cout << qtyOnHand[indexList[indexList.size() -1]]<<endl;
+       cout << wholeSale[indexList[indexList.size() -1]]<<endl;
+       cout << retail[indexList[indexList.size() -1]]<<endl;
+
+
+
+
+
+
+            indexList.pop_back();
+
 
 
 
@@ -113,6 +157,11 @@ vector<int> storageIndex;
 
 
 
+
+    
+
+
+    return;
             
 }
 

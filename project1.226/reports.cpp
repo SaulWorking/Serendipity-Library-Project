@@ -226,7 +226,7 @@ while(getline(readFile, reportWord, ignoreChar)){
 
 
 
-cout << "Your retial value total is: $" << totalRetailValue << endl;
+cout << "Your retail value total is: $" << totalRetailValue << endl;
 
 readFile.close();
 
