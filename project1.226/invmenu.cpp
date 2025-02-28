@@ -4,7 +4,7 @@
 #include <iomanip>
 #include <vector>
 #include "invmenu.h"
-
+#include "bookinfo.h"
 
 using namespace std;
 
@@ -16,6 +16,7 @@ const int MAX_STORAGE = 20;
 string bookTitle[MAX_STORAGE];
 string isbn[MAX_STORAGE];
 string author[MAX_STORAGE];
+string publisher[MAX_STORAGE];
 string dateAdded[MAX_STORAGE];
 int qtyOnHand[MAX_STORAGE];
 double wholeSale[MAX_STORAGE];
@@ -84,9 +85,42 @@ void invCheck(int userChoice){
 
 
 void lookUpBook(){
-            cout << '\n' << setw(15) << "You selected look Up book\n\n";
+
+string userChoice;
+int index = -1;
+
+        cout << '\n' << setw(15) << "You selected look Up book\n\n";
+         cout << '\n' << setw(15) << "Title of book: ";
+
+
+        cin.ignore();
+        getline(cin, userChoice);
+
+
+    for(int i =0; i<MAX_STORAGE; i++){
+
+        if(bookTitle[i] == userChoice){
+            index = i;
+        }
+
+    }
+
+    if(index != -1 )
+        bookInfo(bookTitle[index], isbn[index], author[index], publisher[index], dateAdded[index], qtyOnHand[index], wholeSale[index], retail[index]);
+
+
 }
 
+/*
+string bookTitle[MAX_STORAGE];
+string isbn[MAX_STORAGE];
+string author[MAX_STORAGE];
+string publisher[MAX_STORAGE];
+string dateAdded[MAX_STORAGE];
+int qtyOnHand[MAX_STORAGE];
+double wholeSale[MAX_STORAGE];
+double retail[MAX_STORAGE];
+*/
 void addBook(){
             cout << '\n' << setw(15) << "You selected add book\n\n";
 
@@ -115,21 +149,21 @@ vector<int> indexList;
         cin.ignore();
         cout <<"book: ";
         getline(cin, bookTitle[indexList[indexList.size() -1]]);
-        cout <<"\nisbn: ";
+        cout <<"isbn: ";
 
         getline(cin, isbn[indexList[indexList.size() -1]]);
-        cout<< "\nauthor: ";
+        cout<< "author: ";
         getline(cin, author[indexList[indexList.size() -1]]);
-        cout << "\ndate: ";
+        cout << "date: ";
         getline(cin,  dateAdded[indexList[indexList.size() -1]]);
 
 
-        cout << "\nquantity: ";
+        cout << "quantity: ";
         cin >> qtyOnHand[indexList[indexList.size() -1]];
-        cout << "\nwholesale: ";
+        cout << "wholesale: ";
         cin >> wholeSale[indexList[indexList.size() -1]];
 
-        cout << "\nretail: ";
+        cout << "retail: ";
         cin >> retail[indexList[indexList.size() -1]];
 
 
@@ -141,16 +175,7 @@ vector<int> indexList;
        cout << wholeSale[indexList[indexList.size() -1]]<<endl;
        cout << retail[indexList[indexList.size() -1]]<<endl;
 
-
-
-
-
-
             indexList.pop_back();
-
-
-
-
 
     }
 
@@ -166,9 +191,92 @@ vector<int> indexList;
 }
 
 void editBook(){
+
+string userChoice;
+int index  = -1;
             cout << '\n' << setw(15) << "You selected edit book\n\n";
+
+
+         cout << '\n' << setw(15) << "Title of book: ";
+
+
+        cin.ignore();
+        getline(cin, userChoice);
+
+
+    for(int i =0; i<MAX_STORAGE; i++){
+
+        if(bookTitle[i] == userChoice){
+            index = i;
+        }
+
+    }
+
+    if(index == -1 ){
+        cout << " No value";
+        return;
+
+    }else{
+
+        bookInfo(bookTitle[index], isbn[index], author[index], publisher[index], dateAdded[index], qtyOnHand[index], wholeSale[index], retail[index]);
+
+
+    }
+
+    cout << "which you want to change:?";
+
+
 }
 
 void deleteBook(){
-            cout << '\n' << setw(15) << "You selected delete  book\n\n";
+                cout << '\n' << setw(15) << "You selected delete  book\n\n";
+    cout << "\n which you want tdelte\n";
+
+    string userChoice;
+    char user;
+    
+
+    int index = -1;
+
+    cin.ignore();
+            getline(cin, userChoice);
+
+
+        for(int i =0; i<MAX_STORAGE; i++){
+
+            if(bookTitle[i] == userChoice){
+                index = i;
+                
+                bookInfo(bookTitle[index], isbn[index], author[index], publisher[index], dateAdded[index], qtyOnHand[index], wholeSale[index], retail[index]);
+            }
+        }
+
+    cout << " Doy ou want book deetle? Y/N";
+
+    cin >> user;
+
+    if(user == 'y' || user == 'Y'){
+
+        bookTitle[index] = "";
+        isbn[index] = "";
+        author[index]= "";
+        publisher[index] = "";
+        dateAdded[index] = "";
+        qtyOnHand[index] = 0;
+        wholeSale[index] = 0.0;
+        retail[index] = 0.0;
+        
+
+    }else{
+
+
+
+        cout << "GOODBYE";
+        
+
+
+    }
+
+    return;
+
 }
