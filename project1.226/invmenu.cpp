@@ -223,9 +223,18 @@ int index  = -1;
 
     }
 
-    cout << "which you want to change:?";
+    cout << "which you want to change: ";
+    getline(cin, userChoice);
+
+    if(userChoice == "title" || userChoice == "Title"){
 
 
+	 cout << "\nChange Title of " << bookTitle[index] << " to: ";
+	 getline(cin, userChoice);
+    }else{
+
+	 cout <<"\n Retry.\n";
+	}
 }
 
 void deleteBook(){
