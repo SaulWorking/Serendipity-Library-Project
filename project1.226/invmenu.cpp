@@ -105,6 +105,7 @@ void lookUpBook(){
 
 //check if book space is available
 //if available add book
+//books can have the same title, unfortunately
 void addBook(){
 
     int counter = 0;
@@ -133,6 +134,9 @@ void addBook(){
 
         cout<< "author: ";
         getline(cin, author[indexList[indexList.size() -1]]);
+        
+        cout <<"publisher: ";
+        getline(cin, publisher[indexList[indexList.size() -1]]);
 
         cout << "date: ";
         getline(cin,  dateAdded[indexList[indexList.size() -1]]);
@@ -146,13 +150,6 @@ void addBook(){
         cout << "retail: ";
         cin >> retail[indexList[indexList.size() -1]];
 
-       cout << bookTitle[indexList[indexList.size() -1]] <<endl;
-       cout << isbn[indexList[indexList.size() -1]]<<endl;
-       cout << author[indexList[indexList.size() -1]]<<endl;
-       cout << dateAdded[indexList[indexList.size() -1]]<<endl;
-       cout << qtyOnHand[indexList[indexList.size() -1]]<<endl;
-       cout << wholeSale[indexList[indexList.size() -1]]<<endl;
-       cout << retail[indexList[indexList.size() -1]]<<endl;
             indexList.pop_back();
     }
 
