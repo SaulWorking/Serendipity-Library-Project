@@ -116,7 +116,6 @@ void addBook(){
         if(bookTitle[i] == ""){
             indexList.push_back(i);
             counter++;
-            cout << "Slot available at index " << i << endl;
         }
     }
 

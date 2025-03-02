@@ -1,1 +1,3 @@
 void cashier();
+
+//removed nothing
