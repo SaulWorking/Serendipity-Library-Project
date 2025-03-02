@@ -3,44 +3,36 @@
 #include <string>
 #include <iomanip>
 #include "reports.h"
-
-
 using namespace std;
-
-
-
 
 
 void reports(){
 
+    int userChoice;
 
-int userChoice;
+    cout << setw(20) << " " << "Serendipity Booksellers\n";
+    cout << setw(25) << " " << "Reports\n\n";
+    cout << setw(15) << " " << "1.	Inventory Listing\n";
+    cout << setw(15) << " " << "2.	Inventory Wholesale Value\n";
+    cout << setw(15) << " " <<" 3.	Inventory Retail Value\n";
+    cout << setw(15) << " " <<" 4.	Listing by Quantity\n";
+    cout << setw(15) << " " <<" 5.	Listing by Cost\n";
+    cout << setw(15) << " " <<" 6.	Listing by Age\n";
+    cout << setw(15) << " " <<" 7.	Return to Main Menu\n";
+    cout << setw(15) << " " << "Enter Your Choice: ";
 
-cout << setw(20) << " " << "Serendipity Booksellers\n";
-cout << setw(25) << " " << "Reports\n\n";
-cout << setw(15) << " " << "1.	Inventory Listing\n";
-cout << setw(15) << " " << "2.	Inventory Wholesale Value\n";
-cout << setw(15) << " " <<" 3.	Inventory Retail Value\n";
-cout << setw(15) << " " <<" 4.	Listing by Quantity\n";
-cout << setw(15) << " " <<" 5.	Listing by Cost\n";
-cout << setw(15) << " " <<" 6.	Listing by Age\n";
-cout << setw(15) << " " <<" 7.	Return to Main Menu\n";
-cout << setw(15) << " " << "Enter Your Choice: ";
+        cin >> userChoice;
 
-cin >> userChoice;
+    cout << "\n\n";
 
-cout << "\n\n";
+        while(userChoice <1 || userChoice >7){
 
-     while(userChoice <1 || userChoice >7){
+                cout << "\n" << setw(15) << " " << "Please enter a valid number 1-7.\n";
 
-            cout << "\n" << setw(15) << " " << "Please enter a valid number 1-7.\n";
+                cin >> userChoice;
+            }
+            reportsCheck(userChoice);
 
-            cin >> userChoice;
-        }
-
-        reportsCheck(userChoice);
-
- 
     return;
 }
 
@@ -93,18 +85,6 @@ void reportsCheck(int userInput){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 void repListing(){
 
         cout << '\n' << setw(15) << "you selected Inventory Listing\n";
@@ -134,10 +114,7 @@ void repAge(){
 
 
 
-
-
-//functions for later stages of the project
-
+//functions for later stages of the project when the time comes
 
 /*
 void listInventory(){
