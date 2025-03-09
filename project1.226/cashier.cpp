@@ -9,6 +9,9 @@ using namespace std;
 //calculates price of book and asks for a repeat if possible
 void cashier(){
 
+
+
+
     const double salesTax = 0.06;
     double totalPrice, bookPrice;
     int bookQuantity;
@@ -23,6 +26,9 @@ void cashier(){
         cin.ignore();
         getline(cin, userDate);
 
+    cout << setw(15) << " " <<"Title:";
+        getline(cin, bookTitle);    
+
     cout << setw(15) << " " << "Quantity:" ;
         cin >> bookQuantity;
         cin.ignore();
@@ -31,9 +37,6 @@ void cashier(){
     cout << setw(15) << " " <<"ISBN:";
         getline(cin, bookISBN);
 
-
-    cout << setw(15) << " " <<"Title:";
-        getline(cin, bookTitle);    
 
     cout << setw(15) << " " <<"Price:";
         cin >> bookPrice;

@@ -4,10 +4,14 @@
 #include "invmenu.h"
 #include "bookinfo.h"
 #include "reports.h"
+
+
+
 using namespace std;
 
 void mainMenu(int);
 void optionCheck(int);
+
 
 
 int main(){

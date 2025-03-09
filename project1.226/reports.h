@@ -1,7 +1,5 @@
 void reports();
 void reportsCheck(int);
-
-
 void repListing();
 void repWholesale();
 void repRetail();

@@ -1,4 +1,3 @@
-#include <fstream>
 #include <string>
 #include <iostream>
 #include <iomanip>
@@ -8,8 +7,7 @@
 using namespace std;
 
 //ifstream -> you read
-//ofstream -> you write
-
+//ofstream -> you writ
 const int MAX_STORAGE = 20;
 
 string bookTitle[MAX_STORAGE];
@@ -22,7 +20,13 @@ double wholeSale[MAX_STORAGE];
 double retail[MAX_STORAGE];
 
 
+
+
 void invMenu(){
+
+
+
+
 
     int userChoice;
 
