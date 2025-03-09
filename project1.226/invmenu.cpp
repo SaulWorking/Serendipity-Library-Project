@@ -2,33 +2,20 @@
 #include <iostream>
 #include <iomanip>
 #include <vector>
+#include "inventory.h"
 #include "invmenu.h"
 #include "bookinfo.h"
 using namespace std;
 
 //ifstream -> you read
 //ofstream -> you writ
-const int MAX_STORAGE = 20;
-
-string bookTitle[MAX_STORAGE];
-string isbn[MAX_STORAGE];
-string author[MAX_STORAGE];
-string publisher[MAX_STORAGE];
-string dateAdded[MAX_STORAGE];
-int qtyOnHand[MAX_STORAGE];
-double wholeSale[MAX_STORAGE];
-double retail[MAX_STORAGE];
 
 
 
-
-void invMenu(){
-
+int  invMenu(){
 
 
-
-
-    int userChoice;
+    int userChoice, counter{0};
 
     cout << setw(20) << " " << " Serendipity Booksellers" << endl;
     cout << setw(23) << " " << "Inventory Database\n\n";
@@ -41,15 +28,28 @@ void invMenu(){
 
         cin >> userChoice;
 
-    while(userChoice <1 || userChoice >5){
-        cout << "\n" << setw(15) << " " << "Please enter a valid number 1-5: ";
-            
+
+
+    while(userChoice <1 || userChoice >5 && counter < 15){
+        cout << '\n' << "Please enter a valid number 1-5: ";
+        
+        counter++;
+
+        //check for infinite loop error
+        if(counter >= 15){
+            counter = 0;
             cin >> userChoice;
+            break;
+        }else{
+
+            cin >> userChoice;
+        }
+
         }
 
         invCheck(userChoice);
 
-    return;
+    return userChoice;
 }
 
 //simple choice checking for user Inventory Database options.
@@ -73,7 +73,7 @@ void invCheck(int userChoice){
         invMenu();
                 break;
             case 5:
-                break;
+            cout << "exit\n";
         }
     return;
 }
@@ -91,7 +91,7 @@ void lookUpBook(){
         cin.ignore();
             getline(cin, userChoice);
 
-        for(int i =0; i<MAX_STORAGE; i++){
+        for(int i =0; i<20; i++){
 
             if(bookTitle[i] == userChoice){
                 index = i;
@@ -117,7 +117,7 @@ void addBook(){
     
     cout << '\n' << setw(15) << "You selected add book\n\n";
 
-    for(int i=0; i<MAX_STORAGE; i++){
+    for(int i=0; i<20; i++){
         if(bookTitle[i] == ""){
             indexList.push_back(i);
             counter++;
@@ -174,7 +174,7 @@ void editBook(){
         getline(cin, userChoice);
 
 
-    for(int i =0; i<MAX_STORAGE; i++){
+    for(int i =0; i<20; i++){
         if(bookTitle[i] == userChoice){
             index = i;
         }
@@ -190,12 +190,70 @@ void editBook(){
 
     }
 
-    cout << "\nWhat do you want to change?\nI.E type the first word of each category to change it: quantity on hand = Quantity\nOption: ";
 
+
+        readInput(index);
+
+    //checks for one of eight categories for book Information
+
+}
+
+
+//tests for book availability in storage and deletes book
+void deleteBook(){
+    string userChoice;
+    char user;
+    int index = -1;
+
+    cout << '\n' << setw(15) << ' ' << "You selected delete book\n\n";
+    cout << '\n' << setw(15) << ' ' << "which book will you delete? : ";
+    
+        cin.ignore();
         getline(cin, userChoice);
 
 
-    //checks for one of eight categories for book Information
+        for(int i =0; i<20; i++){
+
+            if(bookTitle[i] == userChoice){
+                index = i;
+                
+                bookInfo(bookTitle[index], isbn[index], author[index], publisher[index], dateAdded[index], qtyOnHand[index], wholeSale[index], retail[index]);
+                break;
+            }
+        }
+    
+        if(index != -1){
+
+            cout << '\n' << setw(20) << ' ' << "Do you really want to delete this?(Y/N): ";
+            cin >> user;
+
+            if(user == 'y' || user == 'Y'){
+                bookTitle[index] = "";
+                isbn[index] = "";
+                author[index]= "";
+                publisher[index] = "";
+                dateAdded[index] = "";
+                qtyOnHand[index] = 0;
+                wholeSale[index] = 0.0;
+                retail[index] = 0.0;  
+            }else{
+                cout << setw(25) << ' ' << "Book doesnt exist.\n";
+
+                 }
+         }
+    return;
+
+}
+
+
+void readInput(int index){
+
+    string userChoice;
+    int quantity;
+    double cost;
+
+    cout << "\nWhat do you want to change?\nI.E type the first word of each category to change it: quantity on hand = Quantity\nOption: ";
+    getline(cin, userChoice);
 
     if(userChoice == "title" || userChoice == "Title"){
 	 cout << "\nChange Title of " << bookTitle[index] << " to: ";
@@ -239,51 +297,4 @@ void editBook(){
     }else{
         cout << "\nRetry.\n";
     }
- 	
-}
-
-//tests for book availability in storage and deletes book
-void deleteBook(){
-    string userChoice;
-    char user;
-    int index = -1;
-
-    cout << '\n' << setw(15) << ' ' << "You selected delete book\n\n";
-    cout << '\n' << setw(15) << ' ' << "which book will you delete? : ";
-    
-        cin.ignore();
-        getline(cin, userChoice);
-
-
-        for(int i =0; i<MAX_STORAGE; i++){
-
-            if(bookTitle[i] == userChoice){
-                index = i;
-                
-                bookInfo(bookTitle[index], isbn[index], author[index], publisher[index], dateAdded[index], qtyOnHand[index], wholeSale[index], retail[index]);
-                break;
-            }
-        }
-    
-        if(index != -1){
-
-            cout << '\n' << setw(20) << ' ' << "Do you really want to delete this?(Y/N): ";
-            cin >> user;
-
-            if(user == 'y' || user == 'Y'){
-                bookTitle[index] = "";
-                isbn[index] = "";
-                author[index]= "";
-                publisher[index] = "";
-                dateAdded[index] = "";
-                qtyOnHand[index] = 0;
-                wholeSale[index] = 0.0;
-                retail[index] = 0.0;  
-            }else{
-                cout << setw(25) << ' ' << "Book doesnt exist.\n";
-
-                 }
-         }
-    return;
-
 }

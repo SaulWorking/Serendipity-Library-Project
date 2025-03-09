@@ -1,16 +1,43 @@
 #include <iostream>
 #include <iomanip>
+#include "inventory.h"
 #include "cashier.h"
 #include "invmenu.h"
 #include "bookinfo.h"
 #include "reports.h"
 
-
+//use  to link the same array between multiple filers...
 
 using namespace std;
 
 void mainMenu(int);
 void optionCheck(int);
+
+
+
+ string bookTitle[20] = {"Freedom", "Head First Design Patterns", "Arduino Cookbook", "Clean Code",
+    "The Pragmatic Programmer", "Learning Python", "Refactoring","Effective Java", "Fluent Python", 
+        "Introduction to the Theory of Computation"};
+
+ string isbn[20] = {"0374158460", "0596007124", "0596802471", "9780132350884", 
+    "9780201616224", "9781491950357", "9780321125217", "9780134494166", "9781449355739", "9780137081073"};
+
+  string author[20] = {"Jonathan Franzen", "Elisabeth Freeman", "Michael Margolis", "Robert C. Martin", 
+                "Andrew Hunt", "Mark Lutz", "Martin Fowler", "Joshua Bloch","Luciano Ramalho", "Michael Sipser"};
+
+  string publisher[20] = {"Farrar", "O'Reilly Media", "O'Reilly Media", "Prentice Hall",
+                                     "Addison-Wesley", "O'Reilly Media", "Addison-Wesley",
+                                    "Addison-Wesley", "O'Reilly Media", "Cengage Learning"};
+
+  string dateAdded[20] =   {"03/05/2004", "01/13/2006", "02/05/2025", "06/04/2008", "02/05/2005",
+    "12/4/2013", "5/5/2019", "03/14/2009", "05/12/2020", "02/05/2025"};
+
+    
+  int qtyOnHand[20] = {40, 35, 50, 25, 20, 45, 30, 15, 10, 12};
+  double wholeSale[20] = {12.50, 25.00, 34.5, 30.00, 28.00, 40.00, 35.00, 38.00, 45.00, 50.00};    
+  double retail[20] = {30.4, 45.0, 56.7, 50.0, 47.5, 65.0, 55.0, 60.0, 70.0, 80.0};
+
+
 
 
 
@@ -48,15 +75,24 @@ void optionCheck(int userChoice){
     switch(userChoice){
 
         case 1:
-        cashier();
+        userChoice =cashier();
+        if(-1 == userChoice)
+            mainMenu(userChoice);
         break;
 
         case 2:
-        invMenu();
+        
+        userChoice = invMenu();
+        if(5 == userChoice)
+            mainMenu(userChoice);
+
         break;
 
         case 3:
-        reports();
+        userChoice = reports();
+        if(7 == userChoice)
+            mainMenu(userChoice);
+
         break;
 
         case 4:

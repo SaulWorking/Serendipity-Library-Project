@@ -3,10 +3,11 @@
 #include <string>
 #include <iomanip>
 #include "reports.h"
+#include "inventory.h"
 using namespace std;
 
 
-void reports(){
+int reports(){
 
     int userChoice;
 
@@ -33,7 +34,7 @@ void reports(){
             }
             reportsCheck(userChoice);
 
-    return;
+    return userChoice;
 }
 
 
