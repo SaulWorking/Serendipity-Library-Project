@@ -2,10 +2,11 @@
 #define inventory
 
 #include <string>
+#include <ctime>
 
 void binarySearch();
 void selectionSort();
-
+void displayDate();
 
 
 
@@ -19,5 +20,7 @@ extern std::string dateAdded[20];
 extern int qtyOnHand[20];
 extern double wholeSale[20] ;
 extern double retail[20];
+
+
 
 #endif

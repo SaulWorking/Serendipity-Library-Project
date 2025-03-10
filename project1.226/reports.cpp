@@ -24,11 +24,11 @@ int reports(){
 
         cin >> userChoice;
 
-    cout << "\n\n";
+        cout << '\n';
 
         while(userChoice <1 || userChoice >7){
 
-                cout << "\n" << setw(15) << " " << "Please enter a valid number 1-7.\n";
+                cout << "\n" << setw(15) << ' ' << "Please enter a valid number 1-7.\n";
 
                 cin >> userChoice;
             }
@@ -88,14 +88,84 @@ void reportsCheck(int userInput){
 
 void repListing(){
 
-        cout << '\n' << setw(15) << "you selected Inventory Listing\n";
+    string wait;
+       
 
 
+       cout << '\n' << setw(55) << "Inventory Report\n"; 
+        cout << '\n' << setw(55); 
+        displayDate();
+
+        for(int i =0; i< 100;i++){
+            cout << '-';
+        }
+
+        cout << '\n';
+
+        for(int i =0; i<20; i++){
+
+            if(bookTitle[i] != ""){
+            cout << left << "Title: "  <<  bookTitle[i]  << '\n' << "ISBN: " <<   isbn[i] << '|' << "Author: " << author[i] << '|';
+            cout << "Publisher: "  << publisher[i]  << '|' << "Wholesale value: " << wholeSale[i] << '|' << "Retail price: " <<retail[i] << '|'<<  "\n\n";
+            }
+
+        }
+        
+        for(int i =0; i< 100;i++){
+            cout << '-';
+        }
+
+
+        cout << '\n';
+        cout << "\nPress enter to continue.";
+        cin.ignore();
+        getline(cin, wait);
+        cout << '\n';
 }
 void repWholesale(){
-        cout << '\n' << setw(15) << "you selected Inventory Wholesale value\n";
 
+
+
+string wait;
+double WholesaleValue{0.0};
+
+
+       cout << '\n' << setw(55) << "Wholesale report\n";
+        cout << '\n' << setw(55); 
+        displayDate();
+
+        for(int i =0; i< 100;i++){
+            cout << '-';
+        }
+
+        cout << '\n';
+
+        for(int i =0; i<20; i++){
+
+            if(bookTitle[i] != ""){
+            cout << left << "Title: "  <<  bookTitle[i]  << '\n' << "ISBN: " <<   isbn[i] << '|' << "Author: " << author[i] << '|' << "Date added: " << dateAdded << '|';
+            cout << "Publisher: "  << publisher[i]  << '|' << "Quantity: " << qtyOnHand[i] << '|' << "Wholesale value: " << wholeSale[i] << '|' << "Retail price: " <<retail[i] << '|'; 
+            
+            WholesaleValue += wholeSale[i];
+            cout << WholesaleValue << endl;
+            
+            }
+        }
+        
+        for(int i =0; i< 100;i++){
+            cout << '-';
+        }
+
+        cout << '\n' << setw(55); 
+        cout << "Wholesale value: " << WholesaleValue;
+        cout << WholesaleValue;
+        cout << '\n';
+        cout << "\nPress enter to continue.";
+        cin.ignore();
+        getline(cin, wait);
+        cout << '\n';
 }
+
 void repRetail(){
         cout << '\n' << setw(15) << "you selected Inventory retail value\n";
 
@@ -115,104 +185,19 @@ void repAge(){
 
 
 
-//functions for later stages of the project when the time comes
+/*  guide for displaying c++ date
 
-/*
-void listInventory(){
-ifstream readFile;
-readFile.open("report.txt");
-string reportWord = "";
-int lineCounter = 1;
-
-while(getline(readFile, reportWord)){
-    if(lineCounter >= 2){
-        cout << "\n\n";
-        lineCounter = 1;
-    }
-    cout << reportWord;
-
-    lineCounter++;
-
-}
-
-readFile.close();
-    return;
-}
-
-void listWholesaleValue(){
-
-ifstream readFile;
-readFile.open("report.txt");
-string reportWord = "";
-
-double totalWholesaleValue = 0.0;
-int lineCounter = 0;
-int wordCounter = 1;
-
-
-while(getline(readFile, reportWord, ',')){
-
-
-    if(wordCounter==7){
-
-    if(lineCounter >=1){
-  cout << "Book " << lineCounter << " cost: " << reportWord << endl;
-
-    totalWholesaleValue += stod(reportWord);
-
-    }    
-        wordCounter = 0;
-
-        lineCounter++;
-    }
+https://www.w3schools.com/cpp/cpp_date.asp
     
+    */
 
-    wordCounter++;
+void displayDate(){
+
+    time_t day;
+
+    time(&day);
+
+    cout << ctime(&day);
+
+
 }
-
-cout << "Your wholesale value total is: $" << totalWholesaleValue << endl;
-
-readFile.close();
-
-    return;
-}
-
-void listRetailValue(){
-ifstream readFile;
-readFile.open("report.txt");
-string reportWord = "";
-
-double totalRetailValue = 0.0;
-int lineCounter = 0;
-int wordCounter = 1;
-char ignoreChar = ',';
-
-while(getline(readFile, reportWord, ignoreChar)){
-
-        ignoreChar = ',';
-
-    if(wordCounter==8){
-        cout << reportWord << endl;
-    }
-
-  cout << reportWord << " ";
-
-        wordCounter++;
-
-
-}   
-
-
-
-cout << "Your retail value total is: $" << totalRetailValue << endl;
-
-readFile.close();
-
-
-
-    
-}
-
-*/
-
-

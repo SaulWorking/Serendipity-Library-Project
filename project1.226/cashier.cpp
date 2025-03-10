@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <vector>
 #include "cashier.h"
 #include "inventory.h"
 using namespace std;
@@ -9,13 +10,16 @@ using namespace std;
 
 //calculates price of book and asks for a repeat if possible
 int cashier(){
-
     const double salesTax = 0.06;
     double totalPrice, bookPrice;
-    int bookQuantity, bookChosen{-1};
+
+    int bookQuantity{0}, bookChosen{-1};
     string userDate, bookISBN, book;
-    char userRepeat{' '};
-    bool ISBNCheck = true;
+    char userYN{' '};
+
+
+
+
 
     cout << '\n' << setw(20) << " " <<"Serenpidity Booksellers" << endl;
     cout << setw(25) << " " << "Cashier Module\n";
@@ -23,29 +27,27 @@ int cashier(){
 
 
 
-    cout << setw(15) << ' ' << "Date:"; 
-        cin.ignore();
-        getline(cin, userDate);
-
 
     cout << setw(15) << ' ' <<"ISBN:";
+        cin.ignore();
         getline(cin, bookISBN);
 
 
     bookChosen = ISBNLookup(bookISBN);
 
-    if(qtyOnHand[bookChosen] <=0){
-        cout << "No book " << bookTitle[bookChosen] << " in stock.\nExiting program...\n";
-        return -1;
+    if(qtyOnHand[bookChosen] <= 0 && bookChosen){
+        cout << "No book " << bookTitle[bookChosen] << " in stock.\nExiting cashier module...\n";
+        //exit to main menu
+        return -2;
     }
     
 
     while(bookChosen == -1){
         cout << "Cannot locate ISBN.";
         cout << "\nDo you want to retry?(y/n)";
-         cin >> userRepeat;
+         cin >> userYN;
 
-         if(userRepeat == 'y'){
+         if(userYN == 'y'){
             cout << "\nISBN: ";
             
             cin.ignore();
@@ -59,16 +61,32 @@ int cashier(){
      if(bookChosen >=0){
     book = bookTitle[bookChosen];
     bookPrice = retail[bookChosen];
+
         cout << "book quantity? ";
+
         cin >> bookQuantity;
 
-        while(bookQuantity <0){
 
-            cout <<"\nQuanity cant be less than 0. Try again: ";
+
+        
+
+
+        while(bookQuantity < 0 || bookQuantity > qtyOnHand[bookChosen]){
+
+            cout <<"\nInvalid Quantity. Try again: ";
             cin >> bookQuantity;
         }
 
+
+        qtyOnHand[bookChosen] -= bookQuantity;
+
+    
     }
+
+    cout << "Do you want to purchase another book?(y/n)";
+    cin >> userYN;
+
+
 
 
 
@@ -76,7 +94,9 @@ int cashier(){
 
     totalPrice = (bookPrice * bookQuantity);
 
-    cout << "\n\nDate: " << userDate << "\n\n";
+    cout << "\nDate:\t";
+    displayDate();
+    
     cout  << left<< setw(5) << "Qty" << setw(20) << "ISBN" << setw(40) << "Title" << setw(10) << "Price"  << setw(3) << "Total"<< endl;
 
 
@@ -95,16 +115,17 @@ int cashier(){
 
     cout << "\n\n" << setw(15) << " " << "Thank you for shopping at Serendipity\n\n" << endl;
     cout << "\n" << setw(15) << " " << "Do you have another transaction? (Y/N): ";
-        cin >> userRepeat;
+        cin >> userYN;
 
-        if(userRepeat == 'y' || userRepeat == 'Y'){
-            cin.ignore();
+        if(userYN == 'y' || userYN == 'Y'){
             cashier();
             }else{
                     cout << '\n' << setw(15) << ' ' << "Goodbye!";
                  }
+            
 
-        return 0;
+        // return to main menu
+        return -2;
 
 
 }
@@ -121,6 +142,6 @@ int ISBNLookup(string ISBN){
 
 
     }
-
+    //returns invalid ISBN index
     return -1;
 }

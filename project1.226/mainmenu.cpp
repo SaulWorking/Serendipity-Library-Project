@@ -76,7 +76,7 @@ void optionCheck(int userChoice){
 
         case 1:
         userChoice =cashier();
-        if(-1 == userChoice)
+        if(-2 == userChoice)
             mainMenu(userChoice);
         break;
 
