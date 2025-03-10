@@ -1,0 +1,2 @@
+overhaul format
+make algorithms concise and easy to read

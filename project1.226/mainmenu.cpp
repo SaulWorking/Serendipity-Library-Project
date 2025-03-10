@@ -1,3 +1,15 @@
+/******************************************************************
+** Program: Serendipity Booksellers POS and inventory management software 
+** Description: program will help employees sell and manage inventory
+
+
+** Course: CS226 CRN 32842
+** Professor: Huseyin Aygun
+** Student: Thien Dinh
+** Due Date: 03/9/2025
+******************************************************************/
+
+
 #include <iostream>
 #include <iomanip>
 #include "inventory.h"
@@ -29,8 +41,8 @@ void optionCheck(int);
                                      "Addison-Wesley", "O'Reilly Media", "Addison-Wesley",
                                     "Addison-Wesley", "O'Reilly Media", "Cengage Learning"};
 
-  string dateAdded[20] =   {"03/05/2004", "01/13/2006", "02/05/2025", "06/04/2008", "02/05/2005",
-    "12/4/2013", "5/5/2019", "03/14/2009", "05/12/2020", "02/05/2025"};
+  string dateAdded[20] =   {"03-05-2004", "01-13-2006", "02-05-2025", "06-04-2008", "02-05-2005",
+    "12-4-2013", "5-5-2019", "03-14-2009", "05-12-2020", "02-05-2025"};
 
     
   int qtyOnHand[20] = {40, 35, 50, 25, 20, 45, 30, 15, 10, 12};

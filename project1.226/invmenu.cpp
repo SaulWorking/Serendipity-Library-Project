@@ -1,3 +1,15 @@
+/******************************************************************
+** Program: Serendipity Booksellers POS and inventory management software 
+** Description: program will help employees sell and manage inventory
+
+
+** Course: CS226 CRN 32842
+** Professor: Huseyin Aygun
+** Student: Thien Dinh
+** Due Date: 03/9/2025
+******************************************************************/
+
+
 #include <string>
 #include <iostream>
 #include <iomanip>

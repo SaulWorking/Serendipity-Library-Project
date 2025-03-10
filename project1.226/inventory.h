@@ -4,9 +4,12 @@
 #include <string>
 #include <ctime>
 
-void binarySearch();
-void selectionSort();
+void search();
+void qtsort(int []);
+void costSort(int []);
+void dateSort(int[]);
 void displayDate();
+void swap(int&, int&);
 
 
 
