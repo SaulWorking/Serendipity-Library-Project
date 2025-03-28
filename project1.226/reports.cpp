@@ -13,8 +13,7 @@
 #include <fstream>
 #include <string>
 #include <iomanip>
-#include "reports.h"
-#include "inventory.h"
+#include "allheaders.h"
 using namespace std;
 
 
@@ -114,7 +113,7 @@ void repListing(){
 
         for(int i =0; i<20; i++){
             
-            if(bookTitle[i] != ""){
+            if(bookTitle[i][0] != '\0'){
                 cout << left << "Title: "  <<  bookTitle[i]  << '\n' << "ISBN: " <<   isbn[i] << '\n';
                 cout << "Author: " << author[i] << '\n' << "Date added: " << dateAdded[i] << '\n';
                 cout << "Publisher: "  << publisher[i]  << '\n' << "Quantity: " << qtyOnHand[i] << '\n'; 
@@ -157,7 +156,7 @@ double WholesaleValue{0.0};
         
         for(int i =0; i<20; i++){
 
-            if(bookTitle[i] != ""){
+            if(bookTitle[i][0] != '\0'){
             cout << left << "Title: "  <<  bookTitle[i]  << '\n' << "ISBN: " <<   isbn[i] << endl;
             cout << "Wholesale value: " << wholeSale[i] << "\n\n";
             WholesaleValue += wholeSale[i] * qtyOnHand[i];
@@ -201,7 +200,7 @@ double retailValue{0.0};
 
         for(int i =0; i<20; i++){
 
-            if(bookTitle[i] != ""){
+            if(bookTitle[i][0] != '\0'){
             cout << left << "Title: "  <<  bookTitle[i]  << '\n' << "ISBN: " <<   isbn[i] << endl;
             cout << "Retail price: " <<retail[i] << "\n\n"; 
 
@@ -253,7 +252,7 @@ void repQty(){
 
             int index = indices[i];
 
-            if(bookTitle[i] != ""){
+            if(bookTitle[i][0] != '\0'){
                 cout << left << "Title: "  <<  bookTitle[index];
                 cout << '\n' << "ISBN: " <<   isbn[index] << endl;
                 cout << "Quantity: " << qtyOnHand[index] << endl;
@@ -306,7 +305,7 @@ void repCost(){
 
             int index = indices[i];
 
-            if(bookTitle[i] != ""){
+            if(bookTitle[i][0] != '\0'){
                 cout << left << "Title: "  <<  bookTitle[index];
                 cout << '\n' << "ISBN: " <<   isbn[index] << endl;
                 cout << "wholesale cost: " << wholeSale[index] << endl;
@@ -356,7 +355,7 @@ void repAge(){
 
             int index = indices[i];
 
-            if(bookTitle[i] != ""){
+            if(bookTitle[i][0] != '\0'){
                 cout << left << "Title: "  <<  bookTitle[index];
                 cout << '\n' << "ISBN: " <<   isbn[index] << endl;
                 cout << "Date Added: " << dateAdded[index] << endl;

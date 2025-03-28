@@ -12,22 +12,24 @@
 
 #include <iostream>
 #include <string>
+#include "allheaders.h"
 using namespace std;
 
 
 //prints out all book information like title and price
-void bookInfo(string Title, string ISBN, string Author, string Publisher, string Date, int Quanity, double WholesalePrice, double RetailPrice){
+void bookInfo(char title[51], char ISBN[14], char author[31], char publisher[31], char date[11], int quanity, double wholesalePrice, double retailPrice){
+
 
     cout << "Serendipity Booksellers Book Information " << endl;
 
-    cout << "Title: " << Title << endl;
+    cout << "Title: " << title << endl;
     cout << "ISBN: " << ISBN << endl;
-    cout << "Author: " << Author << endl;
-    cout << "Publisher: " << Publisher << endl;
-    cout << "Date Added: " << Date << endl;
-    cout << "Quantity-On-Hand: " << Quanity << endl;
-    cout << "Wholesale Cost: " << WholesalePrice << endl;
-    cout << "Retail Price: " << RetailPrice << endl;
+    cout << "Author: " << author << endl;
+    cout << "Publisher: " << publisher << endl;
+    cout << "Date Added: " << date << endl;
+    cout << "Quantity-On-Hand: " << quanity << endl;
+    cout << "Wholesale Cost: " << wholesalePrice << endl;
+    cout << "Retail Price: " << retailPrice << endl;
 
         return; 
 }

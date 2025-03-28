@@ -13,20 +13,25 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
-#include <vector>
-#include "cashier.h"
-#include "inventory.h"
+#include <cstring>
+
+#include "allheaders.h"
 using namespace std;
 
 
 
 //calculates price of book and asks for a repeat if possible
 int cashier(){
+
     const double salesTax = 0.06;
     double totalPrice, bookPrice;
 
+    //book quantity & book index
     int bookQuantity{0}, bookChosen{-1};
-    string userDate, bookISBN, book;
+
+
+    
+    char userDate[11], bookISBN[14], bookName[51];
     char userYN{' '};
 
 
@@ -41,13 +46,14 @@ int cashier(){
 
 
     cout << setw(15) << ' ' <<"ISBN:";
+
         cin.ignore();
-        getline(cin, bookISBN);
+        cin.getline(bookISBN, 14);
 
 
     bookChosen = ISBNLookup(bookISBN);
 
-    if(qtyOnHand[bookChosen] <= 0 && bookChosen){
+    if(qtyOnHand[bookChosen] <= 0 && !bookChosen){
         cout << "No book " << bookTitle[bookChosen] << " in stock.\nExiting cashier module...\n";
         //exit to main menu
         return -2;
@@ -142,11 +148,12 @@ int cashier(){
 
 }
 
-int ISBNLookup(string ISBN){
+int ISBNLookup(char ISBN[]){
 
     for(int i =0; i<20; i++){
 
-        if(isbn[i] == ISBN){
+        
+        if(strstr(isbn[i], ISBN) == ISBN){
         
             return i;
         }

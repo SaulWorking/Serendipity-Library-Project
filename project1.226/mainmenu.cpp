@@ -12,11 +12,8 @@
 
 #include <iostream>
 #include <iomanip>
-#include "inventory.h"
-#include "cashier.h"
-#include "invmenu.h"
-#include "bookinfo.h"
-#include "reports.h"
+#include "allheaders.h"
+
 
 //use  to link the same array between multiple filers...
 
@@ -26,23 +23,6 @@ void mainMenu(int);
 void optionCheck(int);
 
 
-
- string bookTitle[20] = {"Freedom", "Head First Design Patterns", "Arduino Cookbook", "Clean Code",
-    "The Pragmatic Programmer", "Learning Python", "Refactoring","Effective Java", "Fluent Python", 
-        "Introduction to the Theory of Computation"};
-
- string isbn[20] = {"0374158460", "0596007124", "0596802471", "9780132350884", 
-    "9780201616224", "9781491950357", "9780321125217", "9780134494166", "9781449355739", "9780137081073"};
-
-  string author[20] = {"Jonathan Franzen", "Elisabeth Freeman", "Michael Margolis", "Robert C. Martin", 
-                "Andrew Hunt", "Mark Lutz", "Martin Fowler", "Joshua Bloch","Luciano Ramalho", "Michael Sipser"};
-
-  string publisher[20] = {"Farrar", "O'Reilly Media", "O'Reilly Media", "Prentice Hall",
-                                     "Addison-Wesley", "O'Reilly Media", "Addison-Wesley",
-                                    "Addison-Wesley", "O'Reilly Media", "Cengage Learning"};
-
-  string dateAdded[20] =   {"03-05-2004", "01-13-2006", "02-05-2025", "06-04-2008", "02-05-2005",
-    "12-4-2013", "5-5-2019", "03-14-2009", "05-12-2020", "02-05-2025"};
 
     
   int qtyOnHand[20] = {40, 35, 50, 25, 20, 45, 30, 15, 10, 12};
@@ -54,6 +34,7 @@ void optionCheck(int);
 
 
 int main(){
+    
     int userOption{0};
     mainMenu(userOption);
     return 0;

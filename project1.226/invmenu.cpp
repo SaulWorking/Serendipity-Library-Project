@@ -13,10 +13,9 @@
 #include <string>
 #include <iostream>
 #include <iomanip>
-#include <vector>
-#include "inventory.h"
+#include <cstring>
+#include "allheaders.h"
 #include "invmenu.h"
-#include "bookinfo.h"
 using namespace std;
 
 //ifstream -> you read
@@ -94,46 +93,75 @@ void invCheck(int userChoice){
 //search to check if book is in stock and prints out book info
 void lookUpBook(){
 
-    string userChoice; 
+    char userChoice[51];
     int index = -1;
+    
 
     cout << '\n' << setw(15) << "You selected look Up book\n\n";
     cout << '\n' << setw(15) << "Title of book: ";
 
-        cin.ignore();
-            getline(cin, userChoice);
+            cin.ignore();
+            cin.getline(userChoice, 51);
+            strUpper(userChoice);
+
+
+        
 
         for(int i =0; i<20; i++){
 
-            if(bookTitle[i] == userChoice){
+            
+            if(strstr(bookTitle[i], userChoice) == userChoice){
                 index = i;
+
             }
 
         }
 
-    if(index != -1 && userChoice != ""){
+
+    if(index != -1){
         bookInfo(bookTitle[index], isbn[index], author[index], publisher[index], dateAdded[index], qtyOnHand[index], wholeSale[index], retail[index]);
     }else{
         cout << '\n' << setw(15) << ' ' << "Book not found.\n";
     }
 
+
+
 }
+
+
+
 
 //check if book space is available
 //if available add book
 //books can have the same title, unfortunately
 void addBook(){
 
+
+    //check for empty slots
     int counter = 0;
-    vector<int> indexList;
+
+    //empty book index
+    int emptyBookSpace = -1;
+
+    //temporary word to be converted uppersace
+    string word("");
     
     cout << '\n' << setw(15) << "You selected add book\n\n";
 
-    for(int i=0; i<20; i++){
-        if(bookTitle[i] == ""){
-            indexList.push_back(i);
+    
+
+    //check for empty book index
+    for(int index=0; index<20; index++){
+
+
+        if(bookTitle[index][0] == '\0'){
+            
+            emptyBookSpace = index;
+
             counter++;
         }
+
+
     }
 
     if(counter <=0){
@@ -142,32 +170,73 @@ void addBook(){
     }else{
 
         cin.ignore();
-        cout <<"book: ";
-        getline(cin, bookTitle[indexList[indexList.size() -1]]);
+
+        cout <<"book title: ";
+
+        cin.getline(bookTitle[emptyBookSpace], 51);
+        strUpper(isbn[emptyBookSpace]);
+
 
         cout <<"isbn: ";
-        getline(cin, isbn[indexList[indexList.size() -1]]);
+
+        cin.getline(isbn[emptyBookSpace], 31);  
+        strUpper(isbn[emptyBookSpace]);
 
         cout<< "author: ";
-        getline(cin, author[indexList[indexList.size() -1]]);
-        
+
+        cin.getline(author[emptyBookSpace], 31);
+        strUpper(isbn[emptyBookSpace]);
+
         cout <<"publisher: ";
-        getline(cin, publisher[indexList[indexList.size() -1]]);
+
+        cin.getline(publisher[emptyBookSpace], 31);
+        strUpper(isbn[emptyBookSpace]);
+
 
         cout << "date: ";
-        getline(cin,  dateAdded[indexList[indexList.size() -1]]);
+        cin.getline(dateAdded[emptyBookSpace], 11);
 
+
+
+        
         cout << "quantity: ";
-        cin >> qtyOnHand[indexList[indexList.size() -1]];
+        cin >> qtyOnHand[emptyBookSpace];
+
+        while(qtyOnHand[emptyBookSpace] < 0){
+            
+            cout << "quantity greater than -1: ";
+            cin >> qtyOnHand[emptyBookSpace];
+
+
+        }
+
+
 
         cout << "wholesale: ";
-        cin >> wholeSale[indexList[indexList.size() -1]];
+        cin >> wholeSale[emptyBookSpace];
 
+        while(qtyOnHand[emptyBookSpace] < 0){
+            
+            cout << "quantity greater than -1: ";
+            cin >> wholeSale[emptyBookSpace];
+
+
+        }
         cout << "retail: ";
-        cin >> retail[indexList[indexList.size() -1]];
+        cin >> retail[emptyBookSpace];
 
-            indexList.pop_back();
+
+        while(qtyOnHand[emptyBookSpace] < 0){
+            
+            cout << "quantity greater than -1: ";
+            cin >> retail[emptyBookSpace];
+
+
+        }
+
+
     }
+
 
     return;        
 }
@@ -239,12 +308,14 @@ void deleteBook(){
             cout << '\n' << setw(20) << ' ' << "Do you really want to delete this?(Y/N): ";
             cin >> user;
 
-            if(user == 'y' || user == 'Y'){
-                bookTitle[index] = "";
-                isbn[index] = "";
-                author[index]= "";
-                publisher[index] = "";
-                dateAdded[index] = "";
+          
+
+            if(toupper(user) == 'Y'){
+                bookTitle[index][0] = '\0';
+                isbn[index][0] = '\0';
+                author[index][0] = '\0';
+                publisher[index][0] = '\0';
+                dateAdded[index][0] = '\0';
                 qtyOnHand[index] = 0;
                 wholeSale[index] = 0.0;
                 retail[index] = 0.0;  
@@ -261,6 +332,7 @@ void deleteBook(){
 void readInput(int index){
 
     string userChoice;
+
     int quantity;
     double cost;
 
@@ -269,28 +341,32 @@ void readInput(int index){
 
     if(userChoice == "title" || userChoice == "Title"){
 	 cout << "\nChange Title of " << bookTitle[index] << " to: ";
-        getline(cin, userChoice);
-        bookTitle[index] = userChoice;
+
+        cin.getline(bookTitle[index], 51);
+        strUpper(bookTitle[index]);
+
 
     }else if(userChoice == "isbn" || userChoice == "ISBN"){
 	 cout << "\nChange ISBN of " << bookTitle[index] << " to: ";
-        getline(cin, userChoice);
-        isbn[index] = userChoice;
+    
+        cin.getline(isbn[index], 14);
+        strUpper(isbn[index]);
 
     }else if(userChoice == "author" || userChoice == "Author"){
 	 cout << "\nChange author of " << bookTitle[index] << " to: ";
-        getline(cin, userChoice);
-        author[index] = userChoice;
+        cin.getline(author[index], 31);
+        strUpper(author[index]);
+
 
     }else if(userChoice == "publisher" || userChoice == "Publisher"){
 	 cout << "\nChange publisher of " << bookTitle[index] << " to: ";
-         getline(cin, userChoice);
-         isbn[index] = userChoice;
+         cin.getline(publisher[index], 31);
+         strUpper(publisher[index]); 
 
     }else if(userChoice == "date"  || userChoice == "Date"){
 	 cout << "\nChange date of " << bookTitle[index] << " to: ";
-         getline(cin, userChoice);
-         dateAdded[index] = userChoice;
+         cin.getline(dateAdded[index], 11);
+         strUpper(dateAdded[index]);
 
     }else if(userChoice == "quantity" || userChoice == "Quantity"){
 	 cout << "\nChange quantity of " << bookTitle[index] << " to: ";
@@ -310,3 +386,21 @@ void readInput(int index){
         cout << "\nRetry.\n";
     }
 }
+
+
+
+    void strUpper(char * wordy){
+
+        int counter =0;
+
+
+        while( *(wordy+counter) != '0'){
+
+
+            *(wordy+counter) = toupper(wordy[counter]);
+
+  
+                counter++;
+
+        }
+           }
