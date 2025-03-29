@@ -22,16 +22,46 @@ using namespace std;
 void mainMenu(int);
 void optionCheck(int);
 
-char bookTitle[20][51];
-char isbn[20][14];    
-char author[20][31];
-char publisher[20][31];
-char dateAdded[20][11]; 
+// Book titles - 20 rows, 51 characters per title
+    char bookTitle[20][51] = {
+        "FREEDOM", "HEAD FIRST DESIGN PATTERNS", "ARDUINO COOKBOOK", "CLEAN CODE",
+        "THE PRAGMATIC PROGRAMMER", "LEARNING PYTHON", "REFACTORING", "EFFECTIVE JAVA",
+        "FLUENT PYTHON", "INTRODUCTION TO THE THEORY OF COMPUTATION"
+    };
 
+    // ISBN numbers - 20 rows, 11 characters per ISBN
+    char isbn[20][14] = {
+        "0374158460", "0596007124", "0596802471", "9780132350884", 
+        "9780201616224", "9781491950357", "9780321125217", "9780134494166", 
+        "9781449355739", "9780137082073"
+    };
 
-    
-  int qtyOnHand[20] = {40, 35, 50, 25, 20, 45, 30, 15, 10, 12};
+    // Author names - 20 rows, 31 characters per author
+    char author[20][31] = {
+        "JONATHAN FRANZEN", "ELISABETH FREEMAN", "MICHAEL MARGOLIS", "ROBERT C. MARTIN", 
+        "ANDREW HUNT", "MARK LUTZ", "MARTIN FOWLER", "JOSHUA BLOCH", "LUCIANO RAMALHO", 
+        "MICHAEL SIPSER"
+    };
+
+    // Publisher names - 20 rows, 31 characters per publisher
+    char publisher[20][31] = {
+        "FARRAR", "O'REILLY MEDIA", "O'REILLY MEDIA", "PRENTICE HALL",
+        "ADDISON-WESLEY", "O'REILLY MEDIA", "ADDISON-WESLEY", "ADDISON-WESLEY", 
+        "O'REILLY MEDIA", "CENGAGE LEARNING"
+    };
+
+    // Date Added - 20 rows, 11 characters per date
+    char dateAdded[20][11] = {
+        "03-05-2004", "01-13-2006", "02-05-2025", "06-04-2008", "02-05-2005",
+        "12-4-2013", "5-5-2019", "03-14-2009", "05-12-2020", "02-05-2025"
+    };
+   
+
+  // Quantity  
+  int qtyOnHand[20] = {40, 35, 50, 25, 20, 45, 30, 15, 20, 12};
+  // Wholesale Price 
   double wholeSale[20] = {12.50, 25.00, 34.5, 30.00, 28.00, 40.00, 35.00, 38.00, 45.00, 50.00};    
+  // Retail Price 
   double retail[20] = {30.4, 45.0, 56.7, 50.0, 47.5, 65.0, 55.0, 60.0, 70.0, 80.0};
 
 

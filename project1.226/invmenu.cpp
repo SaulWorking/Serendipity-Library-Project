@@ -20,7 +20,7 @@ using namespace std;
 int invMenu(){
 
 
-    int userChoice, counter{0};
+    int userChoice;
 
     cout << setw(20) << " " << " Serendipity Booksellers" << endl;
     cout << setw(23) << " " << "Inventory Database\n\n";
@@ -35,20 +35,11 @@ int invMenu(){
 
 
 
-    while(userChoice <1 || userChoice >5 && counter < 15){
+    while(userChoice <1 || userChoice >5){
         cout << '\n' << "Please enter a valid number 1-5: ";
         
-        counter++;
-
-        //check for infinite loop error
-        if(counter >= 15){
-            counter = 0;
-            cin >> userChoice;
-            break;
-        }else{
 
             cin >> userChoice;
-        }
 
         }
 
@@ -78,8 +69,8 @@ void invCheck(int userChoice){
         invMenu();
                 break;
             case 5:
-            cout << "exit\n";
-        }
+		cout << "\nExiting...\n";
+    }
     return;
 }
 
