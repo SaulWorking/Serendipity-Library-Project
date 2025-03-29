@@ -1,4 +1,8 @@
+#ifndef general_header
+#define general_header
 
+#include <string>
+#include <ctime>
 //bookinfo header 
 
 void bookInfo(char[], char[], char[], char[], char[], int, double, double);
@@ -8,19 +12,11 @@ void bookInfo(char[], char[], char[], char[], char[], int, double, double);
 //cashier header
 
 int cashier();
-int ISBNLookup(std::string);
-
+int ISBNLookup(char []);
 
 
 
 //inventory header
-
-#ifndef inventory
-#define inventory
-
-#include <string>
-#include <ctime>
-
 
 //general search function
 void search();
@@ -62,8 +58,6 @@ extern double retail[20];
 
 
 
-#endif
-
 
 
 
@@ -76,9 +70,6 @@ void addBook();
 void editBook();
 void deleteBook();
 void readInput(int);
-
-
-
 //report header
 
 int reports();
@@ -89,3 +80,5 @@ void repRetail();
 void repQty();
 void repCost();
 void repAge();
+
+#endif

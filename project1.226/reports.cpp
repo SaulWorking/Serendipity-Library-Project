@@ -10,8 +10,6 @@
 ******************************************************************/
 
 #include <iostream>
-#include <fstream>
-#include <string>
 #include <iomanip>
 #include "allheaders.h"
 using namespace std;

@@ -11,7 +11,6 @@
 ******************************************************************/
 
 #include <iostream>
-#include <string>
 #include "allheaders.h"
 using namespace std;
 

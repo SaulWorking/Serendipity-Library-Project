@@ -10,12 +10,10 @@
 ******************************************************************/
 
 
-#include <string>
 #include <iostream>
 #include <iomanip>
 #include <cstring>
 #include "allheaders.h"
-#include "invmenu.h"
 using namespace std;
 
 //ifstream -> you read

@@ -11,7 +11,6 @@
 
 
 #include <iostream>
-#include <string>
 #include <iomanip>
 #include <cstring>
 
@@ -27,7 +26,7 @@ int cashier(){
     double totalPrice, bookPrice;
 
     //book quantity & book index
-    int bookQuantity{0}, bookChosen{-1};
+    int bookQuantity{0}, bookIndex{-1};
 
 
     
@@ -51,16 +50,16 @@ int cashier(){
         cin.getline(bookISBN, 14);
 
 
-    bookChosen = ISBNLookup(bookISBN);
+    bookIndex = ISBNLookup(bookISBN);
 
-    if(qtyOnHand[bookChosen] <= 0 && !bookChosen){
-        cout << "No book " << bookTitle[bookChosen] << " in stock.\nExiting cashier module...\n";
+    if(qtyOnHand[bookIndex] <= 0){
+        cout << "No book " << bookTitle[bookIndex] << " in stock.\nExiting cashier module...\n";
         //exit to main menu
         return -2;
     }
     
 
-    while(bookChosen == -1){
+    while(bookIndex == -1){
         cout << "Cannot locate ISBN.";
         cout << "\nDo you want to retry?(y/n)";
          cin >> userYN;
@@ -69,16 +68,16 @@ int cashier(){
             cout << "\nISBN: ";
             
             cin.ignore();
-            getline(cin, bookISBN);
-            bookChosen = ISBNLookup(bookISBN);
+	   cin.getline(bookISBN, 14);
+            bookIndex = ISBNLookup(bookISBN);
          }
 
 
     }
 
-     if(bookChosen >=0){
-    book = bookTitle[bookChosen];
-    bookPrice = retail[bookChosen];
+     if(bookIndex >=0){
+   strcpy(bookName, bookTitle[bookIndex]);
+    bookPrice = retail[bookIndex];
 
         cout << "book quantity? ";
 
@@ -89,14 +88,14 @@ int cashier(){
         
 
 
-        while(bookQuantity < 0 || bookQuantity > qtyOnHand[bookChosen]){
+        while(bookQuantity < 0 || bookQuantity > qtyOnHand[bookIndex]){
 
             cout <<"\nInvalid Quantity. Try again: ";
             cin >> bookQuantity;
         }
 
 
-        qtyOnHand[bookChosen] -= bookQuantity;
+        qtyOnHand[bookIndex] -= bookQuantity;
 
     
     }
@@ -122,7 +121,7 @@ int cashier(){
         cout << "_";
     }
 
-    cout << '\n' << setw(4)  << left << fixed << setprecision(2) << bookQuantity << setw(20) << bookISBN << setw(40) << book  << " $" << setw(9) << bookPrice << "$"  << totalPrice << endl;
+    cout << '\n' << setw(4)  << left << fixed << setprecision(2) << bookQuantity << setw(20) << bookISBN << setw(40) << bookName  << " $" << setw(9) << bookPrice << "$"  << totalPrice << endl;
     cout << "\n\n\n";
 
 
@@ -152,9 +151,8 @@ int ISBNLookup(char ISBN[]){
 
     for(int i =0; i<20; i++){
 
-        
         if(strstr(isbn[i], ISBN) == ISBN){
-        
+       //returns ISBN index 
             return i;
         }
         

@@ -22,6 +22,11 @@ using namespace std;
 void mainMenu(int);
 void optionCheck(int);
 
+char bookTitle[20][51];
+char isbn[20][14];    
+char author[20][31];
+char publisher[20][31];
+char dateAdded[20][11]; 
 
 
     
