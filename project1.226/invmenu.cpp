@@ -16,12 +16,8 @@
 #include "allheaders.h"
 using namespace std;
 
-//ifstream -> you read
-//ofstream -> you writ
 
-
-
-int  invMenu(){
+int invMenu(){
 
 
     int userChoice, counter{0};
