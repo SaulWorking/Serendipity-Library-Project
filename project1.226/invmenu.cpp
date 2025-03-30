@@ -115,6 +115,8 @@ void addBook(){
             cout << "Retail value: ";
             cin >> bookRetailValue[emptyBookIndex];
     
+
+            
             return;
         }
         //check last slot for book availability.
@@ -132,20 +134,22 @@ void lookUpBook() {
     int bookIndex = -1;
         cout << "Title of book to look up: ";
         
-        cin.ignore();
         getline(cin, bookName);
-        
+        cin.ignore();
+
         bookIndex = findBookIndex(bookName);
         
         if (bookIndex >=0) {
           // look up book
 
 
-          cout << "\n the book matching your book name is...\n";
+          cout << "\n the only book matching your book name is...\n";
           bookIndexInformation(bookIndex);
 
         } else {
           cout << "Book not in inventory\n\n";
+          
+
         }
 
 }
@@ -161,8 +165,9 @@ void editBook(){
 
     cout << '\n' << setw(15) << "You selected edit book\n\n";
     cout << '\n' << setw(15) << "Title of book to edit: ";
-    cin.ignore();
+
     getline(cin, bookName);   
+    cin.ignore();
         bookIndex = findBookIndex(bookName);
 
     if (bookIndex >=0) {
@@ -170,14 +175,14 @@ void editBook(){
         cout << "\nYour book is...\n";
         bookIndexInformation(bookIndex);
 
+        editInventoryInput(bookIndex);
+
     } else {
         cout << "Book not in inventory\n\n";
-
-        return;
     }
 
      //checks for one of eight categories for book Information
-      editInventoryInput(bookIndex);
+
     
     
 }
@@ -193,14 +198,13 @@ void deleteBook(){
     cout << '\n' << setw(15) << ' ' << "You selected delete book\n\n";
     cout << '\n' << setw(15) << ' ' << "which book will you delete? : ";
     
-        cin.ignore();
         getline(cin, bookName);
-        bookIndex = findBookIndex(bookName);
         cin.ignore();
+        bookIndex = findBookIndex(bookName);
     
         if(bookIndex >=0){
 
-            cout << '\n' << setw(20) << ' ' << "Do you really want to delete this?(Y/N): ";\
+            cout << '\n' << setw(20) << ' ' << "Do you really want to delete this?(Y/N): ";
     
 
             cin >> user;
@@ -303,7 +307,6 @@ void editInventoryInput(int index){
         default:
             cout << "\nTry again!\n";
     }   
-        return;
 
     }    
 
@@ -347,7 +350,7 @@ int findBookIndex(string inventoryBookName){
         found = strstr(bookTitle[i], bookToBeSearched);
         
             //check if substring is valid
-        if(found){
+        if(found != nullptr){
 
 
             //check if substring and book title are valid 
@@ -358,7 +361,7 @@ int findBookIndex(string inventoryBookName){
                     
                  //if book is intended book exit loop
                 cin >> userInput;
-                
+
                     if(userInput == 'y' || userInput == 'Y'){
                     
                         return bookIndex;
@@ -367,6 +370,7 @@ int findBookIndex(string inventoryBookName){
                     }else{
                         //else continue searching
                         cout << "\n\nNext book...\n\n";
+                        continue;
                     }
             }
         }
