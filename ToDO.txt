@@ -1,2 +1,1 @@
-overhaul format
-make algorithms concise and easy to read
+sorting algorithm for sortdate fnuction

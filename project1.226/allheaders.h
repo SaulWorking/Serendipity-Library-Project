@@ -4,52 +4,49 @@
 #include <string>
 #include <ctime>
 
-//general purpose
-void separateText();
-void forcedUserWait();
+//general purpose functions/variables
 
 
-//main menu 
+//the amount 
 
-void mainMenu(int);
-void optionCheck(int);
-
+    //prints '-' 100 times
+    void separateText();
+    //asks for user to press enter
+    void forcedUserWait();
+    //takes book index and displays bookinfo
+    void bookIndexInformation(int);
 
 //bookinfo header 
-
-void bookInfo(char[], char[], char[], char[], char[], int, double, double);
-
-
-
+    //takes book information as argument and regurgitates it
+    void bookInfo(char[], char[], char[], char[], char[], int, double, double);
 //cashier header
 
-void cashier();
-int ISBNLookup(std::string);
+    //prompts user to purchase book
+    void cashier();
+
+    //finds index of book ISBN
+    int ISBNLookup(std::string);
 
 
 
 //inventory header
 
-//general search function
-void search();
+    //sorting quantity
+    void quantitySort(int []);
 
-//sorting quantity
-void quantitySort(int []);
+    //sorting cost
+    void costSort(int []);
 
-//sorting cost
-void costSort(int []);
+    //sorting date
+    void dateSort(int[]);
 
-//sorting date
-void dateSort(int[]);
+    //displaye date
+    void displayDate();
 
-//displaye date
-void displayDate();
+    //convert entire c-string to uppercase
+    void strUpper(char *word);
 
-//general integer swap
-void swap(int&, int&);
-
-
-void strUpper(char *word);
+        
 
 
 
@@ -57,16 +54,15 @@ void strUpper(char *word);
     
 
 //connect inventory to entire program
-extern char bookTitle[20][51];
-extern char bookISBN[20][14];    
-extern char bookAuthor[20][31];
-extern char bookPublisher[20][31];
-extern char bookDateAdded[20][11]; 
+    extern char bookTitle[20][51];
+    extern char bookISBN[20][14];    
+    extern char bookAuthor[20][31];
+    extern char bookPublisher[20][31];
+    extern char bookDateAdded[20][11]; 
 
-    
-extern int bookQtyOnHand[20];
-extern double bookWholesaleValue[20] ;
-extern double bookRetailValue[20];
+    extern int bookQtyOnHand[20];
+    extern double bookWholesaleValue[20] ;
+    extern double bookRetailValue[20];
 
 
 
@@ -74,23 +70,25 @@ extern double bookRetailValue[20];
 
 
 //inventory menu header
+    void invMenu();
+    void invCheck(int);
+    void lookUpBook();
+    void addBook();
+    void editBook();
+    void deleteBook();
+    void editInventoryInput(int);
+    int findBookIndex(std::string); 
 
-void invMenu();
-void invCheck(int);
-void lookUpBook();
-void addBook();
-void editBook();
-void deleteBook();
-void readInput(int);
+
+
 //report header
-
-void reports();
-void reportsCheck(int);
-void repListing();
-void repWholesale();
-void repRetail();
-void repQty();
-void repCost();
-void repAge();
+    void reports();
+    void reportsCheck(int);
+    void repListing();
+    void repWholesale();
+    void repRetail();
+    void repQty();
+    void repCost();
+    void repAge();
 
 #endif

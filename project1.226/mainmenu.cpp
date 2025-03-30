@@ -16,7 +16,6 @@
 using namespace std;
 
 
-
 // Book titles - 20 rows, 51 characters per title
     char bookTitle[20][51] = {
         "FREEDOM", "HEAD FIRST DESIGN PATTERNS", "ARDUINO COOKBOOK", "CLEAN CODE",
@@ -63,9 +62,15 @@ using namespace std;
 
 
 int main(){
+
     
+
     int mainMenuChoice{0};
     bool exitModule = false;
+
+
+
+//calling functions was harder to visualize so i used a for loop instead
 
     while(exitModule == false){
     cout << "\n\n\n";

@@ -15,6 +15,8 @@
 using namespace std;
 
 
+const int maximumStock = 20;
+
 void reports(){
     int reportsChoice;
     bool exitModule = false;
@@ -71,7 +73,7 @@ void repListing(){
        separateText();
 
      cout << '\n';
-        for(int bookIndex=0; bookIndex<20; bookIndex++){
+        for(int bookIndex=0; bookIndex<maximumStock; bookIndex++){
             if(bookTitle[bookIndex][0] != '\0'){
                 cout << left << "Title: "  <<  bookTitle[bookIndex];
                 cout << '\n' << "ISBN: " <<   bookISBN[bookIndex] << '\n';
@@ -96,7 +98,7 @@ void repWholesale(){
             displayDate();
             separateText();
 
-        for(int i =0; i<20; i++){
+        for(int i =0; i<maximumStock; i++){
             if(bookTitle[i][0] != '\0'){
             cout << left << "Title: "  <<  bookTitle[i]  << '\n';
             cout         << "ISBN: " <<   bookISBN[i] << endl;
@@ -125,7 +127,7 @@ void repRetail(){
     displayDate();
             separateText();
 
-        for(int i =0; i<20; i++){
+        for(int i =0; i<maximumStock; i++){
             if(bookTitle[i][0] != '\0'){
             cout << left <<  "Title: "  <<  bookTitle[i]; 
             cout << '\n' <<  "ISBN: " <<   bookISBN[i] << endl;
@@ -143,7 +145,7 @@ void repRetail(){
 
 void repQty(){
 
-    int quantityIndexes[9];   
+    int quantityIndexes[maximumStock];   
 
 
     cout << '\n' << setw(40) << ' ' << "Book Quantity report\n";
@@ -153,7 +155,7 @@ void repQty(){
 
         quantitySort(quantityIndexes);
 
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < maximumStock; i++) {
                 int bookIndex = quantityIndexes[i];
                 if(bookTitle[i][0] != '\0'){
                     cout << left << "Title: "  <<  bookTitle[bookIndex];
@@ -167,7 +169,7 @@ void repQty(){
 }
 void repCost(){
 
-    int costIndexes[9];   
+    int costIndexes[maximumStock];   
 
 
     cout << '\n' << setw(40) << ' ' << "Book Cost report\n";
@@ -190,7 +192,7 @@ void repCost(){
 }
 void repAge(){
 
-    int ageIndexes[9];  
+    int ageIndexes[maximumStock];  
 
     cout << '\n' << setw(40) << ' ' << "Book Age report\n";
         displayDate();
@@ -205,7 +207,6 @@ void repAge(){
                 cout << '\n' << "ISBN: " <<   bookISBN[bookIndex] << endl;
                 cout <<         "Date Added: " << bookDateAdded[bookIndex] << endl;
                 cout << '\n';
-
                 }
         }
         separateText();
@@ -243,8 +244,6 @@ void quantitySort(int indices[]){
                 maxIndex = j;
             }
         }
-
-
         int temp = indices[i];
         indices[i] = indices[maxIndex];
         indices[maxIndex] = temp;
@@ -268,8 +267,6 @@ void quantitySort(int indices[]){
                 maxIndex = j;
             }
         }
-
-
         int temp = indices[i];
         indices[i] = indices[maxIndex];
         indices[maxIndex] = temp;
@@ -277,9 +274,6 @@ void quantitySort(int indices[]){
 
   }
   
-
-
-
 
 
 
