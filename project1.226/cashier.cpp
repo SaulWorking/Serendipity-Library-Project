@@ -10,6 +10,9 @@
 ******************************************************************/
 
 
+//defo fix this 
+
+
 #include <iostream>
 #include <iomanip>
 #include <cstring>
@@ -19,97 +22,84 @@ using namespace std;
 
 
 
+
 //calculates price of book and asks for a repeat if possible
-int cashier(){
+void cashier(){
 
+    bool exitModule = false;
     const double salesTax = 0.06;
-    double totalPrice, bookPrice;
-
-    //book quantity & book index
-    int bookQuantity{0}, bookIndex{-1};
-
+    double checkoutPrice = 0;
+    int checkoutQuantity{0}, ISBNIndex{-1};
+    char userInput;
+    string bookISBN;
 
     
-    char userDate[11], bookISBN[14], bookName[51];
-    char userYN{' '};
 
 
+    while(exitModule == false){
+        cout << '\n' << setw(20) << ' ' << "Serenpidity Booksellers" << endl;
+        cout <<         setw(25) << ' ' << "Cashier Module\n";
+        cout <<         setw(15) << ' ' << "ISBN:";
 
-
-
-    cout << '\n' << setw(20) << " " <<"Serenpidity Booksellers" << endl;
-    cout << setw(25) << " " << "Cashier Module\n";
-
-
-
-
-
-    cout << setw(15) << ' ' <<"ISBN:";
-
-        cin.ignore();
-        cin.getline(bookISBN, 14);
-
-
-    bookIndex = ISBNLookup(bookISBN);
-
-    if(qtyOnHand[bookIndex] <= 0){
-        cout << "No book " << bookTitle[bookIndex] << " in stock.\nExiting cashier module...\n";
-        //exit to main menu
-        return -2;
-    }
-    
-
-    while(bookIndex == -1){
-        cout << "Cannot locate ISBN.";
-        cout << "\nDo you want to retry?(y/n)";
-         cin >> userYN;
-
-         if(userYN == 'y'){
-            cout << "\nISBN: ";
-            
+        //get book ISBN from user
             cin.ignore();
-	   cin.getline(bookISBN, 14);
-            bookIndex = ISBNLookup(bookISBN);
-         }
+            getline(cin, bookISBN);
 
+        ISBNIndex = ISBNLookup(bookISBN);
 
-    }
+    //check for book availability
+        if(bookQtyOnHand[ISBNIndex] <= 0){
+            
+            cout << bookTitle[ISBNIndex]; 
+            cout << " is not in stock.\nExiting cashier module...\n";
+            return;
+        }
+    
+    //locate ISBN if it is non-existent
+        while(ISBNIndex == -1){
+            cout << "Cannot locate ISBN.";
+            cout << "\nDo you want to retry?(y/n)";
+                cin >> userInput;
+            if(toupper(userInput) == 'Y'){
+                cin.ignore();
+                getline(cin, bookISBN);
+                ISBNIndex = ISBNLookup(bookISBN);
+            }else{
+                cout << "\nExiting cashier module...\n";
+                exitModule = true;
+                break;
+            }
 
-     if(bookIndex >=0){
-   strcpy(bookName, bookTitle[bookIndex]);
-    bookPrice = retail[bookIndex];
-
-        cout << "book quantity? ";
-
-        cin >> bookQuantity;
-
-
-
-        
-
-
-        while(bookQuantity < 0 || bookQuantity > qtyOnHand[bookIndex]){
-
-            cout <<"\nInvalid Quantity. Try again: ";
-            cin >> bookQuantity;
         }
 
 
-        qtyOnHand[bookIndex] -= bookQuantity;
+    //if ISBN is found ask user for quantity
+     if(ISBNIndex >=0){
 
-    
+        cout << "Book quantity? ";
+        cin >> checkoutQuantity;
+
+        while(checkoutQuantity < 0 || checkoutQuantity > bookQtyOnHand[ISBNIndex] && !isdigit(checkoutQuantity)){
+            cout <<"\nInvalid Quantity. Try again: ";
+            cin >> checkoutQuantity;
+        }
+
+        //subtract user quantity from store inventory
+        bookQtyOnHand[ISBNIndex] -= checkoutQuantity;
     }
 
+
+    
     cout << "Do you want to purchase another book?(y/n)";
-    cin >> userYN;
+
+    //add multiple book purchasing functionality
 
 
 
 
 
 
-
-    totalPrice = (bookPrice * bookQuantity);
+    checkoutPrice = (bookRetailValue[ISBNIndex] * checkoutQuantity);
 
     cout << "\nDate:\t";
     displayDate();
@@ -117,41 +107,40 @@ int cashier(){
     cout  << left<< setw(5) << "Qty" << setw(20) << "ISBN" << setw(40) << "Title" << setw(10) << "Price"  << setw(3) << "Total"<< endl;
 
 
-    for (int i =0; i<85; i++){
-        cout << "_";
-    }
+    separateText();
 
-    cout << '\n' << setw(4)  << left << fixed << setprecision(2) << bookQuantity << setw(20) << bookISBN << setw(40) << bookName  << " $" << setw(9) << bookPrice << "$"  << totalPrice << endl;
+    cout << '\n' << setw(4)  << left << fixed << setprecision(2) << checkoutQuantity << setw(20) << bookISBN[ISBNIndex] << setw(40) << bookTitle[ISBNIndex]  << " $" << setw(9) << bookRetailValue[ISBNIndex] << "$"  << checkoutPrice << endl;
     cout << "\n\n\n";
 
 
 
-    cout << setw(61)  << "\t\tSubtotal" << "$" << totalPrice << endl; 
-    cout << setw(61)  << "\t\tTax" <<  "$" << totalPrice * salesTax << endl;
-    cout << setw(61)  << "\t\tTotal" << "$" << totalPrice + (totalPrice * salesTax) << endl;
+    cout << setw(61)  << "\t\tSubtotal" << "$" << checkoutPrice << endl; 
+    cout << setw(61)  << "\t\tTax" <<  "$" << checkoutPrice * salesTax << endl;
+    cout << setw(61)  << "\t\tTotal" << "$" << checkoutPrice + (checkoutPrice * salesTax) << endl;
 
-    cout << "\n\n" << setw(15) << " " << "Thank you for shopping at Serendipity\n\n" << endl;
-    cout << "\n" << setw(15) << " " << "Do you have another transaction? (Y/N): ";
-        cin >> userYN;
+    cout << "\n\n" << setw(15) << ' ' << "Thank you for shopping at Serendipity\n\n" << endl;
+    cout << "\n" << setw(15) << ' ' << "Do you have another transaction? (Y/N): ";
+    cin >> userInput;
 
-        if(userYN == 'y' || userYN == 'Y'){
-            cashier();
-            }else{
-                    cout << '\n' << setw(15) << ' ' << "Goodbye!";
-                 }
-            
+    if(toupper(userInput) == 'N'){
 
-        // return to main menu
-        return -2;
+        exitModule = true;
 
 
+    }else{
+        continue;
+    }
+
+                 return;
+    }
 }
 
-int ISBNLookup(char ISBN[]){
+
+int ISBNLookup(string ISBN){
 
     for(int i =0; i<20; i++){
 
-        if(strstr(isbn[i], ISBN) == ISBN){
+        if(bookISBN[i] == ISBN){
        //returns ISBN index 
             return i;
         }

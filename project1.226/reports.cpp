@@ -15,366 +15,201 @@
 using namespace std;
 
 
-int reports(){
+void reports(){
+    int reportsChoice;
+    bool exitModule = false;
 
-    int userChoice;
-
-    cout << setw(20) << " " << "Serendipity Booksellers\n";
-    cout << setw(25) << " " << "Reports\n\n";
-    cout << setw(15) << " " << "1.	Inventory Listing\n";
-    cout << setw(15) << " " << "2.	Inventory Wholesale Value\n";
-    cout << setw(15) << " " <<" 3.	Inventory Retail Value\n";
-    cout << setw(15) << " " <<" 4.	Listing by Quantity\n";
-    cout << setw(15) << " " <<" 5.	Listing by Cost\n";
-    cout << setw(15) << " " <<" 6.	Listing by Age\n";
-    cout << setw(15) << " " <<" 7.	Return to Main Menu\n";
-    cout << setw(15) << " " << "Enter Your Choice: ";
-
-        cin >> userChoice;
-
-        cout << '\n';
-
-        while(userChoice <1 || userChoice >7){
-
-                cout << "\n" << setw(15) << ' ' << "Please enter a valid number 1-7.\n";
-
-                cin >> userChoice;
+        while (exitModule == false) {
+            cout << setw(20) << ' ' << "Serendipity Booksellers\n";
+            cout << setw(25) << ' ' << "Reports\n\n";
+            cout << setw(15) << ' ' << "1.	Inventory Listing\n";
+            cout << setw(15) << ' ' << "2.\tInventory Wholesale Value\n";
+            cout << setw(15) << ' ' << "3.	Inventory Retail Value\n";
+            cout << setw(15) << ' ' << "4.	Listing by Quantity\n";
+            cout << setw(15) << ' ' << "5.	Listing by Cost\n";
+            cout << setw(15) << ' ' << "6.	Listing by Age\n";
+            cout << setw(15) << ' ' << "7.	Return to Main Menu\n";
+            cout << setw(15) << ' ' << "Enter Your Choice: ";
+                cin >> reportsChoice;
+                cin.ignore();
+            switch (reportsChoice){
+            case 1:
+              repListing();
+              break;
+            case 2:
+              repWholesale();
+              break;
+            case 3:
+              repRetail();
+              break;
+            case 4:
+              repQty();
+              break;
+            case 5:
+              repCost();
+              break;
+            case 6:
+              repAge();
+              break;
+            case 7:
+              exitModule = true;
+              break;
+            default:
+              cout << "\n\nEnter a number in the range 1-7" << endl;
+              break;
             }
-            reportsCheck(userChoice);
-
-    return userChoice;
+          }
+    return;
 }
 
-
-
-
-
-
-
-
-
-
-void reportsCheck(int userInput){
-
-    switch(userInput){
-
-        case 1:
-     repListing();        
-     reports();
-            break;
-        case 2:
-    repWholesale();
-    reports();
-            break;
-        case 3:
-    repRetail();
-    reports();
-            break;
-        case 4:
-    repQty();
-    reports();
-            break;
-
-         case 5:   
-    repCost();
-    reports();
-            break;
-        case 6:
-    repAge();
-    reports();
-            break;
-        case 7:
-           
-        break;
-
-
-    }
-
-}
 
 
 
 void repListing(){
+    cout << '\n' << setw(40) << ' ' << "Book Listing report\n";
+    displayDate();
+       separateText();
 
-    string wait;
-       
-
-
-       cout << setw(55) << "Inventory Report\n"; 
-        displayDate();
-
-        for(int i =0; i< 100;i++){
-            cout << '-';
-        }
-
-        cout << '\n';
-
-        for(int i =0; i<20; i++){
-            
-            if(bookTitle[i][0] != '\0'){
-                cout << left << "Title: "  <<  bookTitle[i]  << '\n' << "ISBN: " <<   isbn[i] << '\n';
-                cout << "Author: " << author[i] << '\n' << "Date added: " << dateAdded[i] << '\n';
-                cout << "Publisher: "  << publisher[i]  << '\n' << "Quantity: " << qtyOnHand[i] << '\n'; 
-                cout << "Wholesale value: " << wholeSale[i] << '\n' << "Retail price: " <<retail[i] << "\n\n"; 
+     cout << '\n';
+        for(int bookIndex=0; bookIndex<20; bookIndex++){
+            if(bookTitle[bookIndex][0] != '\0'){
+                cout << left << "Title: "  <<  bookTitle[bookIndex];
+                cout << '\n' << "ISBN: " <<   bookISBN[bookIndex] << '\n';
+                cout <<         "Author: " << bookAuthor[bookIndex];
+                cout <<'\n'  << "Date added: " << bookDateAdded[bookIndex] << '\n';
+                cout <<         "Publisher: "  << bookPublisher[bookIndex]; 
+                cout <<'\n'  << "Quantity: " << bookQtyOnHand[bookIndex] << '\n'; 
+                cout <<         "Wholesale value: " << bookWholesaleValue[bookIndex];
+                cout <<'\n' <<  "Retail price: " << bookRetailValue[bookIndex] << "\n\n"; 
             }
-
         }
-        
-        for(int i =0; i< 100;i++){
-            cout << '-';
-        }
-
-
-        cout << '\n';
-        cout << "\nPress enter to continue.";
-        cin.ignore();
-        getline(cin, wait);
-        cout << '\n';
+        separateText();
+        forcedUserWait();
 }
+
+
+
 void repWholesale(){
+    double wholesaleValue{0.0};
 
+        cout << '\n' << setw(40) << ' ' << "Book Wholesale Price report\n";
+            displayDate();
+            separateText();
 
-
-string wait;
-double WholesaleValue{0.0};
-
-    cout << '\n';
-
-       cout << '\n' << setw(55) << "Wholesale report\n";
-        cout << '\n' << setw(55); 
-        displayDate();
-
-        for(int i =0; i< 100;i++){
-            cout << '-';
-        }
-
-        cout << '\n';
-
-
-        
         for(int i =0; i<20; i++){
-
             if(bookTitle[i][0] != '\0'){
-            cout << left << "Title: "  <<  bookTitle[i]  << '\n' << "ISBN: " <<   isbn[i] << endl;
-            cout << "Wholesale value: " << wholeSale[i] << "\n\n";
-            WholesaleValue += wholeSale[i] * qtyOnHand[i];
+            cout << left << "Title: "  <<  bookTitle[i]  << '\n';
+            cout         << "ISBN: " <<   bookISBN[i] << endl;
+            cout         << "Wholesale value: " << bookWholesaleValue[i] << "\n\n";
             
+            wholesaleValue += bookWholesaleValue[i] * bookQtyOnHand[i];
             }
         }
-        
-        cout << '\n';
-        for(int i =0; i< 100;i++){
-            cout << '-';
-        }
 
-        cout << '\n' << setw(55); 
-        cout << "Wholesale value: " << WholesaleValue;
-        cout << '\n';
-        cout << "\nPress enter to continue.";
-        cin.ignore();
-        getline(cin, wait);
-        cout << '\n';
+        separateText();
+            cout << '\n' << setw(55); 
+            cout << "Wholesale value: " << wholesaleValue;
+        forcedUserWait();
 }
+
+
+
+
+
+
 
 void repRetail(){
+    double retailValue{0.0};
 
-string wait;
-double retailValue{0.0};
-
-    cout << '\n';
-
-       cout << '\n' << setw(55) << "Retail report\n";
-        cout << '\n' << setw(55); 
-        displayDate();
-
-
-        for(int i =0; i< 100;i++){
-            cout << '-';
-        }
-
-        cout << '\n';
-
-
+    cout << '\n' << setw(40) << ' ' << "Book Retail Price report\n";
+    displayDate();
+            separateText();
 
         for(int i =0; i<20; i++){
-
             if(bookTitle[i][0] != '\0'){
-            cout << left << "Title: "  <<  bookTitle[i]  << '\n' << "ISBN: " <<   isbn[i] << endl;
-            cout << "Retail price: " <<retail[i] << "\n\n"; 
+            cout << left <<  "Title: "  <<  bookTitle[i]; 
+            cout << '\n' <<  "ISBN: " <<   bookISBN[i] << endl;
+            cout <<          "Retail price: " << bookRetailValue[i] << "\n\n"; 
 
-            retailValue += retail[i] * qtyOnHand[i];
-            
+            retailValue += bookRetailValue[i] * bookQtyOnHand[i];
             }
         }
-
-
-        cout << '\n';
-        for(int i =0; i< 100;i++){
-            cout << '-';
-        }
-
-        cout << '\n' << setw(55); 
-        cout << "Retail value: " << retailValue;
-        cout << '\n';
-        cout << "\nPress enter to continue.";
-        cin.ignore();
-        getline(cin, wait);
-        cout << '\n';
-
+        separateText();
+            cout << '\n' << setw(55); 
+            cout << "Retail value: " << retailValue;
+        forcedUserWait();
 }
 
 
 void repQty(){
 
-
-    string wait;
-    int indices[9];   
+    int quantityIndexes[9];   
 
 
-       cout << setw(55) << "Inventory Report\n"; 
+    cout << '\n' << setw(40) << ' ' << "Book Quantity report\n";
         displayDate();
-
-        for(int i =0; i< 100;i++){
-            cout << '-';
-        }
-
+        separateText();
         cout << '\n';
 
+        quantitySort(quantityIndexes);
 
-        
-        qtsort(indices);
-
-        
-
-        for (int i = 0; i < 10; i++) {
-
-            int index = indices[i];
-
-            if(bookTitle[i][0] != '\0'){
-                cout << left << "Title: "  <<  bookTitle[index];
-                cout << '\n' << "ISBN: " <<   isbn[index] << endl;
-                cout << "Quantity: " << qtyOnHand[index] << endl;
-                cout << '\n';
-                
-                }
-
-
-        }
-          
-        
-
-        for(int i =0; i< 100;i++){
-            cout << '-';
-        }
-
-
-        cout << '\n';
-        cout << "\nPress enter to continue.";
-        cin.ignore();
-        getline(cin, wait);
-        cout << '\n';
-
-
-
+            for (int i = 0; i < 10; i++) {
+                int bookIndex = quantityIndexes[i];
+                if(bookTitle[i][0] != '\0'){
+                    cout << left << "Title: "  <<  bookTitle[bookIndex];
+                    cout << '\n' << "ISBN: " <<   bookISBN[bookIndex] << endl;
+                    cout <<         "Quantity: " << bookQtyOnHand[bookIndex] << endl;
+                    cout << '\n';
+                    }
+            }       
+        separateText();
+        forcedUserWait();
 }
 void repCost(){
 
-        
-    string wait;
-    int indices[9];   
+    int costIndexes[9];   
 
 
-       cout << setw(55) << "Inventory Report\n"; 
+    cout << '\n' << setw(40) << ' ' << "Book Cost report\n";
         displayDate();
-
-        for(int i =0; i< 100;i++){
-            cout << '-';
-        }
-
-        cout << '\n';
-
-
-        
-        costSort(indices);
-
-        
+        separateText();
+        costSort(costIndexes);
 
         for (int i = 0; i < 10; i++) {
-
-            int index = indices[i];
+            int bookIndex = costIndexes[i];
 
             if(bookTitle[i][0] != '\0'){
-                cout << left << "Title: "  <<  bookTitle[index];
-                cout << '\n' << "ISBN: " <<   isbn[index] << endl;
-                cout << "wholesale cost: " << wholeSale[index] << endl;
+                cout << left << "Title: "  <<  bookTitle[bookIndex];
+                cout << '\n' << "ISBN: " <<   bookISBN[bookIndex] << endl;
+                cout <<         "wholesale cost: " << bookWholesaleValue[bookIndex] << endl;
                 cout << '\n';
-                
                 }
-
-
         }
-          
-        
-
-        for(int i =0; i< 100;i++){
-            cout << '-';
-        }
-
-
-        cout << '\n';
-        cout << "\nPress enter to continue.";
-        cin.ignore();
-        getline(cin, wait);
-        cout << '\n';
-
-
+        separateText();
+        forcedUserWait();
 }
 void repAge(){
 
+    int ageIndexes[9];  
 
-
-    string wait;
-    int indices[9];  
-
-
-
-       cout << setw(55) << "Inventory Report\n"; 
+    cout << '\n' << setw(40) << ' ' << "Book Age report\n";
         displayDate();
-
-        for(int i =0; i< 100;i++){
-            cout << '-';
-        }
-
-        cout << '\n';
-
-        dateSort(indices);
+        separateText();
+        dateSort(ageIndexes);
 
         for (int i = 0; i < 10; i++) {
-
-            int index = indices[i];
+            int bookIndex = ageIndexes[i];
 
             if(bookTitle[i][0] != '\0'){
-                cout << left << "Title: "  <<  bookTitle[index];
-                cout << '\n' << "ISBN: " <<   isbn[index] << endl;
-                cout << "Date Added: " << dateAdded[index] << endl;
+                cout << left << "Title: "  <<  bookTitle[bookIndex];
+                cout << '\n' << "ISBN: " <<   bookISBN[bookIndex] << endl;
+                cout <<         "Date Added: " << bookDateAdded[bookIndex] << endl;
                 cout << '\n';
-                
+
                 }
         }
-          
-        
-
-        for(int i =0; i< 100;i++){
-            cout << '-';
-        }
-
-
-        cout << '\n';
-        cout << "\nPress enter to continue.";
-        cin.ignore();
-        getline(cin, wait);
-        cout << '\n';
-
+        separateText();
+        forcedUserWait();
 }
 
 
@@ -386,30 +221,15 @@ https://www.w3schools.com/cpp/cpp_date.asp
     */
 
 void displayDate(){
-
     time_t day;
-
     time(&day);
-
     cout << ctime(&day);
-
-
-}
-
-
-void swap(int &num1, int &num2){
-
-    int temp = num1;
-    num1 = num2;
-    num2 = temp;
-
-
-
 }
 
 
 
-void qtsort(int indices[]){
+
+void quantitySort(int indices[]){
 
     const int SIZE = 10;
 
@@ -419,7 +239,7 @@ void qtsort(int indices[]){
     for (int i = 0; i < SIZE - 1; i++) {
         int maxIndex = i;
         for (int j = i + 1; j < SIZE; j++) {
-            if (qtyOnHand[indices[j]] > qtyOnHand[indices[maxIndex]]) {
+            if (bookQtyOnHand[indices[j]] > bookQtyOnHand[indices[maxIndex]]) {
                 maxIndex = j;
             }
         }
@@ -444,7 +264,7 @@ void qtsort(int indices[]){
     for (int i = 0; i < SIZE - 1; i++) {
         int maxIndex = i;
         for (int j = i + 1; j < SIZE; j++) {
-            if (wholeSale[indices[j]] > wholeSale[indices[maxIndex]]) {
+            if (bookWholesaleValue[indices[j]] > bookWholesaleValue[indices[maxIndex]]) {
                 maxIndex = j;
             }
         }
@@ -458,6 +278,12 @@ void qtsort(int indices[]){
   }
   
 
+
+
+
+
+
+  //definitely fix this at some point -> program doesnt accurately sort by date.
   void dateSort(int indices[]){
 
     const int SIZE = 10;
@@ -466,7 +292,7 @@ void qtsort(int indices[]){
     string dates[SIZE];
 
     for(int i =0; i<SIZE; i++){
-        dates[i] = dateAdded[i];
+        dates[i] = bookDateAdded[i];
     }
 
 //code from https://www.geeksforgeeks.org/removing-punctuations-given-string/
@@ -497,7 +323,7 @@ void qtsort(int indices[]){
     for (int i = 0; i < SIZE - 1; i++) {
         int maxIndex = i;
         for (int j = i + 1; j < SIZE; j++) {
-            if (dateAdded[indices[j]] > dateAdded[indices[maxIndex]]) {
+            if (bookDateAdded[indices[j]] > bookDateAdded[indices[maxIndex]]) {
                 maxIndex = j;
             }
         }
@@ -513,8 +339,26 @@ void qtsort(int indices[]){
 
 
 
+  void separateText(){
+
+    for(int i =0; i< 100; i++){
+        cout << '-';
+    }
+    cout << '\n';
+
+  }
 
 
+
+  void forcedUserWait(){
+    string userInput;
+
+    cout << '\n';
+    cout << "\nPress enter to continue.";
+    getline(cin, userInput);
+    cout << "\n\n\n";
+
+  }
     
 
 
