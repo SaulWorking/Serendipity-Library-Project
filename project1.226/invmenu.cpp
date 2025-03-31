@@ -230,15 +230,10 @@ void deleteBook(){
 
 
 void editInventoryInput(int index){
-
-
     bool exitModule = false;
     int userInput;
-
     int quantity;
     double cost;
-
-
     while(exitModule == false){
 
         cout << setw(20) << ' ' << " Serendipity Booksellers";
@@ -400,3 +395,17 @@ void bookIndexInformation(const int bookIndex){
     bookWholesaleValue[bookIndex], 
     bookRetailValue[bookIndex]);
 }
+
+
+
+
+void setTitle(char *, int);	
+void setISBN(char *, int);		
+void setAuthor(char *, int);		 
+void setPub(char *, int);		
+void setDateAdded(char *, int);	  
+void setQty(int);	
+void setWholesale(double, int);	 
+void setRetail(double, int);
+int  isEmpty(BookData);
+void removeBook(int);
