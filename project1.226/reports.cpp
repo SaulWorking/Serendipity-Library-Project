@@ -6,7 +6,7 @@
 ** Course: CS226 CRN 32842
 ** Professor: Huseyin Aygun
 ** Student: Thien Dinh
-** Due Date: 03/30/2025
+** Due Date: 04/6/2025
 ******************************************************************/
 
 #include <iostream>
@@ -74,15 +74,15 @@ void repListing(){
 
      cout << '\n';
         for(int bookIndex=0; bookIndex<maximumStock; bookIndex++){
-            if(bookTitle[bookIndex][0] != '\0'){
-                cout << left << "Title: "  <<  bookTitle[bookIndex];
-                cout << '\n' << "ISBN: " <<   bookISBN[bookIndex] << '\n';
-                cout <<         "Author: " << bookAuthor[bookIndex];
-                cout <<'\n'  << "Date added: " << bookDateAdded[bookIndex] << '\n';
-                cout <<         "Publisher: "  << bookPublisher[bookIndex]; 
-                cout <<'\n'  << "Quantity: " << bookQtyOnHand[bookIndex] << '\n'; 
-                cout <<         "Wholesale value: " << bookWholesaleValue[bookIndex];
-                cout <<'\n' <<  "Retail price: " << bookRetailValue[bookIndex] << "\n\n"; 
+            if(InventoryInformation[bookIndex].bookTitle[0] != '\0'){
+                cout << left << "Title: "  <<  InventoryInformation[bookIndex].bookTitle;
+                cout << '\n' << "ISBN: " <<   InventoryInformation[bookIndex].bookISBN<< '\n';
+                cout <<         "Author: " << InventoryInformation[bookIndex].bookAuthor;
+                cout <<'\n'  << "Date added: " << InventoryInformation[bookIndex].bookDateAdded << '\n';
+                cout <<         "Publisher: "  << InventoryInformation[bookIndex].bookPublisher; 
+                cout <<'\n'  << "Quantity: " << InventoryInformation[bookIndex].bookQtyOnHand<< '\n'; 
+                cout <<         "Wholesale value: " << InventoryInformation[bookIndex].bookWholesaleValue;
+                cout <<'\n' <<  "Retail price: " << InventoryInformation[bookIndex].bookRetailValue << "\n\n"; 
             }
         }
         separateText();
@@ -92,25 +92,26 @@ void repListing(){
 
 
 void repWholesale(){
-    double wholesaleValue{0.0};
+    double totalWholesaleValue{0.0};
 
         cout << '\n' << setw(40) << ' ' << "Book Wholesale Price report\n";
             displayDate();
             separateText();
 
         for(int i =0; i<maximumStock; i++){
-            if(bookTitle[i][0] != '\0'){
-            cout << left << "Title: "  <<  bookTitle[i]  << '\n';
-            cout         << "ISBN: " <<   bookISBN[i] << endl;
-            cout         << "Wholesale value: " << bookWholesaleValue[i] << "\n\n";
+            if(InventoryInformation[i].bookTitle[0] != '\0'){
+            cout << left << "Title: "  <<  InventoryInformation[i].bookTitle  << '\n';
+            cout         << "ISBN: " <<  InventoryInformation[i].bookISBN << endl;
+            cout         << "Wholesale value: " << InventoryInformation[i].bookWholesaleValue << "\n\n";
             
-            wholesaleValue += bookWholesaleValue[i] * bookQtyOnHand[i];
+            totalWholesaleValue += InventoryInformation[i].bookWholesaleValue * InventoryInformation[i].bookQtyOnHand;
+     
             }
         }
 
         separateText();
             cout << '\n' << setw(55); 
-            cout << "Wholesale value: " << wholesaleValue;
+            cout << "Wholesale value: " << totalWholesaleValue;
         forcedUserWait();
 }
 
@@ -121,24 +122,24 @@ void repWholesale(){
 
 
 void repRetail(){
-    double retailValue{0.0};
+    double totalRetailValue{0.0};
 
     cout << '\n' << setw(40) << ' ' << "Book Retail Price report\n";
-    displayDate();
-            separateText();
+        displayDate();
+        separateText();
 
         for(int i =0; i<maximumStock; i++){
-            if(bookTitle[i][0] != '\0'){
-            cout << left <<  "Title: "  <<  bookTitle[i]; 
-            cout << '\n' <<  "ISBN: " <<   bookISBN[i] << endl;
-            cout <<          "Retail price: " << bookRetailValue[i] << "\n\n"; 
+            if(InventoryInformation[i].bookTitle[0] != '\0'){
+            cout << left <<  "Title: "  <<  InventoryInformation[i].bookTitle; 
+            cout << '\n' <<  "ISBN: " <<   InventoryInformation[i].bookISBN << endl;
+            cout <<          "Retail price: " << InventoryInformation[i].bookRetailValue << "\n\n"; 
 
-            retailValue += bookRetailValue[i] * bookQtyOnHand[i];
+            totalRetailValue += InventoryInformation[i].bookRetailValue * InventoryInformation[i].bookQtyOnHand;
             }
         }
         separateText();
             cout << '\n' << setw(55); 
-            cout << "Retail value: " << retailValue;
+            cout << "Retail value: " << totalRetailValue;
         forcedUserWait();
 }
 
@@ -157,10 +158,10 @@ void repQty(){
 
             for (int i = 0; i < maximumStock; i++) {
                 int bookIndex = quantityIndexes[i];
-                if(bookTitle[i][0] != '\0'){
-                    cout << left << "Title: "  <<  bookTitle[bookIndex];
-                    cout << '\n' << "ISBN: " <<   bookISBN[bookIndex] << endl;
-                    cout <<         "Quantity: " << bookQtyOnHand[bookIndex] << endl;
+                if(InventoryInformation[i].bookTitle[0] != '\0'){
+                    cout << left <<  "Title: "  <<  InventoryInformation[bookIndex].bookTitle; 
+                    cout << '\n' <<  "ISBN: " <<   InventoryInformation[bookIndex].bookISBN << endl;
+                    cout <<          "Quantity: " << InventoryInformation[bookIndex].bookQtyOnHand << "\n\n"; 
                     cout << '\n';
                     }
             }       
@@ -177,13 +178,13 @@ void repCost(){
         separateText();
         costSort(costIndexes);
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             int bookIndex = costIndexes[i];
 
-            if(bookTitle[i][0] != '\0'){
-                cout << left << "Title: "  <<  bookTitle[bookIndex];
-                cout << '\n' << "ISBN: " <<   bookISBN[bookIndex] << endl;
-                cout <<         "wholesale cost: " << bookWholesaleValue[bookIndex] << endl;
+            if(InventoryInformation[i].bookTitle[0] != '\0'){
+                cout << left <<  "Title: "  <<  InventoryInformation[bookIndex].bookTitle; 
+                cout << '\n' <<  "ISBN: " <<   InventoryInformation[bookIndex].bookISBN << endl;
+                cout <<          "Store price: " << InventoryInformation[bookIndex].bookWholesaleValue << "\n\n"; 
                 cout << '\n';
                 }
         }
@@ -199,13 +200,13 @@ void repAge(){
         separateText();
         dateSort(ageIndexes);
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             int bookIndex = ageIndexes[i];
 
-            if(bookTitle[i][0] != '\0'){
-                cout << left << "Title: "  <<  bookTitle[bookIndex];
-                cout << '\n' << "ISBN: " <<   bookISBN[bookIndex] << endl;
-                cout <<         "Date Added: " << bookDateAdded[bookIndex] << endl;
+            if(InventoryInformation[i].bookTitle[0] != '\0'){
+            cout << left <<  "Title: "  <<  InventoryInformation[bookIndex].bookTitle; 
+            cout << '\n' <<  "ISBN: " <<   InventoryInformation[bookIndex].bookISBN << endl;
+            cout <<          "Age: " << InventoryInformation[bookIndex].bookDateAdded << "\n\n"; 
                 cout << '\n';
                 }
         }
@@ -232,7 +233,7 @@ void displayDate(){
 
 void quantitySort(int indices[]){
 
-    const int SIZE = 10;
+    const int SIZE = 20;
 
     for(int i=0; i<SIZE; i++)
         indices[i] = i;
@@ -240,7 +241,7 @@ void quantitySort(int indices[]){
     for (int i = 0; i < SIZE - 1; i++) {
         int maxIndex = i;
         for (int j = i + 1; j < SIZE; j++) {
-            if (bookQtyOnHand[indices[j]] > bookQtyOnHand[indices[maxIndex]]) {
+            if (InventoryInformation[indices[j]].bookQtyOnHand > InventoryInformation[indices[maxIndex]].bookQtyOnHand) {
                 maxIndex = j;
             }
         }
@@ -255,7 +256,7 @@ void quantitySort(int indices[]){
 
   void costSort(int indices[]){
 
-    const int SIZE = 10;
+    const int SIZE = 20;
 
     for(int i=0; i<SIZE; i++)
         indices[i] = i;
@@ -263,7 +264,7 @@ void quantitySort(int indices[]){
     for (int i = 0; i < SIZE - 1; i++) {
         int maxIndex = i;
         for (int j = i + 1; j < SIZE; j++) {
-            if (bookWholesaleValue[indices[j]] > bookWholesaleValue[indices[maxIndex]]) {
+            if (InventoryInformation[indices[j]].bookWholesaleValue > InventoryInformation[indices[maxIndex]].bookWholesaleValue) {
                 maxIndex = j;
             }
         }
@@ -280,14 +281,17 @@ void quantitySort(int indices[]){
   //definitely fix this at some point -> program doesnt accurately sort by date.
   void dateSort(int indices[]){
 
-    const int SIZE = 10;
+    const int SIZE = 20;
 
 
     string dates[SIZE];
 
+    //setting up date array for date comparison
     for(int i =0; i<SIZE; i++){
-        dates[i] = bookDateAdded[i];
+        dates[i] = InventoryInformation[i].bookDateAdded;
     }
+
+
 
 //code from https://www.geeksforgeeks.org/removing-punctuations-given-string/
 
@@ -317,7 +321,9 @@ void quantitySort(int indices[]){
     for (int i = 0; i < SIZE - 1; i++) {
         int maxIndex = i;
         for (int j = i + 1; j < SIZE; j++) {
-            if (bookDateAdded[indices[j]] > bookDateAdded[indices[maxIndex]]) {
+        if (InventoryInformation[indices[j]].bookDateAdded >InventoryInformation[indices[maxIndex]].bookDateAdded){
+                
+        
                 maxIndex = j;
             }
         }

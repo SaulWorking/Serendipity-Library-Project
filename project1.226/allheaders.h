@@ -69,6 +69,19 @@ struct BookData{
 
 extern BookData InventoryInformation[20];
 
+/*
+previous data structure
+
+extern char bookTitle[20][51];
+extern char bookISBN[20][14];    
+extern char bookAuthor[20][31];
+extern char bookPublisher[20][31];
+extern char bookDateAdded[20][11]; 
+extern int bookQtyOnHand[20];
+extern double bookWholesaleValue[20];
+extern double bookRetailValue[20];
+*/
+
 
 //functions for specific subscripts in array
 
@@ -78,10 +91,10 @@ void setISBN(char *, int);
 void setAuthor(char *, int);		 
 void setPub(char *, int);		
 void setDateAdded(char *, int);	  
-void setQty(int);	
+void setQty(int, int);	
 void setWholesale(double, int);	 
 void setRetail(double, int);
-int  isEmpty(BookData);
+int  isEmpty(int);
 void removeBook(int);
 
 

@@ -6,12 +6,11 @@
 ** Course: CS226 CRN 32842
 ** Professor: Huseyin Aygun
 ** Student: Thien Dinh
-** Due Date: 03/30/2025
+** Due Date: 04/6/2025
 ******************************************************************/
-
-
 #include <iostream>
 #include <iomanip>
+#include <cstring>
 #include "allheaders.h"
 using namespace std;
 
@@ -84,17 +83,10 @@ BookData InventoryInformation[20] = {
 };
 
 
-
-
 int main(){
-
-    
-
     int mainMenuChoice{0};
     bool exitModule = false;
-
-
-
+    
 //calling functions was harder to visualize so i used a for loop instead
 
     while(exitModule == false){
@@ -106,8 +98,7 @@ int main(){
     cout << setw(15) << ' ' << "3.	Report Module" << endl;
     cout << setw(15) << ' ' << "4.	Exit" << endl;
     cout << "\n\n" << setw(15) << ' ' << "Enter your choice: ";
-    cin >> mainMenuChoice;
-
+        cin >> mainMenuChoice;
         switch(mainMenuChoice){
             case 1:
                 cashier();
@@ -128,7 +119,54 @@ int main(){
         }
     }
     return 0;
+}
 
+
+
+void setTitle(char *bookName, int bookIndex){
+    strcpy(InventoryInformation[bookIndex].bookTitle, bookName);
+}
+void setISBN(char *bookISBN, int bookIndex){
+    strcpy(InventoryInformation[bookIndex].bookISBN, bookISBN);
+}
+void setAuthor(char *bookAuthor, int bookIndex){
+    strcpy(InventoryInformation[bookIndex].bookAuthor, bookAuthor);
+}		 
+void setPub(char *bookPublisher, int bookIndex){
+    strcpy(InventoryInformation[bookIndex].bookPublisher, bookPublisher);
+
+}
+void setDateAdded(char *bookDateAdded, int bookIndex){
+    strcpy(InventoryInformation[bookIndex].bookDateAdded, bookDateAdded);
+}
+
+void setQty(int bookQuantity, int bookIndex){
+    InventoryInformation[bookIndex].bookQtyOnHand = bookQuantity;
+}
+void setWholesale(double wholesalePrice, int bookIndex){
+    InventoryInformation[bookIndex].bookWholesaleValue = wholesalePrice;
+} 
+void setRetail(double retailPrice, int bookIndex){
+    InventoryInformation[bookIndex].bookRetailValue = retailPrice;
+}
+int  isEmpty(int bookIndex){
+        //checks for first character of booktitle at specified book index
+    if(InventoryInformation[bookIndex].bookTitle[0] == '\0'){
+        return true;
+    }else{  
+        return false;
+    }
+
+}
+void removeBook(int bookIndex){
+    InventoryInformation[bookIndex].bookTitle[0] = '\0';
+    InventoryInformation[bookIndex].bookISBN[0] = '\0';
+    InventoryInformation[bookIndex].bookAuthor[0]= '\0';
+    InventoryInformation[bookIndex].bookPublisher[0] = '\0';
+    InventoryInformation[bookIndex].bookDateAdded[0]= '\0';
+    InventoryInformation[bookIndex].bookQtyOnHand = 0;
+    InventoryInformation[bookIndex].bookRetailValue = 0.0;
+    InventoryInformation[bookIndex].bookWholesaleValue = 0.0;
 }
 
 

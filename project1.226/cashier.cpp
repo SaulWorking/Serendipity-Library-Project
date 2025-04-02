@@ -6,7 +6,7 @@
 ** Course: CS226 CRN 32842
 ** Professor: Huseyin Aygun
 ** Student: Thien Dinh
-** Due Date: 03/30/2025
+** Due Date: 04/6/2025
 ******************************************************************/
 
 
@@ -43,8 +43,8 @@ void cashier(){
         ISBNIndex = ISBNLookup(cashierBookISBN);
 
     //check for book availability
-        if(bookQtyOnHand[ISBNIndex] <= 0){
-            cout << bookTitle[ISBNIndex]; 
+        if(InventoryInformation[ISBNIndex].bookQtyOnHand <= 0){
+            cout << InventoryInformation[ISBNIndex].bookTitle;
             cout << " is not in stock.\nExiting cashier module...\n";
             return;
         }
@@ -71,13 +71,13 @@ void cashier(){
      if(ISBNIndex >=0){
         cout << "Book quantity? ";
         cin >> checkoutQuantity;
-        while(checkoutQuantity < 0 || checkoutQuantity > bookQtyOnHand[ISBNIndex] && !isdigit(checkoutQuantity)){
+        while(checkoutQuantity < 0 || checkoutQuantity > InventoryInformation[ISBNIndex].bookQtyOnHand && !isdigit(checkoutQuantity)){
             cout <<"\nInvalid Quantity. Try again: ";
             cin >> checkoutQuantity;
         }
 
         //subtract user quantity from store inventory
-        bookQtyOnHand[ISBNIndex] -= checkoutQuantity;
+        InventoryInformation[ISBNIndex].bookQtyOnHand -= checkoutQuantity;
     }
 
     cout << "Do you want to purchase another book?(y/n)";
@@ -90,7 +90,7 @@ void cashier(){
 
     
 
-        checkoutPrice = (bookRetailValue[ISBNIndex] * checkoutQuantity);
+        checkoutPrice = (InventoryInformation[ISBNIndex].bookRetailValue * checkoutQuantity);
 
 
 
@@ -106,7 +106,7 @@ void cashier(){
     
     cout  << left<< setw(5) << "Qty" << setw(20) << "ISBN" << setw(40) << "Title" << setw(10) << "Price"  << setw(3) << "Total"<< endl;
         separateText();
-    cout << '\n' << setw(4)  << left << fixed << setprecision(2) << checkoutQuantity << setw(20) << bookISBN[ISBNIndex] << setw(40) << bookTitle[ISBNIndex]  << " $" << setw(9) << bookRetailValue[ISBNIndex] << "$"  << checkoutPrice << endl;
+    cout << '\n' << setw(4)  << left << fixed << setprecision(2) << checkoutQuantity << setw(20) << InventoryInformation[ISBNIndex].bookISBN << setw(40) << InventoryInformation[ISBNIndex].bookTitle  << " $" << setw(9) << InventoryInformation[ISBNIndex].bookRetailValue << "$"  << checkoutPrice << endl;
     cout << "\n\n\n";
 
     cout << setw(61)  << "\t\tSubtotal" << "$" << checkoutPrice << endl; 
@@ -132,7 +132,7 @@ void cashier(){
 int ISBNLookup(string ISBN){
 
     for(int i =0; i<20; i++){
-        if(bookISBN[i] == ISBN){
+        if(InventoryInformation[i].bookISBN == ISBN){
        //returns ISBN index 
             return i;
         }
