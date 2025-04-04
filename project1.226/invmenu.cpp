@@ -19,11 +19,12 @@
 using namespace std;
 
 
+
 void invMenu(){
 
-    int inventoryChoice;
+    int inventoryChoice{0};
     bool exitModule = false;
-
+    
 
    while(exitModule == false){
     cout << setw(20) << ' ' << " Serendipity Booksellers" << endl;
@@ -66,8 +67,38 @@ void invMenu(){
 
 
 
-//simple choice checking for user Inventory Database options.
+void lookUpBook() {
 
+    int bookIndex = -1;
+    string bookName = "flu";
+        
+        cout << bookName << endl;
+        
+            cout << "Title of book to look up: ";
+
+
+            cin.ignore();
+            getline(cin, bookName);
+ 
+
+
+            cout << "\n I am before the findBookIndex function\n";
+
+             
+            bookIndex = findBookIndex(bookName);
+                
+            if (bookIndex >=0) {
+                  // look up book
+        
+                cout << "\n the only book matching your book name is...\n";
+                bookIndexInformation(bookIndex);
+        
+            } else {
+                  cout << "Book not in inventory\n\n"; 
+            }
+        }
+
+//simple choice checking for user Inventory Database options.
 
 //check if book space is available
 //if available add book
@@ -75,13 +106,9 @@ void invMenu(){
 void addBook(){
 
     //empty book index
+    
     int emptyBookIndex = 0;
 
-
-    //user input variables
-    char *userInput = nullptr;
-    int userQuantity = 0;
-    double userPrice = 0.0;
     
         cout << '\n' << setw(15) << "You selected add book\n\n";
 
@@ -89,12 +116,17 @@ void addBook(){
     for(int index=0; index<20; index++)
         //assign empty slot to book userchoice
         if(isEmpty(index)){
-            
+        
+
+            //user input variables
+            char userInput[51];
+            int userQuantity = 0;
+            double userPrice = 0.0;
+
             emptyBookIndex = index;
 
             cin.ignore();
             cout <<"book title: ";
-
             
             cin.getline(userInput, 51);
             strUpper(userInput);
@@ -147,26 +179,7 @@ void addBook(){
 }
 
 
-void lookUpBook() {
-    string bookName;
-    int bookIndex = -1;
-        cout << "Title of book to look up: ";
-        
-        getline(cin, bookName);
-        cin.ignore();
 
-        bookIndex = findBookIndex(bookName);
-        
-        if (bookIndex >=0) {
-          // look up book
-
-          cout << "\n the only book matching your book name is...\n";
-          bookIndexInformation(bookIndex);
-
-        } else {
-          cout << "Book not in inventory\n\n"; 
-        }
-}
        
 
 
@@ -214,6 +227,10 @@ void deleteBook(){
     
         getline(cin, bookName);
         cin.ignore();
+
+
+
+        
         bookIndex = findBookIndex(bookName);
     
         if(bookIndex >=0){
@@ -238,7 +255,7 @@ void deleteBook(){
 
 void editInventoryInput(int index){
 
-    char *userInput;
+    char userInput[51];
     int userQuantity = 0;
     int userEditChoice = 0;
     double userPrice = 0.0;
@@ -267,6 +284,7 @@ void editInventoryInput(int index){
 
 
     switch(userEditChoice){
+
         case 1:
             cout <<"\n Changing title to: ";
             cin.getline(userInput, 51);
@@ -329,69 +347,100 @@ void editInventoryInput(int index){
 
 void strUpper(char * wordToBeUppercase){
         int counter =0;
-        while( *(wordToBeUppercase+counter) != '0'){
+        while( *(wordToBeUppercase+counter) != '0' && isalpha(*(wordToBeUppercase + counter))){
+
             *(wordToBeUppercase+counter) = toupper(wordToBeUppercase[counter]);
                 counter++;
         }
 }
 
-int findBookIndex(string inventoryBookName){
+int findBookIndex(string bookWant){
+
+
+    cout << "\n I am in the  findBookIndex function\n";
+ 
+
 
     //i.e input free -> convert to FREE c-string 
     //check for "FREE" substring
     int bookIndex{-1};
-    const int maxNameLength = 51;
-    
-  
 
-
-
-    char bookToBeSearched[maxNameLength];
-    char * found;
+    char bookToBeSearched[51];
+    char found[51];
     char userInput{' '};
 
 
 
+
         //convert userInput to c-string
-        strcpy(bookToBeSearched, inventoryBookName.c_str());
+
+        cout << "\nfindBookIndex: 1 \n";
+
+        strncpy(bookToBeSearched, bookWant.c_str(), 51);
         strUpper(bookToBeSearched);
-    
 
-    
-    for(int i=0; i<20; i++){
+        cout << "\nfindBookIndex: 2 \n";
 
-
+        //assign substring to found
         
-        found = strstr(InventoryInformation[i].bookTitle, bookToBeSearched);
-        
-            //check if substring is valid
-        if(found != nullptr){
+
+        for(int i =0; i <20; i++){
+            
+
+            cout << "\nLOOPfindBookIndex: " << i <<  "\n";
+
+
+
+
+        //check if input is found in inventory. continue if else.
+        if(strstr(invbook[i].Title, bookToBeSearched)){
+            strncpy(found, strstr(invbook[i].Title, bookToBeSearched), 51);
+        }else{
+            continue;
+        }
+
+
+            //check if substring is empty
+        if(found[0] != '\0'){
 
 
             //check if substring and book title are valid 
-            if(!strcmp(found, InventoryInformation[i].bookTitle) && InventoryInformation[i].bookTitle[0] != '\0'){
+            if(!strcmp(found, invbook[i].Title) && invbook[i].Title[0] != '\0'){
+                cout << "\nfindBookIndex: 4 \n";
+
                 bookIndex = i;
                     bookIndexInformation(bookIndex);
                     cout << "\nIs this your book(Y/N)?\n\n";
                     
                  //if book is intended book exit loop
-                cin >> userInput;
 
+               
+                  cout << "\nfindBookIndex: 5 \n";
+
+                  cin >> userInput;
                     if(userInput == 'y' || userInput == 'Y'){
-                    
-                        return bookIndex;
 
-            
+
+                        return bookIndex;
                     }else{
                         //else continue searching
                         cout << "\n\nNext book...\n\n";
-                        continue;
+
                     }
+            
             }
         }
+
     }
     return bookIndex;
+
 }
+
+
+    
+
+
+
 
 
 
@@ -403,12 +452,65 @@ Hint: Use the strstr function to search the title in the database.*/
 
 void bookIndexInformation(const int bookIndex){
     bookInfo(
-    InventoryInformation[bookIndex].bookTitle, 
-    InventoryInformation[bookIndex].bookISBN,
-    InventoryInformation[bookIndex].bookAuthor,  
-    InventoryInformation[bookIndex].bookPublisher, 
-    InventoryInformation[bookIndex].bookDateAdded, 
-    InventoryInformation[bookIndex].bookQtyOnHand,
-    InventoryInformation[bookIndex].bookWholesaleValue, 
-    InventoryInformation[bookIndex].bookRetailValue);
+    invbook[bookIndex].Title, 
+    invbook[bookIndex].ISBN,
+    invbook[bookIndex].Author,  
+    invbook[bookIndex].Publisher, 
+    invbook[bookIndex].DateAdded, 
+    invbook[bookIndex].QtyOnHand,
+    invbook[bookIndex].WholesaleValue, 
+    invbook[bookIndex].RetailValue);
 }
+
+
+
+
+
+
+
+void setTitle(char *bookName, int bookIndex){
+    strncpy(invbook[bookIndex].Title, bookName, 51);
+}
+void setISBN(char *ISBN, int bookIndex){
+    strncpy(invbook[bookIndex].ISBN, ISBN, 14);
+}
+void setAuthor(char *Author, int bookIndex){
+    strncpy(invbook[bookIndex].Author, Author, 31);
+}		 
+void setPub(char *Publisher, int bookIndex){
+    strncpy(invbook[bookIndex].Publisher, Publisher, 31);
+
+}
+void setDateAdded(char *DateAdded, int bookIndex){
+    strncpy(invbook[bookIndex].DateAdded, DateAdded, 11);
+}
+
+void setQty(int bookQuantity, int bookIndex){
+    invbook[bookIndex].QtyOnHand = bookQuantity;
+}
+void setWholesale(double wholesalePrice, int bookIndex){
+    invbook[bookIndex].WholesaleValue = wholesalePrice;
+} 
+void setRetail(double retailPrice, int bookIndex){
+    invbook[bookIndex].RetailValue = retailPrice;
+}
+int isEmpty(int bookIndex){
+        //checks for first character of Title at specified book index
+    if(invbook[bookIndex].Title[0] == '\0'){
+        return true;
+    }else{  
+        return false;
+    }
+
+}
+void removeBook(int bookIndex){
+    invbook[bookIndex].Title[0] = '\0';
+    invbook[bookIndex].ISBN[0] = '\0';
+    invbook[bookIndex].Author[0]= '\0';
+    invbook[bookIndex].Publisher[0] = '\0';
+    invbook[bookIndex].DateAdded[0]= '\0';
+    invbook[bookIndex].QtyOnHand = 0;
+    invbook[bookIndex].RetailValue = 0.0;
+    invbook[bookIndex].WholesaleValue = 0.0;
+}
+

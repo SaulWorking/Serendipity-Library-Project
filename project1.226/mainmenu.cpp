@@ -14,6 +14,8 @@
 #include "allheaders.h"
 using namespace std;
 
+//global data
+
 /*
 // Book titles - 20 rows, 51 characters per title
     char bookTitle[20][51] = {
@@ -60,30 +62,37 @@ using namespace std;
 
 
     //arrays sorted by TITLE, ISBN, AUTHOR, PUBLISHER, DATE ADDED, QUANTITY, PRICE, and RETAIL PRICE
-BookData InventoryInformation[20] = {
-    {"FREEDOM", "0374158460", "JONATHAN FRANZEN", "FARRAR", "03-05-2004", 40, 12.50, 30.4},
 
-    {"HEAD FIRST DESIGN PATTERNS", "0596007124", "ELISABETH FREEMAN", "O'REILLY MEDIA", "01-13-2006", 35, 25.00, 45.0},
 
-    {"ARDUINO COOKBOOK", "0596802471", "MICHAEL MARGOLIS", "O'REILLY MEDIA", "02-05-2025", 50, 34.5, 56.7},
-
-    {"CLEAN CODE", "9780132350884", "ROBERT C. MARTIN", "PRENTICE HALL", "06-04-2008", 25, 30.00, 50.0},
-
-    {"THE PRAGMATIC PROGRAMMER", "9780201616224", "ANDREW HUNT", "ADDISON-WESLEY", "02-05-2005", 20, 28.00, 47.5},
-
-    {"LEARNING PYTHON", "9781491950357", "MARK LUTZ", "O'REILLY MEDIA", "12-4-2013", 45, 40.00, 65.0},
-
-    {"REFACTORING", "9780321125217", "MARTIN FOWLER", "ADDISON-WESLEY", "5-5-2019", 30, 35.00, 55.0},
-
-    {"EFFECTIVE JAVA", "9780134494166", "JOSHUA BLOCH", "ADDISON-WESLEY", "03-14-2009", 15, 38.00, 60.0},
-
-    {"FLUENT PYTHON", "9781449355739", "LUCIANO RAMALHO", "O'REILLY MEDIA", "05-12-2020", 20, 45.00, 70.0},
-
-    {"INTRODUCTION TO THE THEORY OF COMPUTATION", "9780137082073", "MICHAEL SIPSER", "CENGAGE LEARNING", "02-05-2025", 12, 50.00, 80.0}
-};
-
+  BookData invbook[20] = {
+        {"FREEDOM", "0374158460", "JONATHAN FRANZEN", "FARRAR", "03-05-2004", 40, 12.50, 30.4},
+    
+        {"HEAD FIRST DESIGN PATTERNS", "0596007124", "ELISABETH FREEMAN", "O'REILLY MEDIA", "01-13-2006", 35, 25.00, 45.0},
+    
+        {"ARDUINO COOKBOOK", "0596802471", "MICHAEL MARGOLIS", "O'REILLY MEDIA", "02-05-2025", 50, 34.5, 56.7},
+    
+        {"CLEAN CODE", "9780132350884", "ROBERT C. MARTIN", "PRENTICE HALL", "06-04-2008", 25, 30.00, 50.0},
+    
+        {"THE PRAGMATIC PROGRAMMER", "9780201616224", "ANDREW HUNT", "ADDISON-WESLEY", "02-05-2005", 20, 28.00, 47.5},
+    
+        {"LEARNING PYTHON", "9781491950357", "MARK LUTZ", "O'REILLY MEDIA", "12-4-2013", 45, 40.00, 65.0},
+    
+        {"REFACTORING", "9780321125217", "MARTIN FOWLER", "ADDISON-WESLEY", "5-5-2019", 30, 35.00, 55.0},
+    
+        {"EFFECTIVE JAVA", "9780134494166", "JOSHUA BLOCH", "ADDISON-WESLEY", "03-14-2009", 15, 38.00, 60.0},
+    
+        {"FLUENT PYTHON", "9781491946008", "LUCIANO RAMALHO", "O'REILLY MEDIA", "05-12-2020", 20, 45.00, 70.0},
+    
+        {"INTRODUCTION TO THE THEORY OF COMPUTATION", "9780137082073", "MICHAEL SIPSER", "CENGAGE LEARNING", "02-05-2025", 12, 50.00, 80.0}
+    };
 
 int main(){
+
+
+    
+
+
+
     int mainMenuChoice{0};
     bool exitModule = false;
     
@@ -120,55 +129,3 @@ int main(){
     }
     return 0;
 }
-
-
-
-void setTitle(char *bookName, int bookIndex){
-    strcpy(InventoryInformation[bookIndex].bookTitle, bookName);
-}
-void setISBN(char *bookISBN, int bookIndex){
-    strcpy(InventoryInformation[bookIndex].bookISBN, bookISBN);
-}
-void setAuthor(char *bookAuthor, int bookIndex){
-    strcpy(InventoryInformation[bookIndex].bookAuthor, bookAuthor);
-}		 
-void setPub(char *bookPublisher, int bookIndex){
-    strcpy(InventoryInformation[bookIndex].bookPublisher, bookPublisher);
-
-}
-void setDateAdded(char *bookDateAdded, int bookIndex){
-    strcpy(InventoryInformation[bookIndex].bookDateAdded, bookDateAdded);
-}
-
-void setQty(int bookQuantity, int bookIndex){
-    InventoryInformation[bookIndex].bookQtyOnHand = bookQuantity;
-}
-void setWholesale(double wholesalePrice, int bookIndex){
-    InventoryInformation[bookIndex].bookWholesaleValue = wholesalePrice;
-} 
-void setRetail(double retailPrice, int bookIndex){
-    InventoryInformation[bookIndex].bookRetailValue = retailPrice;
-}
-int  isEmpty(int bookIndex){
-        //checks for first character of booktitle at specified book index
-    if(InventoryInformation[bookIndex].bookTitle[0] == '\0'){
-        return true;
-    }else{  
-        return false;
-    }
-
-}
-void removeBook(int bookIndex){
-    InventoryInformation[bookIndex].bookTitle[0] = '\0';
-    InventoryInformation[bookIndex].bookISBN[0] = '\0';
-    InventoryInformation[bookIndex].bookAuthor[0]= '\0';
-    InventoryInformation[bookIndex].bookPublisher[0] = '\0';
-    InventoryInformation[bookIndex].bookDateAdded[0]= '\0';
-    InventoryInformation[bookIndex].bookQtyOnHand = 0;
-    InventoryInformation[bookIndex].bookRetailValue = 0.0;
-    InventoryInformation[bookIndex].bookWholesaleValue = 0.0;
-}
-
-
-
-

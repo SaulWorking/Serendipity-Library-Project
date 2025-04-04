@@ -3,7 +3,7 @@
 
 #include <string>
 #include <ctime>
-
+using namespace std;
 //general purpose functions/variables
 
 
@@ -55,19 +55,21 @@
 
 //connect inventory to entire program
 
-struct BookData{
-     char bookTitle[51];
-     char bookISBN[14];    
-     char bookAuthor[31];
-     char bookPublisher[31];
-     char bookDateAdded[11]; 
+ struct BookData{
+     char Title[51];
+     char ISBN[14];    
+     char Author[31];
+     char Publisher[31];
+     char DateAdded[11]; 
 
-     int bookQtyOnHand;     
-     double bookWholesaleValue;
-     double bookRetailValue;
+     int QtyOnHand;     
+     double WholesaleValue;
+     double RetailValue;
+
+
 };  
 
-extern BookData InventoryInformation[20];
+extern BookData invbook[20];
 
 /*
 previous data structure
@@ -107,7 +109,7 @@ void removeBook(int);
     void editBook();
     void deleteBook();
     void editInventoryInput(int);
-    int findBookIndex(std::string); 
+    int findBookIndex(string); 
 
 
 
