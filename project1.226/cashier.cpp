@@ -68,29 +68,25 @@ void cashier(){
 
 
     //if ISBN is found ask user for quantity
-     if(ISBNIndex >=0){
-        cout << "Book quantity? ";
-        cin >> checkoutQuantity;
-        while(checkoutQuantity < 0 || checkoutQuantity > invbook[ISBNIndex].QtyOnHand && !isdigit(checkoutQuantity)){
-            cout <<"\nInvalid Quantity. Try again: ";
-            cin >> checkoutQuantity;
-        }
+            if(ISBNIndex >=0){
+                cout << "Book quantity? ";
+                cin >> checkoutQuantity;
+                while(checkoutQuantity < 0 || checkoutQuantity > invbook[ISBNIndex].QtyOnHand && !isdigit(checkoutQuantity)){
+                    cout <<"\nInvalid Quantity. Try again: ";
+                    cin >> checkoutQuantity;
+                }
 
-        //subtract user quantity from store inventory
-        invbook[ISBNIndex].QtyOnHand -= checkoutQuantity;
-    }
+                //subtract user quantity from store inventory
+                invbook[ISBNIndex].QtyOnHand -= checkoutQuantity;
+            }
 
-    cout << "Do you want to purchase another book?(y/n)";
-
-
+            cout << "Do you want to purchase another book?(y/n)";
 
 
     //add multiple book purchasing functionality
 
 
         checkoutPrice = (invbook[ISBNIndex].RetailValue * checkoutQuantity);
-
-
 
     //output sale information for user
 
@@ -100,14 +96,14 @@ void cashier(){
     cout  << left<< setw(5) << "Qty" << setw(20) << "ISBN" << setw(40) << "Title" << setw(10) << "Price"  << setw(3) << "Total"<< endl;
         separateText();
     cout << '\n' << setw(4)  << left << fixed << setprecision(2) << checkoutQuantity << setw(20) << invbook[ISBNIndex].ISBN << setw(40) << invbook[ISBNIndex].Title  << " $" << setw(9) << invbook[ISBNIndex].RetailValue << "$"  << checkoutPrice << endl;
-    cout << "\n\n\n";
+        cout << "\n\n\n";
 
-    cout << setw(61)  << "\t\tSubtotal" << "$" << checkoutPrice << endl; 
-    cout << setw(61)  << "\t\tTax"      << "$" << checkoutPrice * salesTax << endl;
-    cout << setw(61)  << "\t\tTotal"    << "$" << checkoutPrice + (checkoutPrice * salesTax) << endl;
+        cout << setw(61)  << "\t\tSubtotal" << "$" << checkoutPrice << endl; 
+        cout << setw(61)  << "\t\tTax"      << "$" << checkoutPrice * salesTax << endl;
+        cout << setw(61)  << "\t\tTotal"    << "$" << checkoutPrice + (checkoutPrice * salesTax) << endl;
 
-    cout << "\n\n" << setw(15) << ' ' << "Thank you for shopping at Serendipity\n\n" << endl;
-    cout << "\n" << setw(15) << ' ' << "Do you have another transaction? (Y/N): ";
+        cout << "\n\n" << setw(15) << ' ' << "Thank you for shopping at Serendipity\n\n" << endl;
+        cout << "\n" << setw(15) << ' ' << "Do you have another transaction? (Y/N): ";
     cin >> userInput;
 
     if(toupper(userInput) == 'N'){
@@ -118,8 +114,6 @@ void cashier(){
         return;
     }
 }
-
-
 
 
 int ISBNLookup(string ISBN){

@@ -65,8 +65,6 @@ void reports(){
 }
 
 
-
-
 void repListing(){
     cout << '\n' << setw(40) << ' ' << "Book Listing report\n";
     displayDate();
@@ -88,7 +86,6 @@ void repListing(){
         separateText();
         forcedUserWait();
 }
-
 
 
 void repWholesale(){
@@ -148,7 +145,6 @@ void repQty(){
 
     int quantityIndexes[maximumStock];   
 
-
     cout << '\n' << setw(40) << ' ' << "Book Quantity report\n";
         displayDate();
         separateText();
@@ -171,7 +167,6 @@ void repQty(){
 void repCost(){
 
     int costIndexes[maximumStock];   
-
 
     cout << '\n' << setw(40) << ' ' << "Book Cost report\n";
         displayDate();
@@ -213,7 +208,6 @@ void repAge(){
         separateText();
         forcedUserWait();
 }
-
 
 
 /*  guide for displaying c++ date
@@ -283,25 +277,16 @@ void quantitySort(int indices[]){
 
     const int SIZE = 20;
 
-
     string dates[SIZE];
 
     //setting up date array for date comparison
     for(int i =0; i<SIZE; i++){
         dates[i] = invbook[i].DateAdded;
     }
-
-
-
 //code from https://www.geeksforgeeks.org/removing-punctuations-given-string/
-
-    // indexes
+    // indexe
     for(int i=0; i<SIZE; i++)
         indices[i] = i;
-
-    
-
-    
 
   }
 
@@ -316,16 +301,12 @@ void quantitySort(int indices[]){
 
   }
 
-
-
   void forcedUserWait(){
     string userInput;
-
     cout << '\n';
-    cout << "\nPress enter to continue.";
-    getline(cin, userInput);
+        cout << "\nPress enter to continue.";
+        getline(cin, userInput);
     cout << "\n\n\n";
-
   }
     
 

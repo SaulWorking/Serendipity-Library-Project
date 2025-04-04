@@ -7,7 +7,6 @@ using namespace std;
 //general purpose functions/variables
 
 
-//the amount 
 
     //prints '-' 100 times
     void separateText();
@@ -85,9 +84,8 @@ extern double bookRetailValue[20];
 */
 
 
-//functions for specific subscripts in array
-
-
+//functions for inventory management
+    //set user input to specific index in inventory
 void setTitle(char *, int);	
 void setISBN(char *, int);		
 void setAuthor(char *, int);		 

@@ -19,13 +19,11 @@
 using namespace std;
 
 
-
 void invMenu(){
 
     int inventoryChoice{0};
     bool exitModule = false;
     
-
    while(exitModule == false){
     cout << setw(20) << ' ' << " Serendipity Booksellers" << endl;
     cout << setw(23) << ' ' << "Inventory Database\n\n";
@@ -35,9 +33,8 @@ void invMenu(){
     cout << setw(15) << ' ' << "4.	Delete a Book"         << endl;
     cout << setw(15) << ' ' << "5.	Return to the Main Menu"  << endl;
     cout << '\n' << setw(15) << ' ' << "Enter your choice: ";
-
+        
         cin >> inventoryChoice;
-
         switch (inventoryChoice) {
             case 1:
               lookUpBook();
@@ -59,44 +56,33 @@ void invMenu(){
               break;
             }
 
-          }
+    }
           
-        }
-
-
-
-
+}
 
 void lookUpBook() {
 
     int bookIndex = -1;
-    string bookName = "flu";
-        
-        cout << bookName << endl;
+    string bookName = "placeHolder";
         
             cout << "Title of book to look up: ";
 
-
-            cin.ignore();
+                cin.ignore();
             getline(cin, bookName);
  
-
-
-            cout << "\n I am before the findBookIndex function\n";
-
-             
             bookIndex = findBookIndex(bookName);
                 
             if (bookIndex >=0) {
                   // look up book
         
-                cout << "\n the only book matching your book name is...\n";
+                cout << "\nThe only book matching your title is...\n";
+                
                 bookIndexInformation(bookIndex);
         
             } else {
                   cout << "Book not in inventory\n\n"; 
             }
-        }
+}
 
 //simple choice checking for user Inventory Database options.
 
@@ -108,8 +94,6 @@ void addBook(){
     //empty book index
     
     int emptyBookIndex = 0;
-
-    
         cout << '\n' << setw(15) << "You selected add book\n\n";
 
     //check for empty book index
@@ -117,7 +101,6 @@ void addBook(){
         //assign empty slot to book userchoice
         if(isEmpty(index)){
         
-
             //user input variables
             char userInput[51];
             int userQuantity = 0;
@@ -175,7 +158,6 @@ void addBook(){
             cout << "Sorry, no space available for new books.\n";
             return;
         }
-
 }
 
 
@@ -193,31 +175,32 @@ void editBook(){
     cout << '\n' << setw(15) << "You selected edit book\n\n";
     cout << '\n' << setw(15) << "Title of book to edit: ";
 
-    getline(cin, bookName);   
     cin.ignore();
+    getline(cin, bookName);   
+
         bookIndex = findBookIndex(bookName);
+
+
 
     if (bookIndex >=0) {
         // look up book
         cout << "\nYour book is...\n";
+
+
         bookIndexInformation(bookIndex);
-
         editInventoryInput(bookIndex);
-
     } else {
         cout << "Book not in inventory\n\n";
     }
 
-     //checks for one of eight categories for book Information
-
-    
-    
+     //checks for one of eight categories for book Information 
 }
+
+
 
 
 //tests for book availability in storage and deletes book
 void deleteBook(){
-
     string bookName;
     char user;
     int bookIndex = -1;
@@ -225,21 +208,17 @@ void deleteBook(){
     cout << '\n' << setw(15) << ' ' << "You selected delete book\n\n";
     cout << '\n' << setw(15) << ' ' << "which book will you delete? : ";
     
-        getline(cin, bookName);
+
         cin.ignore();
+        getline(cin, bookName);
 
-
-
-        
         bookIndex = findBookIndex(bookName);
-    
-        if(bookIndex >=0){
 
+        if(bookIndex >=0){
             cout << '\n' << setw(20) << ' ' << "Do you really want to delete this?(Y/N): ";
     
-
-            cin >> user;
-            cin.ignore();
+                cin >> user;
+                    cin.ignore();
 
             if(toupper(user) == 'Y'){
                 removeBook(bookIndex);
@@ -249,7 +228,6 @@ void deleteBook(){
             }
          }  
     return;
-
 }
 
 
@@ -261,10 +239,7 @@ void editInventoryInput(int index){
     double userPrice = 0.0;
     bool exitModule = false;
 
-    
-
     while(exitModule == false){
-
         cout << setw(20) << ' ' << " Serendipity Booksellers";
         cout << setw(23) << ' ' << "Inventory Database\n";
         cout << setw(15) << ' ' << "1   ISBN\n";
@@ -282,9 +257,7 @@ void editInventoryInput(int index){
         cin >> userEditChoice;
         cin.ignore();
 
-
     switch(userEditChoice){
-
         case 1:
             cout <<"\n Changing title to: ";
             cin.getline(userInput, 51);
@@ -345,6 +318,9 @@ void editInventoryInput(int index){
 
 }
 
+
+
+
 void strUpper(char * wordToBeUppercase){
         int counter =0;
         while( *(wordToBeUppercase+counter) != '0' && isalpha(*(wordToBeUppercase + counter))){
@@ -355,83 +331,61 @@ void strUpper(char * wordToBeUppercase){
 }
 
 int findBookIndex(string bookWant){
-
-
-    cout << "\n I am in the  findBookIndex function\n";
- 
-
-
     //i.e input free -> convert to FREE c-string 
     //check for "FREE" substring
     int bookIndex{-1};
 
-    char bookToBeSearched[51];
-    char found[51];
-    char userInput{' '};
+        char bookToBeSearched[51];
+        char found[51];
+        char userInput{' '};
+        //covert userInput to c-string 
+        //convert to uppercase
 
-
-
-
-        //convert userInput to c-string
-
-        cout << "\nfindBookIndex: 1 \n";
+        //general tip-> use strncpy to prevent segfaults/something similar
 
         strncpy(bookToBeSearched, bookWant.c_str(), 51);
         strUpper(bookToBeSearched);
 
-        cout << "\nfindBookIndex: 2 \n";
-
-        //assign substring to found
-        
 
         for(int i =0; i <20; i++){
+        //general reminder 
+
+            //strstr returns pointer to string or nullptr
+            //if statement accepts pointers
             
-
-            cout << "\nLOOPfindBookIndex: " << i <<  "\n";
-
-
-
-
-        //check if input is found in inventory. continue if else.
-        if(strstr(invbook[i].Title, bookToBeSearched)){
-            strncpy(found, strstr(invbook[i].Title, bookToBeSearched), 51);
-        }else{
-            continue;
-        }
-
-
-            //check if substring is empty
-        if(found[0] != '\0'){
-
-
-            //check if substring and book title are valid 
-            if(!strcmp(found, invbook[i].Title) && invbook[i].Title[0] != '\0'){
-                cout << "\nfindBookIndex: 4 \n";
-
-                bookIndex = i;
-                    bookIndexInformation(bookIndex);
-                    cout << "\nIs this your book(Y/N)?\n\n";
-                    
-                 //if book is intended book exit loop
-
-               
-                  cout << "\nfindBookIndex: 5 \n";
-
-                  cin >> userInput;
-                    if(userInput == 'y' || userInput == 'Y'){
-
-
-                        return bookIndex;
-                    }else{
-                        //else continue searching
-                        cout << "\n\nNext book...\n\n";
-
-                    }
-            
+            //check if input is found in inventory. continue if else.
+            if(strstr(invbook[i].Title, bookToBeSearched)){
+                strncpy(found, strstr(invbook[i].Title, bookToBeSearched), 51);
+                }else{
+                    continue;
             }
-        }
+
+                //check if substring is empty
+            if(found[0] != '\0'){
+
+                //check if substring and book title are valid 
+                if(!strcmp(found, invbook[i].Title) && invbook[i].Title[0] != '\0'){
+
+                    bookIndex = i;
+                        bookIndexInformation(bookIndex);
+                        cout << "\nIs this your book(Y/N)?";
+                            cin >> userInput;
+                    //if book is intended book exit loop
+                        if(isalpha(userInput) && userInput == 'Y' || userInput == 'y'){
+                            return bookIndex;
+                        }else {
+                            //else continue searching
+                            cout << "\nNext book...\n\n";
+
+                        }
+                }
+            }
 
     }
+
+    //return to zero
+    bookIndex = -1;
+
     return bookIndex;
 
 }
