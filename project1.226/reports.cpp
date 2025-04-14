@@ -6,14 +6,13 @@
 ** Course: CS226 CRN 32842
 ** Professor: Huseyin Aygun
 ** Student: Thien Dinh
-** Due Date: 04/6/2025
+** Due Date: 04/13/2025
 ******************************************************************/
 
 #include <iostream>
 #include <iomanip>
 #include "allheaders.h"
 using namespace std;
-
 
 const int maximumStock = 20;
 
@@ -70,17 +69,33 @@ void repListing(){
     displayDate();
        separateText();
 
-     cout << '\n';
-        for(int bookIndex=0; bookIndex<maximumStock; bookIndex++){
-            if(invbook[bookIndex].Title[0] != '\0'){
-                cout << left << "Title: "  <<  invbook[bookIndex].Title;
-                cout << '\n' << "ISBN: " <<   invbook[bookIndex].ISBN<< '\n';
-                cout <<         "Author: " << invbook[bookIndex].Author;
-                cout <<'\n'  << "Date added: " << invbook[bookIndex].DateAdded<< '\n';
-                cout <<         "Publisher: "  << invbook[bookIndex].Publisher; 
-                cout <<'\n'  << "Quantity: " << invbook[bookIndex].QtyOnHand<< '\n'; 
-                cout <<         "Wholesale value: " << invbook[bookIndex].WholesaleValue;
-                cout <<'\n' <<  "Retail price: " << invbook[bookIndex].RetailValue << "\n\n"; 
+
+    
+            bookFile.seekp(0L, ios::end);
+            int totalRecords = bookFile.tellp()/ sizeof(invbook);
+
+
+
+
+        cout << '\n';
+        for(int bookIndex=0; bookIndex<totalRecords; bookIndex++){
+
+            bookFile.clear();
+            bookFile.seekg(sizeof(invbook) * bookIndex, ios::beg);
+            if (!bookFile.eof()) {
+                bookFile.read(reinterpret_cast<char *>(&invbook), sizeof(invbook));
+            }
+
+
+            if(invbook.Title[0] != '\0'){
+                cout << left << "Title: "  <<  invbook.Title;
+                cout << '\n' << "ISBN: " <<   invbook.ISBN<< '\n';
+                cout <<         "Author: " << invbook.Author;
+                cout <<'\n'  << "Date added: " << invbook.DateAdded<< '\n';
+                cout <<         "Publisher: "  << invbook.Publisher; 
+                cout <<'\n'  << "Quantity: " << invbook.QtyOnHand<< '\n'; 
+                cout <<         "Wholesale value: " << invbook.WholesaleValue;
+                cout <<'\n' <<  "Retail price: " << invbook.RetailValue << "\n\n"; 
             }
         }
         separateText();
@@ -95,13 +110,27 @@ void repWholesale(){
             displayDate();
             separateText();
 
-        for(int i =0; i<maximumStock; i++){
-            if(invbook[i].Title[0] != '\0'){
-            cout << left << "Title: "  <<  invbook[i].Title  << '\n';
-            cout         << "ISBN: " <<  invbook[i].ISBN << endl;
-            cout         << "Wholesale value: " << invbook[i].WholesaleValue << "\n\n";
+               
+            bookFile.seekp(0L, ios::end);
+            int totalRecords = bookFile.tellp()/ sizeof(invbook);
+
+
+        for(int i =0; i<totalRecords; i++){
+
+
             
-            totalWholesaleValue += invbook[i].WholesaleValue * invbook[i].QtyOnHand;
+            bookFile.clear();
+            bookFile.seekg(sizeof(invbook) * i, ios::beg);
+            if (!bookFile.eof()) {
+                bookFile.read(reinterpret_cast<char *>(&invbook), sizeof(invbook));
+            }
+
+            if(invbook.Title[0] != '\0'){
+            cout << left << "Title: "  <<  invbook.Title  << '\n';
+            cout         << "ISBN: " <<  invbook.ISBN << endl;
+            cout         << "Wholesale value: " << invbook.WholesaleValue << "\n\n";
+            
+            totalWholesaleValue += invbook.WholesaleValue * invbook.QtyOnHand;
      
             }
         }
@@ -125,13 +154,27 @@ void repRetail(){
         displayDate();
         separateText();
 
-        for(int i =0; i<maximumStock; i++){
-            if(invbook[i].Title[0] != '\0'){
-            cout << left <<  "Title: "  <<  invbook[i].Title; 
-            cout << '\n' <<  "ISBN: " <<   invbook[i].ISBN << endl;
-            cout <<          "Retail price: " << invbook[i].RetailValue << "\n\n"; 
 
-            totalRetailValue += invbook[i].RetailValue * invbook[i].QtyOnHand;
+               
+        bookFile.seekp(0L, ios::end);
+        int totalRecords = bookFile.tellp()/ sizeof(invbook);
+
+
+        for(int i =0; i<totalRecords; i++){
+
+            bookFile.clear();
+            bookFile.seekg(sizeof(invbook) * i, ios::beg);
+            if (!bookFile.eof()) {
+                bookFile.read(reinterpret_cast<char *>(&invbook), sizeof(invbook));
+            }
+    
+
+            if(invbook.Title[0] != '\0'){
+            cout << left <<  "Title: "  <<  invbook.Title; 
+            cout << '\n' <<  "ISBN: " <<   invbook.ISBN << endl;
+            cout <<          "Retail price: " << invbook.RetailValue << "\n\n"; 
+
+            totalRetailValue += invbook.RetailValue * invbook.QtyOnHand;
             }
         }
         separateText();
@@ -152,12 +195,18 @@ void repQty(){
 
         quantitySort(quantityIndexes);
 
-            for (int i = 0; i < maximumStock; i++) {
+
+
+        int totalRecords = bookFile.tellp()/ sizeof(invbook);
+
+
+            for (int i = 0; i < totalRecords; i++) {
                 int bookIndex = quantityIndexes[i];
-                if(invbook[i].Title[0] != '\0'){
-                    cout << left <<  "Title: "  <<  invbook[bookIndex].Title; 
-                    cout << '\n' <<  "ISBN: " <<   invbook[bookIndex].ISBN << endl;
-                    cout <<          "Quantity: " << invbook[bookIndex].QtyOnHand << "\n\n"; 
+                
+                if(invbook.Title[0] != '\0'){
+                    cout << left <<  "Title: "  <<  invbook.Title; 
+                    cout << '\n' <<  "ISBN: " <<   invbook.ISBN << endl;
+                    cout <<          "Quantity: " << invbook.QtyOnHand << "\n\n"; 
                     cout << '\n';
                     }
             }       
@@ -173,13 +222,17 @@ void repCost(){
         separateText();
         costSort(costIndexes);
 
-        for (int i = 0; i < 20; i++) {
+
+        int totalRecords = bookFile.tellp()/ sizeof(invbook);
+
+
+        for (int i = 0; i <totalRecords; i++) {
             int bookIndex = costIndexes[i];
 
-            if(invbook[i].Title[0] != '\0'){
-                cout << left <<  "Title: "  <<  invbook[bookIndex].Title; 
-                cout << '\n' <<  "ISBN: " <<   invbook[bookIndex].ISBN << endl;
-                cout <<          "Store price: " << invbook[bookIndex].WholesaleValue << "\n\n"; 
+            if(invbook.Title[0] != '\0'){
+                cout << left <<  "Title: "  <<  invbook.Title; 
+                cout << '\n' <<  "ISBN: " <<   invbook.ISBN << endl;
+                cout <<          "Store price: " << invbook.WholesaleValue << "\n\n"; 
                 cout << '\n';
                 }
         }
@@ -195,13 +248,16 @@ void repAge(){
         separateText();
         dateSort(ageIndexes);
 
-        for (int i = 0; i < 20; i++) {
+        int totalRecords = bookFile.tellp()/ sizeof(invbook);
+
+
+        for (int i = 0; i < totalRecords; i++) {
             int bookIndex = ageIndexes[i];
 
-            if(invbook[i].Title[0] != '\0'){
-            cout << left <<  "Title: "  <<  invbook[bookIndex].Title; 
-            cout << '\n' <<  "ISBN: " <<   invbook[bookIndex].ISBN << endl;
-            cout <<          "Age: " << invbook[bookIndex].DateAdded << "\n\n"; 
+            if(invbook.Title[0] != '\0'){
+            cout << left <<  "Title: "  <<  invbook.Title << endl;
+            cout << '\n' <<  "ISBN: " <<   invbook.ISBN << endl;
+            cout <<          "Age: " << invbook.DateAdded << "\n\n"; 
                 cout << '\n';
                 }
         }
@@ -210,17 +266,13 @@ void repAge(){
 }
 
 
-/*  guide for displaying c++ date
 
-https://www.w3schools.com/cpp/cpp_date.asp
-    
-    */
 
-void displayDate(){
-    time_t day;
-    time(&day);
-    cout << ctime(&day);
-}
+// https://www.w3schools.com/cpp/cpp_date.asp
+// guide for displaying date
+
+
+
 
 
 
@@ -229,13 +281,39 @@ void quantitySort(int indices[]){
 
     const int SIZE = 20;
 
-    for(int i=0; i<SIZE; i++)
+    BookData book;
+    int maxIndex = 0;
+
+    int totalRecords = bookFile.tellp()/ sizeof(invbook);
+
+    for(int i =0; i<totalRecords; i++   )
         indices[i] = i;
 
-    for (int i = 0; i < SIZE - 1; i++) {
-        int maxIndex = i;
-        for (int j = i + 1; j < SIZE; j++) {
-            if (invbook[indices[j]].QtyOnHand > invbook[indices[maxIndex]].QtyOnHand) {
+
+
+    for (int i = 0; i < totalRecords; i++) {
+        maxIndex = i;
+        for (int j = i ; j < SIZE; j++) {
+            
+
+            //read into temporary book
+            bookFile.clear();
+            bookFile.seekg(sizeof(book) * j, ios::beg);
+            if (!bookFile.eof()) {
+                bookFile.read(reinterpret_cast<char *>(&book), sizeof(book));
+            }
+
+
+            //read into invbook
+            bookFile.clear();
+            bookFile.seekg(sizeof(invbook) * maxIndex, ios::beg);
+            if (!bookFile.eof()) {
+                bookFile.read(reinterpret_cast<char *>(&invbook), sizeof(invbook));
+            }
+
+
+
+            if (book.QtyOnHand > invbook.QtyOnHand) {
                 maxIndex = j;
             }
         }
@@ -250,12 +328,16 @@ void quantitySort(int indices[]){
 
   void costSort(int indices[]){
 
+
+    /*
     const int SIZE = 20;
 
-    for(int i=0; i<SIZE; i++)
-        indices[i] = i;
 
-    for (int i = 0; i < SIZE - 1; i++) {
+    BookData book;
+
+    int totalRecords = bookFile.tellp()/ sizeof(invbook);
+
+    for (int i = 0; i < totalRecords; i++) {
         int maxIndex = i;
         for (int j = i + 1; j < SIZE; j++) {
             if (invbook[indices[j]].WholesaleValue > invbook[indices[maxIndex]].WholesaleValue) {
@@ -266,7 +348,7 @@ void quantitySort(int indices[]){
         indices[i] = indices[maxIndex];
         indices[maxIndex] = temp;
     }
-
+*/
   }
   
 
@@ -274,20 +356,24 @@ void quantitySort(int indices[]){
 
   //definitely fix this at some point -> program doesnt accurately sort by date.
   void dateSort(int indices[]){
-
-    const int SIZE = 20;
+/*
+   const int SIZE = 20;
 
     string dates[SIZE];
 
+
+    int totalRecords = bookFile.tellp()/ sizeof(invbook);
+
+
     //setting up date array for date comparison
-    for(int i =0; i<SIZE; i++){
+    for(int i =0; i<totalRecords; i++){
         dates[i] = invbook[i].DateAdded;
     }
 //code from https://www.geeksforgeeks.org/removing-punctuations-given-string/
     // indexe
-    for(int i=0; i<SIZE; i++)
+    for(int i=0; i<totalRecords; i++)
         indices[i] = i;
-
+*/
   }
 
 
@@ -309,6 +395,12 @@ void quantitySort(int indices[]){
     cout << "\n\n\n";
   }
     
+
+  void displayDate(){
+    time_t day;
+    time(&day);
+    cout << ctime(&day);
+}
 
 
 

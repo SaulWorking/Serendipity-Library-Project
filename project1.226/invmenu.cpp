@@ -6,8 +6,10 @@
 ** Course: CS226 CRN 32842
 ** Professor: Huseyin Aygun
 ** Student: Thien Dinh
-** Due Date: 04/6/2025
+** Due Date: 04/13/2025
 ******************************************************************/
+
+
 
 
 //thank you for fixing this 
@@ -17,6 +19,16 @@
 #include <cstring>
 #include "allheaders.h"
 using namespace std;
+
+
+
+void printError(){
+
+    static int counter{1};
+    cout << "\nERROR! input/output doesnt work/\n\n" << "\n counter: " << counter << endl;
+    counter++;
+}
+
 
 
 void invMenu(){
@@ -63,22 +75,24 @@ void invMenu(){
 void lookUpBook() {
 
     int bookIndex = -1;
-    string bookName = "placeHolder";
+    string bookName;
         
             cout << "Title of book to look up: ";
 
-                cin.ignore();
+            cin.ignore();
             getline(cin, bookName);
  
+            cout << bookIndex;
             bookIndex = findBookIndex(bookName);
                 
+            cout << bookIndex << endl;
+
             if (bookIndex >=0) {
                   // look up book
-        
-                cout << "\nThe only book matching your title is...\n";
+                cout << "\n\nThe only book matching your title is...\n\n";
                 
                 bookIndexInformation(bookIndex);
-        
+                cout << '\n';
             } else {
                   cout << "Book not in inventory\n\n"; 
             }
@@ -89,76 +103,181 @@ void lookUpBook() {
 //check if book space is available
 //if available add book
 //books can have the same title, unfortunately
-void addBook(){
+void addBook() {
+    double priceInput;
+    int quantityInput;
+    char userInput[51];
+    cout << "\nAdding Book...\n" << endl;
+  
+    //set reading position to end of file
+    bookFile.seekp(0L, ios::end);
 
-    //empty book index
-    
-    int emptyBookIndex = 0;
-        cout << '\n' << setw(15) << "You selected add book\n\n";
 
-    //check for empty book index
-    for(int index=0; index<20; index++)
-        //assign empty slot to book userchoice
-        if(isEmpty(index)){
+
+    //find amount of books available
+    int totalRecords = bookFile.tellp()/ sizeof(invbook);
+
+    cout << "\nBooks in storage: " << totalRecords << endl;
+
+
+    for (int i = 0; i < totalRecords; i++) {
+
         
-            //user input variables
-            char userInput[51];
-            int userQuantity = 0;
-            double userPrice = 0.0;
+        //prepare for file reading
+        bookFile.clear();
 
-            emptyBookIndex = index;
+        //try and find an empty book space
+        bookFile.seekg(i*sizeof(invbook), ios::beg);
 
-            cin.ignore();
-            cout <<"book title: ";
-            
-            cin.getline(userInput, 51);
-            strUpper(userInput);
-            setTitle(userInput, emptyBookIndex);
-    
-            cout <<"ISBN: ";
-            cin.getline(userInput, 14);  
-            strUpper(userInput);
-            setISBN(userInput, emptyBookIndex);
-
-
-            cout<< "Author: ";
-            cin.getline(userInput, 31);
-            strUpper(userInput);
-            setAuthor(userInput, emptyBookIndex);
-
-
-            cout <<"Publisher: ";
-            cin.getline(userInput, 31);
-            strUpper(userInput);
-            setPub(userInput, emptyBookIndex);
-
-            
-            cout << "Date: ";
-            cin.getline(userInput, 11);
-            setDateAdded(userInput, emptyBookIndex);
-            
-            
-            cout << "Quantity: ";
-            cin >> userQuantity;
-            setQty(userQuantity, emptyBookIndex);
-    
-            cout << "Wholesale value: ";
-            cin >> userPrice;
-            setWholesale(userPrice, emptyBookIndex);
-
-            cout << "Retail value: ";
-            cin >> userPrice;
-            setRetail(userPrice, emptyBookIndex);
-
-            return;
+        //read from file if not at end and read to struct -> BookData invbook
+        if (!bookFile.eof()) {
+            bookFile.read(reinterpret_cast<char *>(&invbook), sizeof(invbook));
         }
-        //check last slot for book availability.
+    
+
+
+
         
-        if(isEmpty(19)){
-            cout << "Sorry, no space available for new books.\n";
-            return;
-        }
-}
+
+        //check if invbook is empty
+      if (isEmpty()){
+
+        cin.ignore();
+        cout << "ISBN: ";
+        cin.getline(userInput, 14);
+        strUpper((userInput));
+        setISBN(userInput);
+        
+  
+        cout << "Title: ";
+        cin.getline(userInput, 51);
+        strUpper((userInput));
+        setTitle(userInput);
+  
+        cout << "Author: ";
+        cin.getline(userInput, 31);
+        strUpper((userInput));
+        setAuthor(userInput);
+  
+        cout << "Publisher: ";
+        cin.getline(userInput, 31);
+        strUpper((userInput));
+        setPub(userInput);
+  
+        cout << "Date: ";
+        cin.getline(userInput, 11);
+        setDateAdded(userInput);
+  
+        cout << "Quantity: ";
+        cin >> quantityInput;
+        cin.ignore();
+        setQty(quantityInput);
+  
+        cout << "Wholesale cost: ";
+        cin >> priceInput;
+        cin.ignore();
+        setWholesale(priceInput);
+  
+        cout << "Retail cost: ";
+        cin >> priceInput;
+        cin.ignore();
+        setRetail(priceInput);
+  
+
+ 
+//https://stackoverflow.com/questions/38607754/how-to-force-file-flushing
+
+        bookFile.clear();
+        bookFile.seekp(0L, ios::end);
+        bookFile.write(reinterpret_cast<char *>(&invbook), sizeof(invbook));
+        bookFile.flush();
+
+
+
+        return;
+      
+    }
+
+    }
+
+
+
+    cin.ignore();
+
+    cout << "ISBN: ";
+    cin.getline(userInput, 14);
+    strUpper((userInput));
+    setISBN(userInput);
+    
+
+    cout << "Title: ";
+    cin.getline(userInput, 51);
+    strUpper((userInput));
+    setTitle(userInput);
+
+    cout << "Author: ";
+    cin.getline(userInput, 31);
+    strUpper((userInput));
+    setAuthor(userInput);
+
+    cout << "Publisher: ";
+    cin.getline(userInput, 31);
+    strUpper((userInput));
+    setPub(userInput);
+
+    cout << "Date: ";
+    cin.getline(userInput, 11);
+    setDateAdded(userInput);
+
+    cout << "Quantity: ";
+    cin >> quantityInput;
+    cin.ignore();
+    setQty(quantityInput);
+
+    cout << "Wholesale cost: ";
+    cin >> priceInput;
+    cin.ignore();
+    setWholesale(priceInput);
+
+    cout << "Retail cost: ";
+    cin >> priceInput;
+    cin.ignore();
+    setRetail(priceInput);
+
+  
+  //https://stackoverflow.com/questions/37034247/ofstream-creating-file-but-not-writing-to-it-in-c
+  
+    
+    bookFile.clear();
+    bookFile.seekp(0L, ios::end);
+    bookFile.write(reinterpret_cast<char *>(&invbook), sizeof(invbook));
+    bookFile.flush();
+
+
+
+  }
+  
+
+
+
+  
+
+
+//Change the addBook function so it works with the file instead of the array of BookData structures. 
+
+//When a new book is added to the inventory, the program will step through the file, reading each record into a single BookData structure. 
+
+//The program will then call the isEmpty function. 
+
+//When it finds an empty structure, it will ask the user for the book’s data. 
+
+//The function will then set its variable members to the new data. 
+
+//Once the structure is filled with the new data, it will be written to the file, over the old record
+
+
+
+
 
 
 
@@ -185,7 +304,6 @@ void editBook(){
     if (bookIndex >=0) {
         // look up book
         cout << "\nYour book is...\n";
-
 
         bookIndexInformation(bookIndex);
         editInventoryInput(bookIndex);
@@ -222,6 +340,13 @@ void deleteBook(){
 
             if(toupper(user) == 'Y'){
                 removeBook(bookIndex);
+                    
+                
+            bookFile.clear();
+            bookFile.seekp(sizeof(invbook) * bookIndex, ios::beg);
+            bookFile.write(reinterpret_cast<char *>(&invbook), sizeof(invbook));
+            bookFile.flush();
+
             }else{
                 cout << setw(25) << ' ' << "Book doesnt exist.\n";
 
@@ -242,8 +367,8 @@ void editInventoryInput(int index){
     while(exitModule == false){
         cout << setw(20) << ' ' << " Serendipity Booksellers";
         cout << setw(23) << ' ' << "Inventory Database\n";
-        cout << setw(15) << ' ' << "1   ISBN\n";
-        cout << setw(15) << ' ' << "2.  Title\n";
+        cout << setw(15) << ' ' << "1   Title\n";
+        cout << setw(15) << ' ' << "2.  ISBN\n";
         cout << setw(15) << ' ' << "3.	Author\n" ;
         cout << setw(15) << ' ' << "4.	Publisher\n";
         cout << setw(15) << ' ' << "5.	Date Added\n";
@@ -259,60 +384,66 @@ void editInventoryInput(int index){
 
     switch(userEditChoice){
         case 1:
-            cout <<"\n Changing title to: ";
+            cout <<"\n Changing TITLE to: ";
             cin.getline(userInput, 51);
             strUpper(userInput);
-            setTitle(userInput, index);
+            setTitle(userInput);
             break;
         case 2:
             cout <<"\n Changing ISBN to: ";
             cin.getline(userInput, 14);
             strUpper(userInput);
-            setISBN(userInput, index);
+            setISBN(userInput);
 
             break;
         case 3:
             cout <<"\n Changing author to: ";
             cin.getline(userInput, 31);
             strUpper(userInput);
-            setAuthor(userInput, index);
+            setAuthor(userInput);
 
             break;
         case 4:
             cout <<"\n Changing publisher to: ";
             cin.getline(userInput, 31);
             strUpper(userInput);
-            setPub(userInput, index);
+            setPub(userInput);
 
             break;
          case 5:
             cout <<"\n Changing date added to: ";
             cin.getline(userInput, 11);
             strUpper(userInput);
-            setDateAdded(userInput, index);
+            setDateAdded(userInput);
             break;
          case 6:
             cout <<"\n Changing quantity to: ";
             cin >> userQuantity;
-            setQty(userQuantity, index);
+            setQty(userQuantity);
             break;
          case 7:
             cout <<"\n Changing wholesale value to: ";
             cin >> userPrice;
-            setWholesale(userPrice, index);
+            setWholesale(userPrice);
             break;
         case 8:
             cout <<"\n Changing retail value to: ";
             cin >> userPrice;
-            setRetail(userPrice, index);
+            setRetail(userPrice);
             break;
         case 9:
+
             exitModule = true;
             cout <<"goodbye!\n";
             break;
         default:
             cout << "\nTry again!\n";
     }   
+
+        bookFile.clear();
+        bookFile.seekp(sizeof(invbook) * index, ios::beg);
+        bookFile.write(reinterpret_cast<char *>(&invbook), sizeof(invbook));
+        bookFile.flush();
 
     }    
 
@@ -321,51 +452,78 @@ void editInventoryInput(int index){
 
 
 
+
+
 void strUpper(char * wordToBeUppercase){
+
         int counter =0;
         while( *(wordToBeUppercase+counter) != '0' && isalpha(*(wordToBeUppercase + counter))){
-
+ 
             *(wordToBeUppercase+counter) = toupper(wordToBeUppercase[counter]);
                 counter++;
+    
+            
+
+
         }
 }
 
 int findBookIndex(string bookWant){
+
+    //prepare bookfile for operation
+    
+
     //i.e input free -> convert to FREE c-string 
     //check for "FREE" substring
-    int bookIndex{-1};
+        int bookIndex{-1};
 
         char bookToBeSearched[51];
         char found[51];
         char userInput{' '};
         //covert userInput to c-string 
         //convert to uppercase
-
         //general tip-> use strncpy to prevent segfaults/something similar
 
         strncpy(bookToBeSearched, bookWant.c_str(), 51);
         strUpper(bookToBeSearched);
 
 
-        for(int i =0; i <20; i++){
-        //general reminder 
+    
+        //ending byte
+        bookFile.seekp(0L, ios::end);
+        int totalRecords = bookFile.tellp()/ sizeof(invbook);
 
-            //strstr returns pointer to string or nullptr
-            //if statement accepts pointers
+        cout << "\nBooks in storage: " << totalRecords << endl;
+
+
+    
+
+
+        for(int i =0; i <totalRecords;i++){
             
-            //check if input is found in inventory. continue if else.
-            if(strstr(invbook[i].Title, bookToBeSearched)){
-                strncpy(found, strstr(invbook[i].Title, bookToBeSearched), 51);
+            bookFile.clear();
+            bookFile.seekg(sizeof(invbook) * i, ios::beg);
+            if (!bookFile.eof()) {
+                bookFile.read(reinterpret_cast<char *>(&invbook), sizeof(invbook));
+            }
+
+
+            if(strstr(invbook.Title, bookToBeSearched)){
+                strncpy(found, strstr(invbook.Title, bookToBeSearched), 51);
+
+
+
                 }else{
                     continue;
             }
 
-                //check if substring is empty
             if(found[0] != '\0'){
 
                 //check if substring and book title are valid 
-                if(!strcmp(found, invbook[i].Title) && invbook[i].Title[0] != '\0'){
+                if(!strcmp(found, invbook.Title) && invbook.Title[0] != '\0'){
 
+
+                    
                     bookIndex = i;
                         bookIndexInformation(bookIndex);
                         cout << "\nIs this your book(Y/N)?";
@@ -376,22 +534,22 @@ int findBookIndex(string bookWant){
                         }else {
                             //else continue searching
                             cout << "\nNext book...\n\n";
-
                         }
-                }
-            }
+                }    
+
+        }
 
     }
 
-    //return to zero
+    
     bookIndex = -1;
 
     return bookIndex;
+}    //premature check
 
-}
 
 
-    
+
 
 
 
@@ -406,65 +564,66 @@ Hint: Use the strstr function to search the title in the database.*/
 
 void bookIndexInformation(const int bookIndex){
     bookInfo(
-    invbook[bookIndex].Title, 
-    invbook[bookIndex].ISBN,
-    invbook[bookIndex].Author,  
-    invbook[bookIndex].Publisher, 
-    invbook[bookIndex].DateAdded, 
-    invbook[bookIndex].QtyOnHand,
-    invbook[bookIndex].WholesaleValue, 
-    invbook[bookIndex].RetailValue);
+    invbook.Title, 
+    invbook.ISBN,
+    invbook.Author,  
+    invbook.Publisher, 
+    invbook.DateAdded, 
+    invbook.QtyOnHand,
+    invbook.WholesaleValue, 
+    invbook.RetailValue);
 }
 
 
 
 
+void setTitle(char *Title){
+    
+    strncpy(invbook.Title, Title, 51); 
 
-
-
-void setTitle(char *bookName, int bookIndex){
-    strncpy(invbook[bookIndex].Title, bookName, 51);
 }
-void setISBN(char *ISBN, int bookIndex){
-    strncpy(invbook[bookIndex].ISBN, ISBN, 14);
+
+void setISBN(char *ISBN){
+    strncpy(invbook.ISBN, ISBN, 14);
 }
-void setAuthor(char *Author, int bookIndex){
-    strncpy(invbook[bookIndex].Author, Author, 31);
+void setAuthor(char *Author){
+    strncpy(invbook.Author, Author, 31);
 }		 
-void setPub(char *Publisher, int bookIndex){
-    strncpy(invbook[bookIndex].Publisher, Publisher, 31);
+void setPub(char *Publisher){
+    strncpy(invbook.Publisher, Publisher, 31);
+}
+void setDateAdded(char *DateAdded){
+    strncpy(invbook.DateAdded, DateAdded, 11);
+}
 
+void setQty(int bookQuantity){
+    invbook.QtyOnHand = bookQuantity;
 }
-void setDateAdded(char *DateAdded, int bookIndex){
-    strncpy(invbook[bookIndex].DateAdded, DateAdded, 11);
-}
-
-void setQty(int bookQuantity, int bookIndex){
-    invbook[bookIndex].QtyOnHand = bookQuantity;
-}
-void setWholesale(double wholesalePrice, int bookIndex){
-    invbook[bookIndex].WholesaleValue = wholesalePrice;
+void setWholesale(double wholesalePrice){
+    invbook.WholesaleValue = wholesalePrice;
 } 
-void setRetail(double retailPrice, int bookIndex){
-    invbook[bookIndex].RetailValue = retailPrice;
+void setRetail(double retailPrice){
+    invbook.RetailValue = retailPrice;
 }
-int isEmpty(int bookIndex){
+int isEmpty(){
         //checks for first character of Title at specified book index
-    if(invbook[bookIndex].Title[0] == '\0'){
+    if(invbook.Title[0] == '\0'){
         return true;
-    }else{  
+    }else{
         return false;
     }
 
+    
 }
+
 void removeBook(int bookIndex){
-    invbook[bookIndex].Title[0] = '\0';
-    invbook[bookIndex].ISBN[0] = '\0';
-    invbook[bookIndex].Author[0]= '\0';
-    invbook[bookIndex].Publisher[0] = '\0';
-    invbook[bookIndex].DateAdded[0]= '\0';
-    invbook[bookIndex].QtyOnHand = 0;
-    invbook[bookIndex].RetailValue = 0.0;
-    invbook[bookIndex].WholesaleValue = 0.0;
+    invbook.Title[0] = '\0';
+    invbook.ISBN[0] = '\0';
+    invbook.Author[0]= '\0';
+    invbook.Publisher[0] = '\0';
+    invbook.DateAdded[0]= '\0';
+    invbook.QtyOnHand = 0;
+    invbook.RetailValue = 0.0;
+    invbook.WholesaleValue = 0.0;
 }
 

@@ -6,7 +6,7 @@
 ** Course: CS226 CRN 32842
 ** Professor: Huseyin Aygun
 ** Student: Thien Dinh
-** Due Date: 04/6/2025
+** Due Date: 04/13/2025
 ******************************************************************/
 #include <iostream>
 #include <iomanip>
@@ -60,6 +60,8 @@ using namespace std;
     */
 
     //arrays sorted by TITLE, ISBN, AUTHOR, PUBLISHER, DATE ADDED, QUANTITY, PRICE, and RETAIL PRICE
+
+/*
 BookData invbook[20] = {
         {"FREEDOM", "0374158460", "JONATHAN FRANZEN", "FARRAR", "03-05-2004", 40, 12.50, 30.4},
     
@@ -81,6 +83,15 @@ BookData invbook[20] = {
     
         {"INTRODUCTION TO THE THEORY OF COMPUTATION", "9780137082073", "MICHAEL SIPSER", "CENGAGE LEARNING", "02-05-2025", 12, 50.00, 80.0}
     };
+*/
+
+
+
+//variable to be read in
+BookData invbook;
+fstream bookFile("reports.txt", ios::binary | ios::out | ios::in);
+
+
 
 int main(){
 
@@ -111,6 +122,10 @@ int main(){
                 break;
             case 4:
                 cout << '\n' << setw(15) << ' ' << "Goodbye!\n";
+
+                    bookFile.close();
+
+
                 exitModule = true;
                 break;
             default:

@@ -1,25 +1,38 @@
 #include <iostream>
 #include <cstring>
 #include <string>
+#include <fstream>
 
 using namespace std;
 
-int findBookIndex(string);
 
-int findBookIndex(string bookWant){
+struct BookData{
+    char Title[51];
+    char ISBN[14];    
+    char Author[31];
+    char Publisher[31];
+    char DateAdded[11]; 
 
-    cout << bookWant << endl;
-    
+    int QtyOnHand;     
+    double WholesaleValue;
+    double RetailValue;
 
-    return 1;
 
-}
+};  
 
 
 
 int main(){
 
-int hi = findBookIndex("hi");
+    fstream homophobia("reports.txt", ios::binary | ios::out | ios::in);
+char read;
+
+
+    BookData invbook;
+
+    cout << sizeof(invbook);
+
+    
 
     return 0;
 }

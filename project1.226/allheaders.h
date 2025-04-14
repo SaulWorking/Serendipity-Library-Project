@@ -3,9 +3,13 @@
 
 #include <string>
 #include <ctime>
+#include <fstream>
+#include <iostream>
 using namespace std;
 //general purpose functions/variables
 
+
+void printError();
 
 
     //prints '-' 100 times
@@ -64,11 +68,9 @@ using namespace std;
      int QtyOnHand;     
      double WholesaleValue;
      double RetailValue;
-
-
 };  
 
-extern BookData invbook[20];
+extern BookData invbook;
 
 /*
 previous data structure
@@ -83,18 +85,23 @@ extern double bookWholesaleValue[20];
 extern double bookRetailValue[20];
 */
 
+extern fstream bookFile;
+
+
+
+
 
 //functions for inventory management
     //set user input to specific index in inventory
-void setTitle(char *, int);	
-void setISBN(char *, int);		
-void setAuthor(char *, int);		 
-void setPub(char *, int);		
-void setDateAdded(char *, int);	  
-void setQty(int, int);	
-void setWholesale(double, int);	 
-void setRetail(double, int);
-int  isEmpty(int);
+void setTitle(char *);	
+void setISBN(char *);		
+void setAuthor(char *);		 
+void setPub(char *);		
+void setDateAdded(char *);	  
+void setQty(int);	
+void setWholesale(double);	 
+void setRetail(double);
+int  isEmpty();
 void removeBook(int);
 
 
