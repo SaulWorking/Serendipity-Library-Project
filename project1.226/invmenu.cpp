@@ -244,33 +244,15 @@ void addBook() {
   
   //https://stackoverflow.com/questions/37034247/ofstream-creating-file-but-not-writing-to-it-in-c
   
-    
     bookFile.clear();
     bookFile.seekp(0L, ios::end);
     bookFile.write(reinterpret_cast<char *>(&invbook), sizeof(invbook));
     bookFile.flush();
 
 
-
   }
   
 
-
-
-  
-
-
-//Change the addBook function so it works with the file instead of the array of BookData structures. 
-
-//When a new book is added to the inventory, the program will step through the file, reading each record into a single BookData structure. 
-
-//The program will then call the isEmpty function. 
-
-//When it finds an empty structure, it will ask the user for the book’s data. 
-
-//The function will then set its variable members to the new data. 
-
-//Once the structure is filled with the new data, it will be written to the file, over the old record
 
 
 
