@@ -6,7 +6,7 @@
 ** Course: CS226 CRN 32842
 ** Professor: Huseyin Aygun
 ** Student: Thien Dinh
-** Due Date: 04/13/2025
+** Due Date: 04/20/2025
 ******************************************************************/
 
 
@@ -20,15 +20,12 @@
 #include "allheaders.h"
 using namespace std;
 
-
-
 void printError(){
 
     static int counter{1};
     cout << "\nERROR! input/output doesnt work/\n\n" << "\n counter: " << counter << endl;
     counter++;
 }
-
 
 
 void invMenu(){
@@ -113,16 +110,12 @@ void addBook() {
     bookFile.seekp(0L, ios::end);
 
 
-
     //find amount of books available
     int totalRecords = bookFile.tellp()/ sizeof(invbook);
 
     cout << "\nBooks in storage: " << totalRecords << endl;
 
-
     for (int i = 0; i < totalRecords; i++) {
-
-        
         //prepare for file reading
         bookFile.clear();
 
@@ -135,123 +128,111 @@ void addBook() {
         }
     
 
-
         //check if invbook is empty
-      if (isEmpty()){
+        if (invbook.isEmpty()){
 
+            cin.ignore();
+            cout << "ISBN: ";
+            cin.getline(userInput, 14);
+            strUpper((userInput));
+            invbook.setISBN(userInput);
+            
+            cout << "Title: ";
+            cin.getline(userInput, 51);
+            strUpper((userInput));
+            invbook.setTitle(userInput);
+    
+            cout << "Author: ";
+            cin.getline(userInput, 31);
+            strUpper((userInput));
+            invbook.setAuthor(userInput);
+    
+            cout << "Publisher: ";
+            cin.getline(userInput, 31);
+            strUpper((userInput));
+            invbook.setPub(userInput);
+    
+            cout << "Date: ";
+            cin.getline(userInput, 11);
+            invbook.setDateAdded(userInput);
+    
+            cout << "Quantity: ";
+            cin >> quantityInput;
+            cin.ignore();
+            invbook.setQty(quantityInput);
+    
+            cout << "Wholesale cost: ";
+            cin >> priceInput;
+            cin.ignore();
+            invbook.setWholesale(priceInput);
+    
+            cout << "Retail cost: ";
+            cin >> priceInput;
+            cin.ignore();
+            invbook.setRetail(priceInput);
+    
+
+    //https://stackoverflow.com/questions/38607754/how-to-force-file-flushing
+            bookFile.clear();
+            bookFile.seekp(0L, ios::end);
+            bookFile.write(reinterpret_cast<char *>(&invbook), sizeof(invbook));
+            bookFile.flush();
+            return;
+        
+        }
+    }
+
+
+    if(totalRecords < 20){
         cin.ignore();
+
         cout << "ISBN: ";
         cin.getline(userInput, 14);
         strUpper((userInput));
-        setISBN(userInput);
+        invbook.setISBN(userInput);
         
-  
+
         cout << "Title: ";
         cin.getline(userInput, 51);
         strUpper((userInput));
-        setTitle(userInput);
-  
+        invbook.setTitle(userInput);
+
         cout << "Author: ";
         cin.getline(userInput, 31);
         strUpper((userInput));
-        setAuthor(userInput);
-  
+        invbook.setAuthor(userInput);
+
         cout << "Publisher: ";
         cin.getline(userInput, 31);
         strUpper((userInput));
-        setPub(userInput);
-  
+        invbook.setPub(userInput);
+
         cout << "Date: ";
         cin.getline(userInput, 11);
-        setDateAdded(userInput);
-  
+        invbook.setDateAdded(userInput);
+
         cout << "Quantity: ";
         cin >> quantityInput;
         cin.ignore();
-        setQty(quantityInput);
-  
+        invbook.setQty(quantityInput);
+
         cout << "Wholesale cost: ";
         cin >> priceInput;
         cin.ignore();
-        setWholesale(priceInput);
-  
+        invbook.setWholesale(priceInput);
+
         cout << "Retail cost: ";
         cin >> priceInput;
         cin.ignore();
-        setRetail(priceInput);
-  
+        invbook.setRetail(priceInput);
 
- 
-//https://stackoverflow.com/questions/38607754/how-to-force-file-flushing
-
+    //https://stackoverflow.com/questions/37034247/ofstream-creating-file-but-not-writing-to-it-in-c
         bookFile.clear();
         bookFile.seekp(0L, ios::end);
         bookFile.write(reinterpret_cast<char *>(&invbook), sizeof(invbook));
         bookFile.flush();
-
-
-
-        return;
-      
     }
-
-    }
-
-
-
-    cin.ignore();
-
-    cout << "ISBN: ";
-    cin.getline(userInput, 14);
-    strUpper((userInput));
-    setISBN(userInput);
-    
-
-    cout << "Title: ";
-    cin.getline(userInput, 51);
-    strUpper((userInput));
-    setTitle(userInput);
-
-    cout << "Author: ";
-    cin.getline(userInput, 31);
-    strUpper((userInput));
-    setAuthor(userInput);
-
-    cout << "Publisher: ";
-    cin.getline(userInput, 31);
-    strUpper((userInput));
-    setPub(userInput);
-
-    cout << "Date: ";
-    cin.getline(userInput, 11);
-    setDateAdded(userInput);
-
-    cout << "Quantity: ";
-    cin >> quantityInput;
-    cin.ignore();
-    setQty(quantityInput);
-
-    cout << "Wholesale cost: ";
-    cin >> priceInput;
-    cin.ignore();
-    setWholesale(priceInput);
-
-    cout << "Retail cost: ";
-    cin >> priceInput;
-    cin.ignore();
-    setRetail(priceInput);
-
-  
-  //https://stackoverflow.com/questions/37034247/ofstream-creating-file-but-not-writing-to-it-in-c
-  
-    bookFile.clear();
-    bookFile.seekp(0L, ios::end);
-    bookFile.write(reinterpret_cast<char *>(&invbook), sizeof(invbook));
-    bookFile.flush();
-
-
-  }
-  
+}
 
 
 
@@ -318,7 +299,9 @@ void deleteBook(){
                     cin.ignore();
 
             if(toupper(user) == 'Y'){
-                removeBook(bookIndex);
+                invbook.removeBook();
+                // at book Index and then Write to file
+                //book Index Byte
                     
                 
             bookFile.clear();
@@ -366,49 +349,49 @@ void editInventoryInput(int index){
             cout <<"\n Changing TITLE to: ";
             cin.getline(userInput, 51);
             strUpper(userInput);
-            setTitle(userInput);
+            invbook.setTitle(userInput);
             break;
         case 2:
             cout <<"\n Changing ISBN to: ";
             cin.getline(userInput, 14);
             strUpper(userInput);
-            setISBN(userInput);
+            invbook.setISBN(userInput);
 
             break;
         case 3:
             cout <<"\n Changing author to: ";
             cin.getline(userInput, 31);
             strUpper(userInput);
-            setAuthor(userInput);
+            invbook.setAuthor(userInput);
 
             break;
         case 4:
             cout <<"\n Changing publisher to: ";
             cin.getline(userInput, 31);
             strUpper(userInput);
-            setPub(userInput);
+            invbook.setPub(userInput);
 
             break;
          case 5:
             cout <<"\n Changing date added to: ";
             cin.getline(userInput, 11);
             strUpper(userInput);
-            setDateAdded(userInput);
+            invbook.setDateAdded(userInput);
             break;
          case 6:
             cout <<"\n Changing quantity to: ";
             cin >> userQuantity;
-            setQty(userQuantity);
+            invbook.setQty(userQuantity);
             break;
          case 7:
             cout <<"\n Changing wholesale value to: ";
             cin >> userPrice;
-            setWholesale(userPrice);
+            invbook.setWholesale(userPrice);
             break;
         case 8:
             cout <<"\n Changing retail value to: ";
             cin >> userPrice;
-            setRetail(userPrice);
+            invbook.setRetail(userPrice);
             break;
         case 9:
 
@@ -434,28 +417,19 @@ void editInventoryInput(int index){
 
 
 void strUpper(char * wordToBeUppercase){
-
         int counter =0;
         while( *(wordToBeUppercase+counter) != '0' && isalpha(*(wordToBeUppercase + counter))){
- 
             *(wordToBeUppercase+counter) = toupper(wordToBeUppercase[counter]);
                 counter++;
-    
-            
-
-
         }
 }
 
 int findBookIndex(string bookWant){
-
     //prepare bookfile for operation
-    
 
     //i.e input free -> convert to FREE c-string 
     //check for "FREE" substring
         int bookIndex{-1};
-
         char bookToBeSearched[51];
         char found[51];
         char userInput{' '};
@@ -466,43 +440,30 @@ int findBookIndex(string bookWant){
         strncpy(bookToBeSearched, bookWant.c_str(), 51);
         strUpper(bookToBeSearched);
 
-
-    
         //ending byte
         bookFile.seekp(0L, ios::end);
         int totalRecords = bookFile.tellp()/ sizeof(invbook);
 
         cout << "\nBooks in storage: " << totalRecords << endl;
-
-
-    
-
-
         for(int i =0; i <totalRecords;i++){
-            
+    
             bookFile.clear();
             bookFile.seekg(sizeof(invbook) * i, ios::beg);
             if (!bookFile.eof()) {
                 bookFile.read(reinterpret_cast<char *>(&invbook), sizeof(invbook));
             }
 
-
-            if(strstr(invbook.Title, bookToBeSearched)){
-                strncpy(found, strstr(invbook.Title, bookToBeSearched), 51);
-
-
-
+            if(strstr(invbook.getTitle(), bookToBeSearched)){
+                strncpy(found, strstr(invbook.getTitle(), bookToBeSearched), 51);
                 }else{
-                    continue;
+                continue;
             }
 
             if(found[0] != '\0'){
 
                 //check if substring and book title are valid 
-                if(!strcmp(found, invbook.Title) && invbook.Title[0] != '\0'){
+                if(!strcmp(found, invbook.getTitle()) && invbook.getTitle()[0] != '\0'){
 
-
-                    
                     bookIndex = i;
                         bookIndexInformation(bookIndex);
                         cout << "\nIs this your book(Y/N)?";
@@ -543,66 +504,15 @@ Hint: Use the strstr function to search the title in the database.*/
 
 void bookIndexInformation(const int bookIndex){
     bookInfo(
-    invbook.Title, 
-    invbook.ISBN,
-    invbook.Author,  
-    invbook.Publisher, 
-    invbook.DateAdded, 
-    invbook.QtyOnHand,
-    invbook.WholesaleValue, 
-    invbook.RetailValue);
+    invbook.getTitle(), 
+    invbook.getISBN(),
+    invbook.getAuthor(),
+    invbook.getPub(),
+    invbook.getDateAdded(),
+    invbook.getQty(),
+    invbook.getWholesale(),
+    invbook.getRetail());
 }
 
 
-
-
-void setTitle(char *Title){
-    
-    strncpy(invbook.Title, Title, 51); 
-
-}
-
-void setISBN(char *ISBN){
-    strncpy(invbook.ISBN, ISBN, 14);
-}
-void setAuthor(char *Author){
-    strncpy(invbook.Author, Author, 31);
-}		 
-void setPub(char *Publisher){
-    strncpy(invbook.Publisher, Publisher, 31);
-}
-void setDateAdded(char *DateAdded){
-    strncpy(invbook.DateAdded, DateAdded, 11);
-}
-
-void setQty(int bookQuantity){
-    invbook.QtyOnHand = bookQuantity;
-}
-void setWholesale(double wholesalePrice){
-    invbook.WholesaleValue = wholesalePrice;
-} 
-void setRetail(double retailPrice){
-    invbook.RetailValue = retailPrice;
-}
-int isEmpty(){
-        //checks for first character of Title at specified book index
-    if(invbook.Title[0] == '\0'){
-        return true;
-    }else{
-        return false;
-    }
-
-    
-}
-
-void removeBook(int bookIndex){
-    invbook.Title[0] = '\0';
-    invbook.ISBN[0] = '\0';
-    invbook.Author[0]= '\0';
-    invbook.Publisher[0] = '\0';
-    invbook.DateAdded[0]= '\0';
-    invbook.QtyOnHand = 0;
-    invbook.RetailValue = 0.0;
-    invbook.WholesaleValue = 0.0;
-}
 

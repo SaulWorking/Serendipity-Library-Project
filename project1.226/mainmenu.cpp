@@ -6,7 +6,7 @@
 ** Course: CS226 CRN 32842
 ** Professor: Huseyin Aygun
 ** Student: Thien Dinh
-** Due Date: 04/13/2025
+** Due Date: 04/20/2025
 ******************************************************************/
 #include <iostream>
 #include <iomanip>
@@ -64,37 +64,26 @@ using namespace std;
 /*
 BookData invbook[20] = {
         {"FREEDOM", "0374158460", "JONATHAN FRANZEN", "FARRAR", "03-05-2004", 40, 12.50, 30.4},
-    
         {"HEAD FIRST DESIGN PATTERNS", "0596007124", "ELISABETH FREEMAN", "O'REILLY MEDIA", "01-13-2006", 35, 25.00, 45.0},
-    
         {"ARDUINO COOKBOOK", "0596802471", "MICHAEL MARGOLIS", "O'REILLY MEDIA", "02-05-2025", 50, 34.5, 56.7},
-    
         {"CLEAN CODE", "9780132350884", "ROBERT C. MARTIN", "PRENTICE HALL", "06-04-2008", 25, 30.00, 50.0},
-    
         {"THE PRAGMATIC PROGRAMMER", "9780201616224", "ANDREW HUNT", "ADDISON-WESLEY", "02-05-2005", 20, 28.00, 47.5},
-    
         {"LEARNING PYTHON", "9781491950357", "MARK LUTZ", "O'REILLY MEDIA", "12-4-2013", 45, 40.00, 65.0},
-    
         {"REFACTORING", "9780321125217", "MARTIN FOWLER", "ADDISON-WESLEY", "5-5-2019", 30, 35.00, 55.0},
-    
         {"EFFECTIVE JAVA", "9780134494166", "JOSHUA BLOCH", "ADDISON-WESLEY", "03-14-2009", 15, 38.00, 60.0},
-    
         {"FLUENT PYTHON", "9781491946008", "LUCIANO RAMALHO", "O'REILLY MEDIA", "05-12-2020", 20, 45.00, 70.0},
-    
         {"INTRODUCTION TO THE THEORY OF COMPUTATION", "9780137082073", "MICHAEL SIPSER", "CENGAGE LEARNING", "02-05-2025", 12, 50.00, 80.0}
     };
 */
 
-
-
-//variable to be read in
+//Declaring global OBJECT... to be read in
 BookData invbook;
+
+
+    //"reports.txt" is "ASCIIdata.txt" written in binary data
 fstream bookFile("reports.txt", ios::binary | ios::out | ios::in);
 
-
-
 int main(){
-
     int mainMenuChoice{0};
     bool exitModule = false;
     
@@ -109,7 +98,6 @@ int main(){
     cout << setw(15) << ' ' << "4.	Exit" << endl;
     cout << "\n\n" << setw(15) << ' ' << "Enter your choice: ";
         cin >> mainMenuChoice;
-
         switch(mainMenuChoice){
             case 1:
                 cashier();
@@ -122,10 +110,7 @@ int main(){
                 break;
             case 4:
                 cout << '\n' << setw(15) << ' ' << "Goodbye!\n";
-
-                    bookFile.close();
-
-
+                bookFile.close();
                 exitModule = true;
                 break;
             default:

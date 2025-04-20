@@ -6,7 +6,7 @@
 ** Course: CS226 CRN 32842
 ** Professor: Huseyin Aygun
 ** Student: Thien Dinh
-** Due Date: 04/13/2025
+** Due Date: 04/20/2025
 ******************************************************************/
 
 
@@ -16,7 +16,6 @@
 #include <iostream>
 #include <iomanip>
 #include <cstring>
-
 #include "allheaders.h"
 using namespace std;
 
@@ -30,8 +29,8 @@ void cashier(){
     const double salesTax = 0.06;
     double checkoutPrice = 0;
     int checkoutQuantity{0}, ISBNIndex{-1};
-    char userInput;
-    string cashierISBN;
+    char userInput = '\0';
+    string cashierISBN = "";
 
     
     while(exitModule == false){
@@ -45,8 +44,8 @@ void cashier(){
         ISBNIndex = ISBNLookup(cashierISBN);
 
     //check for book availability
-        if(invbook.QtyOnHand <= 0){
-            cout << invbook.Title;
+        if(invbook.getQty() <= 0){
+            cout << invbook.getTitle();
             cout << " is not in stock.\nExiting cashier module...\n";
             return;
         }
@@ -73,13 +72,22 @@ void cashier(){
             if(ISBNIndex >=0){
                 cout << "Book quantity? ";
                 cin >> checkoutQuantity;
-                while(checkoutQuantity < 0 || checkoutQuantity > invbook.QtyOnHand && !isdigit(checkoutQuantity)){
+                while(checkoutQuantity < 0 || checkoutQuantity > invbook.getQty() && !isdigit(checkoutQuantity)){
                     cout <<"\nInvalid Quantity. Try again: ";
                     cin >> checkoutQuantity;
                 }
 
                 //subtract user quantity from store inventory
-                invbook.QtyOnHand -= checkoutQuantity;
+                invbook.setQty(invbook.getQty()- checkoutQuantity);
+
+                //write new quantity to file
+
+                bookFile.clear();
+                bookFile.seekp(sizeof(invbook) * ISBNIndex, ios::beg);
+                bookFile.write(reinterpret_cast<char *>(&invbook), sizeof(invbook));
+                bookFile.flush();
+        
+
             }
 
             cout << "Do you want to purchase another book?(y/n)";
@@ -88,7 +96,7 @@ void cashier(){
     //add multiple book purchasing functionality
 
 
-        checkoutPrice = (invbook.RetailValue * checkoutQuantity);
+        checkoutPrice = (invbook.getRetail() * checkoutQuantity);
 
     //output sale information for user
 
@@ -97,7 +105,7 @@ void cashier(){
     
     cout  << left<< setw(5) << "Qty" << setw(20) << "ISBN" << setw(40) << "Title" << setw(10) << "Price"  << setw(3) << "Total"<< endl;
         separateText();
-    cout << '\n' << setw(4)  << left << fixed << setprecision(2) << checkoutQuantity << setw(20) << invbook.ISBN << setw(40) << invbook.Title  << " $" << setw(9) << invbook.RetailValue << "$"  << checkoutPrice << endl;
+    cout << '\n' << setw(4)  << left << fixed << setprecision(2) << checkoutQuantity << setw(20) << invbook.getISBN() << setw(40) << invbook.getTitle()  << " $" << setw(9) << invbook.getRetail() << "$"  << checkoutPrice << endl;
         cout << "\n\n\n";
 
         cout << setw(61)  << "\t\tSubtotal" << "$" << checkoutPrice << endl; 
@@ -125,20 +133,20 @@ int ISBNLookup(string ISBN){
 
 
 
-    for(int i =0; i<totalRecords; i++){
+    for(int bookIndex =0; bookIndex<totalRecords; bookIndex++){
 
 
         bookFile.clear();
-        bookFile.seekg(sizeof(invbook) * i, ios::beg);
+        bookFile.seekg(sizeof(invbook) * bookIndex, ios::beg);
         if (!bookFile.eof()) {
             bookFile.read(reinterpret_cast<char *>(&invbook), sizeof(invbook));
         }
 
 
 
-        if(invbook.ISBN == ISBN){
+        if(invbook.getISBN() == ISBN){
        //returns ISBN index 
-            return i;
+            return bookIndex;
         }
     }
     //returns invalid ISBN index
