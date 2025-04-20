@@ -45,6 +45,7 @@ void cashier(){
 
     //check for book availability
         if(invbook.getQty() <= 0){
+            cout << "This book ";
             cout << invbook.getTitle();
             cout << " is not in stock.\nExiting cashier module...\n";
             return;
@@ -55,14 +56,16 @@ void cashier(){
             cout << "Cannot locate ISBN.";
             cout << "\nDo you want to retry?(y/n)";
                 cin >> userInput;
+                //continue
             if(toupper(userInput) == 'Y'){
                 cin.ignore();
                 getline(cin, cashierISBN);
                 ISBNIndex = ISBNLookup(cashierISBN);
             }else{
+                //exit
                 cout << "\nExiting cashier module...\n";
                 exitModule = true;
-                break;
+                return;
             }
 
         }
@@ -72,6 +75,7 @@ void cashier(){
             if(ISBNIndex >=0){
                 cout << "Book quantity? ";
                 cin >> checkoutQuantity;
+                // 0 < quantity < actualBookQuantity
                 while(checkoutQuantity < 0 || checkoutQuantity > invbook.getQty() && !isdigit(checkoutQuantity)){
                     cout <<"\nInvalid Quantity. Try again: ";
                     cin >> checkoutQuantity;
@@ -81,7 +85,6 @@ void cashier(){
                 invbook.setQty(invbook.getQty()- checkoutQuantity);
 
                 //write new quantity to file
-
                 bookFile.clear();
                 bookFile.seekp(sizeof(invbook) * ISBNIndex, ios::beg);
                 bookFile.write(reinterpret_cast<char *>(&invbook), sizeof(invbook));
@@ -90,11 +93,9 @@ void cashier(){
 
             }
 
-            cout << "Do you want to purchase another book?(y/n)";
-
 
     //add multiple book purchasing functionality
-
+                //sometime
 
         checkoutPrice = (invbook.getRetail() * checkoutQuantity);
 
@@ -136,6 +137,7 @@ int ISBNLookup(string ISBN){
     for(int bookIndex =0; bookIndex<totalRecords; bookIndex++){
 
 
+    //read each book structure
         bookFile.clear();
         bookFile.seekg(sizeof(invbook) * bookIndex, ios::beg);
         if (!bookFile.eof()) {

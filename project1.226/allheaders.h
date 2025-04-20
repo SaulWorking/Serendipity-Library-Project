@@ -16,6 +16,10 @@ using namespace std;
     void forcedUserWait();
     //takes book index and displays bookinfo
     void bookIndexInformation(int);
+    //swap
+    void swap(int &, int &);
+    void swap(double &, double &);
+
 //bookinfo header 
     //regurgitates book information 
     void bookInfo(char[], char[], char[], char[], char[], int, double, double);
@@ -90,7 +94,7 @@ class BookData{
 
         //get functions
         //char * is c-string
-        char * getTitle()
+        char * getTitle() 
             {return bookTitle;}
         char * getISBN()
             {return bookISBN;}
@@ -98,14 +102,31 @@ class BookData{
             {return bookAuthor;}
         char * getPub()
             {return bookPublisher;}
-        char * getDateAdded()
+        char * getDateAdded() 
             {return bookDateAdded;}
-        int getQty()
+        int getQty() const
             {return bookQtyOnHand;}
-        double getWholesale()
+        double getWholesale() const
             {return bookWholesaleValue;}
-        double getRetail()
-            {return bookRetailValue;}    
+        double getRetail() const
+            {return bookRetailValue;}
+        
+
+        //initialize with null values
+        BookData(){
+            bookTitle[0] = '\0';
+            bookISBN[0] = '\0'; 
+            bookAuthor[0] = '\0';
+            bookPublisher[0] = '\0';
+            bookDateAdded[0] = '\0';
+    
+            bookQtyOnHand = 0;    
+            bookWholesaleValue = 0.0;
+            bookRetailValue = 0.0;
+
+        }
+
+
 };  
 
 /*

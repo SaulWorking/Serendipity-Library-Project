@@ -110,6 +110,7 @@ int main(){
                 break;
             case 4:
                 cout << '\n' << setw(15) << ' ' << "Goodbye!\n";
+                bookFile.clear();
                 bookFile.close();
                 exitModule = true;
                 break;

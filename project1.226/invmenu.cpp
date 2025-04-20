@@ -79,11 +79,9 @@ void lookUpBook() {
             cin.ignore();
             getline(cin, bookName);
  
-            cout << bookIndex;
+
             bookIndex = findBookIndex(bookName);
                 
-            cout << bookIndex << endl;
-
             if (bookIndex >=0) {
                   // look up book
                 cout << "\n\nThe only book matching your title is...\n\n";
@@ -101,9 +99,10 @@ void lookUpBook() {
 //if available add book
 //books can have the same title, unfortunately
 void addBook() {
-    double priceInput;
-    int quantityInput;
+    double priceInput =0.0;
+    int quantityInput =0;
     char userInput[51];
+    bool writeCheck = false;
     cout << "\nAdding Book...\n" << endl;
   
     //set reading position to end of file
@@ -170,13 +169,33 @@ void addBook() {
             cin >> priceInput;
             cin.ignore();
             invbook.setRetail(priceInput);
+            
+            if(priceInput != 0.0 && quantityInput != 0 && userInput[0] != '\0'){
+                writeCheck = true;
+
+            }
+
+            
     
 
     //https://stackoverflow.com/questions/38607754/how-to-force-file-flushing
-            bookFile.clear();
-            bookFile.seekp(0L, ios::end);
-            bookFile.write(reinterpret_cast<char *>(&invbook), sizeof(invbook));
-            bookFile.flush();
+
+            if(writeCheck){
+                bookFile.clear();
+                bookFile.seekp(0L, ios::end);
+                bookFile.write(reinterpret_cast<char *>(&invbook), sizeof(invbook));
+                bookFile.flush();
+            }else{
+
+                invbook.removeBook();
+                
+                bookFile.clear();
+                bookFile.seekp(0L, ios::end);
+                bookFile.write(reinterpret_cast<char *>(&invbook), sizeof(invbook));
+                bookFile.flush();
+
+                "Failure to write...\n";
+            }
             return;
         
         }
@@ -486,7 +505,6 @@ int findBookIndex(string bookWant){
 
     return bookIndex;
 }    //premature check
-
 
 
 
