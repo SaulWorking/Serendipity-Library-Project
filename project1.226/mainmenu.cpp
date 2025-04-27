@@ -6,7 +6,7 @@
 ** Course: CS226 CRN 32842
 ** Professor: Huseyin Aygun
 ** Student: Thien Dinh
-** Due Date: 04/20/2025
+** Due Date: 04/27/2025
 ******************************************************************/
 #include <iostream>
 #include <iomanip>
@@ -14,7 +14,7 @@
 #include "allheaders.h"
 using namespace std;
 
-//global data
+//example data
     /*
     // Book titles - 20 rows, 51 characters per title
         char bookTitle[20][51] = {
@@ -78,26 +78,20 @@ BookData invbook[20] = {
 
 //Declaring global OBJECT... to be read in
 BookData invbook;
-
-
-    //"reports.txt" is "ASCIIdata.txt" written in binary data
-fstream bookFile("reports.txt", ios::binary | ios::out | ios::in);
+BookStorage bookFile;
+Menu menuHelper;
 
 int main(){
     int mainMenuChoice{0};
     bool exitModule = false;
     
-//calling functions was harder to visualize so i used a for loop instead
     while(exitModule == false){
-    cout << "\n\n\n";
-    cout << setw(20) << ' ' << "Serendipity Booksellers " << endl;
-    cout << setw(25) << ' ' << "Main Menu" << "\n\n";
-    cout << setw(15) << ' ' << "1.	Cashier Module" << endl;
-    cout << setw(15) << ' ' << "2.	Inventory Database Module" << endl;
-    cout << setw(15) << ' ' << "3.	Report Module" << endl;
-    cout << setw(15) << ' ' << "4.	Exit" << endl;
-    cout << "\n\n" << setw(15) << ' ' << "Enter your choice: ";
+
+     menuHelper.menuOutput("MainMenu");
+
         cin >> mainMenuChoice;
+    menuHelper.separateText();
+
         switch(mainMenuChoice){
             case 1:
                 cashier();
@@ -110,8 +104,10 @@ int main(){
                 break;
             case 4:
                 cout << '\n' << setw(15) << ' ' << "Goodbye!\n";
-                bookFile.clear();
-                bookFile.close();
+
+                //close file 
+                bookFile.~BookStorage();
+                //exit program
                 exitModule = true;
                 break;
             default:

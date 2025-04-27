@@ -6,7 +6,7 @@
 ** Course: CS226 CRN 32842
 ** Professor: Huseyin Aygun
 ** Student: Thien Dinh
-** Due Date: 04/20/2025
+** Due Date: 04/27/2025
 ******************************************************************/
 
 #include <iostream>
@@ -17,21 +17,15 @@ using namespace std;
 const int maximumStock = 20;
 
 void reports(){
-    int reportsChoice;
+    int reportsChoice{0};
     bool exitModule = false;
 
     while (exitModule == false) {
-        cout << setw(20) << ' ' << "Serendipity Booksellers\n";
-        cout << setw(25) << ' ' << "Reports\n\n";
-        cout << setw(15) << ' ' << "1.	Inventory Listing\n";
-        cout << setw(15) << ' ' << "2.\tInventory Wholesale Value\n";
-        cout << setw(15) << ' ' << "3.	Inventory Retail Value\n";
-        cout << setw(15) << ' ' << "4.	Listing by Quantity\n";
-        cout << setw(15) << ' ' << "5.	Listing by Cost\n";
-        cout << setw(15) << ' ' << "6.	Listing by Age\n";
-        cout << setw(15) << ' ' << "7.	Return to Main Menu\n";
-        cout << setw(15) << ' ' << "Enter Your Choice: ";
+
+        menuHelper.menuOutput("Report");
+
             cin >> reportsChoice;
+            menuHelper.separateText();
             cin.ignore();
         switch (reportsChoice){
             case 1:
@@ -63,39 +57,25 @@ void reports(){
     return;
 }
 
-
 void repListing(){
     cout << '\n' << setw(40) << ' ' << "Book Listing report\n";
-    displayDate();
-    separateText();
 
-        bookFile.clear();
-        bookFile.seekp(0L, ios::end);
-        int totalRecords = bookFile.tellp()/ sizeof(invbook);
+    menuHelper.displayDate();
+    menuHelper.separateText();
+            cout << '\n';
 
-        cout << '\n';
-        
-    for(int bookIndex=0; bookIndex<totalRecords; bookIndex++){
+        for(int bookIndex=0; bookIndex<bookFile.storageSize(); bookIndex++){
 
-        bookFile.clear();
-        bookFile.seekg(sizeof(invbook) * bookIndex, ios::beg);
-        if (!bookFile.eof()) {
-            bookFile.read(reinterpret_cast<char *>(&invbook), sizeof(invbook));
+
+            invbook = bookFile.bookRead(invbook, bookIndex);
+
+            if(!invbook.isEmpty()){
+                cout << "[Book " << bookIndex + 1  << ']' << endl;
+                invbook.bookIndexInformation();
+            }
         }
-
-        if(invbook.getTitle()[0] != '\0'){
-            cout << left << "Title: "  <<  invbook.getTitle();
-            cout << '\n' << "ISBN: " <<   invbook.getISBN()<< '\n';
-            cout <<         "Author: " << invbook.getAuthor();
-            cout <<'\n'  << "Date added: " << invbook.getDateAdded()<< '\n';
-            cout <<         "Publisher: "  << invbook.getPub(); 
-            cout <<'\n'  << "Quantity: " << invbook.getQty()<< '\n'; 
-            cout <<         "Wholesale value: " << invbook.getWholesale();
-            cout <<'\n' <<  "Retail price: " << invbook.getRetail() << "\n\n"; 
-        }
-    }
-    separateText();
-    forcedUserWait();
+        menuHelper.separateText();
+        menuHelper.forcedUserWait();
 }
 
 
@@ -103,42 +83,28 @@ void repWholesale(){
     double totalWholesaleValue{0.0};
 
         cout << '\n' << setw(40) << ' ' << "Book Wholesale Price report\n";
-            displayDate();
-            separateText();
+        menuHelper.displayDate();
+        menuHelper.separateText();
 
-            bookFile.clear();
-            bookFile.seekp(0L, ios::end);
-            int totalRecords = bookFile.tellp()/ sizeof(invbook);
+        for(int bookIndex=0; bookIndex<bookFile.storageSize(); bookIndex++){
 
+            invbook = bookFile.bookRead(invbook, bookIndex);
 
-        for(int i =0; i<totalRecords; i++){
+            if(!invbook.isEmpty()){
 
-
-            
-            bookFile.clear();
-            bookFile.seekg(sizeof(invbook) * i, ios::beg);
-            if (!bookFile.eof()) {
-                bookFile.read(reinterpret_cast<char *>(&invbook), sizeof(invbook));
-            }
-
-            if(invbook.getTitle()[0] != '\0'){
-            cout << left << "Title: "  <<  invbook.getTitle()  << '\n';
-            cout         << "ISBN: " <<  invbook.getISBN() << endl;
-            cout         << "Wholesale value: " << invbook.getWholesale() << "\n\n";
-            
-            totalWholesaleValue += invbook.getWholesale() * invbook.getQty();
+                cout << "[Book " << bookIndex + 1  << ']' << endl;
+                invbook.printReport("Wholesale");
+                
+                totalWholesaleValue += invbook.getWholesale() * invbook.getQty();
      
             }
         }
 
-        separateText();
+        menuHelper.separateText();
             cout << '\n' << setw(55); 
             cout << "Wholesale value: " << totalWholesaleValue;
-        forcedUserWait();
+        menuHelper.forcedUserWait();
 }
-
-
-
 
 
 
@@ -147,155 +113,107 @@ void repRetail(){
     double totalRetailValue{0.0};
 
     cout << '\n' << setw(40) << ' ' << "Book Retail Price report\n";
-        displayDate();
-        separateText();
+    menuHelper.displayDate();
+    menuHelper.separateText();
         
-        bookFile.clear();
-        bookFile.seekp(0L, ios::end);
-        int totalRecords = bookFile.tellp()/ sizeof(invbook);
+        for(int bookIndex=0; bookIndex<bookFile.storageSize(); bookIndex++){
+            invbook = bookFile.bookRead(invbook, bookIndex);
 
-
-        for(int i =0; i<totalRecords; i++){
-
-            bookFile.clear();
-            bookFile.seekg(sizeof(invbook) * i, ios::beg);
-            if (!bookFile.eof()) {
-                bookFile.read(reinterpret_cast<char *>(&invbook), sizeof(invbook));
-            }
-    
-
-            if(invbook.getTitle()[0] != '\0'){
-                cout << left << "Title: "  <<  invbook.getTitle()  << '\n';
-                cout         << "ISBN: " <<  invbook.getISBN() << endl;
-                cout         << "Retail value: " << invbook.getRetail() << "\n\n";
-                
+            if(!invbook.isEmpty()){
+                cout << "[Book " << bookIndex + 1  << ']' << endl;
+                invbook.printReport("Retail");
                 totalRetailValue += invbook.getRetail() * invbook.getQty();
-         
             }
+
         }
-        separateText();
+        menuHelper.separateText();
             cout << '\n' << setw(55); 
             cout << "Retail value: " << totalRetailValue;
-        forcedUserWait();
+        menuHelper.forcedUserWait();
 }
 
 
 /// brief 
 void repQty(){
 
-
-
-    
     int quantityIndexes[maximumStock];   
 
     cout << '\n' << setw(40) << ' ' << "Book Quantity report\n";
-        displayDate();
-        separateText();
-        cout << '\n';
+    menuHelper.displayDate();
+    menuHelper.separateText();
+
 
         quantitySort(quantityIndexes);
 
-        bookFile.clear();
-        bookFile.seekp(0L, ios::end);
-        int totalRecords = bookFile.tellp()/ sizeof(invbook);
 
-        for(int i =0; i < totalRecords; i++){
-            cout << quantityIndexes[i] <<  ' ';
-        }
-
-            for (int i = 0; i < totalRecords; i++) {
+            for (int i = 0; i < bookFile.storageSize(); i++) {
                 int bookIndex = quantityIndexes[i];
 
                 //print according to byte size
 
+                invbook = bookFile.bookRead(invbook, bookIndex);
 
-                bookFile.clear();
-                bookFile.seekg(sizeof(invbook) * bookIndex, ios::beg);
-                if (!bookFile.eof()) {
-                    bookFile.read(reinterpret_cast<char *>(&invbook), sizeof(invbook));
-                }
-    
-                if(invbook.getTitle()[0] != '\0'){
-                    cout << left << "Title: "  <<  invbook.getTitle()  << '\n';
-                    cout         << "ISBN: " <<  invbook.getISBN() << endl;
-                    cout         << "Quantity: " << invbook.getQty() << "\n\n";
+                if(!invbook.isEmpty()){
+
+                    cout << "[Book " << bookIndex + 1  << ']' << endl;
+                    invbook.printReport("Quantity");
                 }
             }       
-        separateText();
-        forcedUserWait();
+        menuHelper.separateText();
+        menuHelper.forcedUserWait();
 }
 void repCost(){
 
     int costIndexes[maximumStock];   
 
     cout << '\n' << setw(40) << ' ' << "Book Cost report\n";
-        displayDate();
-        separateText();
+        menuHelper.displayDate();
+        menuHelper.separateText();
         costSort(costIndexes);
 
-        bookFile.clear();
-        bookFile.seekp(0L, ios::end);
-        int totalRecords = bookFile.tellp()/ sizeof(invbook);
 
-
-
-        for(int i =0; i < totalRecords; i++){
-            cout << costIndexes[i] <<  ' ';
-        }
-
-        for (int i = 0; i <totalRecords; i++) {
+        for (int i = 0; i <bookFile.storageSize(); i++) {
             int bookIndex = costIndexes[i];
 
+            invbook = bookFile.bookRead(invbook, bookIndex);
 
-            bookFile.clear();
-            bookFile.seekg(sizeof(invbook) * bookIndex, ios::beg);
-            if (!bookFile.eof()) {
-                bookFile.read(reinterpret_cast<char *>(&invbook), sizeof(invbook));
+
+            if(!invbook.isEmpty()){
+                cout << "[Book " << bookIndex + 1  << ']' << endl;
+ 
+                invbook.printReport("Retail");
+
             }
 
-
-            if(invbook.getTitle()[0] != '\0'){
-                cout << left << "Title: "  <<  invbook.getTitle()  << '\n';
-                cout         << "ISBN: " <<  invbook.getISBN() << endl;
-                cout         << "Retail Value: " << invbook.getRetail() << "\n\n";
-            }
+            
         }
-        separateText();
-        forcedUserWait();
+        menuHelper.separateText();
+        menuHelper.forcedUserWait();
 }
 void repAge(){
 
     int ageIndexes[maximumStock];  
 
     cout << '\n' << setw(40) << ' ' << "Book Age report\n";
-        displayDate();
-        separateText();
+    menuHelper.displayDate();
+    menuHelper.separateText();
 
         dateSort(ageIndexes);
 
-
-        bookFile.clear();
-        bookFile.seekp(0L, ios::end);
-        int totalRecords = bookFile.tellp()/ sizeof(invbook);
-
-
-        for (int i = 0; i < totalRecords; i++) {
+        for (int i = 0; i < bookFile.storageSize(); i++) {
             int bookIndex = ageIndexes[i];
 
-            bookFile.clear();
-            bookFile.seekg(sizeof(invbook) * bookIndex, ios::beg);
-            if (!bookFile.eof()) {
-                bookFile.read(reinterpret_cast<char *>(&invbook), sizeof(invbook));
-            }
+            invbook = bookFile.bookRead(invbook, bookIndex);
 
-                if(invbook.getTitle()[0] != '\0'){
-                    cout << left << "Title: "  <<  invbook.getTitle()  << '\n';
-                    cout         << "ISBN: " <<  invbook.getISBN() << endl;
-                    cout         << "Date: " << invbook.getDateAdded() << "\n\n";
+                if(!invbook.isEmpty()){
+                    cout << "[Book " << bookIndex + 1  << ']' << endl;
+
+                    invbook.printReport("DateAdded");
+
                 }
         }
-        separateText();
-        forcedUserWait();
+        menuHelper.separateText();
+        menuHelper.forcedUserWait();
 }
 
 
@@ -307,42 +225,28 @@ void repAge(){
 
 
 
-
-
-
 void quantitySort(int indices[]){
 
     BookData book;
     int maxIndex = 0;
 
-    bookFile.clear();
-    bookFile.seekp(0L, ios::end);
-    int totalRecords = bookFile.tellp()/ sizeof(invbook);
-
     //set up indexes  :3
-    for(int i =0; i<totalRecords; i++)
+    for(int i =0; i<bookFile.storageSize(); i++)
         indices[i] = i;
 
 
     //start 
-    for (int i = 0; i < totalRecords - 1; i++) {
+    for (int i = 0; i < bookFile.storageSize() - 1; i++) {
         maxIndex = i;
     
-        for (int j = i + 1; j < totalRecords; j++) {
+        for (int j = i + 1; j < bookFile.storageSize(); j++) {
             // read invbook (current max)
-            bookFile.clear();
-            bookFile.seekg(sizeof(invbook) * indices[maxIndex], ios::beg);
-            if (!bookFile.eof()) {
-                bookFile.read(reinterpret_cast<char *>(&invbook), sizeof(invbook));
-            }
+
+            invbook = bookFile.bookRead(invbook, indices[maxIndex]);
+            book  = bookFile.bookRead(book, indices[j]);
 
             // read book (candidate)
-            bookFile.clear();
-            bookFile.seekg(sizeof(book) * indices[j], ios::beg);
-            if (!bookFile.eof()) {
-                bookFile.read(reinterpret_cast<char *>(&book), sizeof(book));
-            }
-
+  
             // compare retail values
             if (book.getQty() > invbook.getQty()) {
                 maxIndex = j;
@@ -370,36 +274,25 @@ void quantitySort(int indices[]){
     BookData book;
     int maxIndex = 0;
 
-    bookFile.clear();
-    bookFile.seekp(0L, ios::end);
-    int totalRecords = bookFile.tellp()/ sizeof(invbook);
-
-    for(int i =0; i<totalRecords; i++)
+    for(int i =0; i<bookFile.storageSize(); i++)
         indices[i] = i;
 
-
-
-        for (int i = 0; i < totalRecords - 1; i++) {
+        for (int i = 0; i < bookFile.storageSize() - 1; i++) {
             maxIndex = i;
         
-            for (int j = i + 1; j < totalRecords; j++) {
+            for (int j = i + 1; j < bookFile.storageSize(); j++) {
                 // read invbook (current max)
-                bookFile.clear();
-                bookFile.seekg(sizeof(invbook) * indices[maxIndex], ios::beg);
-                bookFile.read(reinterpret_cast<char *>(&invbook), sizeof(invbook));
-        
-                // read book (candidate)
-                bookFile.clear();
-                bookFile.seekg(sizeof(book) * indices[j], ios::beg);
-                bookFile.read(reinterpret_cast<char *>(&book), sizeof(book));
-        
+
+                invbook = bookFile.bookRead(invbook, indices[maxIndex]);
+                book = bookFile.bookRead(book, indices[j]);
+
+            
                 // compare retail values
                 if (book.getRetail() > invbook.getRetail()) {
                     maxIndex = j;
                 }
             }
 
-            
         if(maxIndex != i)
             swap(indices[i], indices[maxIndex]);
 
@@ -418,51 +311,30 @@ void quantitySort(int indices[]){
   //definitely fix this at some point -> program doesnt accurately sort by date.
   void dateSort(int indices[]){
 
-   const int SIZE = 20;
-
    BookData book;
    int mindex = 0;
 
-   bookFile.clear();
-   bookFile.seekp(0L, ios::end);
-   int totalRecords = bookFile.tellp()/ sizeof(invbook);
-
-   
-   for(int i =0; i<totalRecords; i++)
+   for(int i =0; i<bookFile.storageSize(); i++)
         indices[i] = i;
 
-    
-        for (int i = 0; i < totalRecords-1; i++) {
+        for (int i = 0; i < bookFile.storageSize()-1; i++) {
             mindex = i;
     
             //read max value
-            for (int j = i+1 ; j < totalRecords; j++) {
+            for (int j = i+1 ; j < bookFile.storageSize(); j++) {
                 //read into invbook
-                bookFile.clear();
-                bookFile.seekg(sizeof(invbook) * indices[mindex], ios::beg);
-                if (!bookFile.eof()) {
-                    bookFile.read(reinterpret_cast<char *>(&invbook), sizeof(invbook));
-                }
-                //read into tempbook
-                bookFile.clear();
-                bookFile.seekg(sizeof(book) * indices[j], ios::beg);
-                if (!bookFile.eof()) {
-                    bookFile.read(reinterpret_cast<char *>(&book), sizeof(book));
-                }
+
+                invbook = bookFile.bookRead(invbook, indices[mindex]);
+                book = bookFile.bookRead(book, indices[j]);
+
                 if (book.getDateAdded() < invbook.getDateAdded()) {
                     mindex = j;
                 }
             }
             //swap
 
-
-
             swap(indices[i], indices[mindex]);
 
-    
-        for(int i =0; i < totalRecords; i++){
-            cout << indices[i] <<  ' ';
-        }
             cout << endl;
         }
 } 
@@ -472,53 +344,50 @@ void quantitySort(int indices[]){
 
 
 
-  void separateText(){
-
-    for(int i =0; i< 100; i++){
-        cout << '-';
-    }
-    cout << '\n';
-
-  }
-
-  void forcedUserWait(){
-    string userInput;
-    cout << '\n';
-        cout << "\nPress enter to continue.";
-        getline(cin, userInput);
-    cout << "\n\n\n";
-  }
-    
-
-  void displayDate(){
-    time_t day;
-    time(&day);
-    cout << ctime(&day);
-}
-
-
+//report swap
 
 void swap(int &num1, int &num2){
-
     int temp = num1;
-
     //num1 becomes num2
     num1 = num2;
     //num2 becomes num1
     num2 = temp;
-    
-
 }
 void swap(double &num1, double &num2){
-
-
     double temp = num1;
-
     //num1 becomes num2
     num1 = num2;
     //num2 becomes num1
     num2 = temp;
     
+}
+
+
+
+void BookData::printReport(string reportType){
+    if(reportType == "Wholesale"){
+        cout << left << "Title: "  <<  invbook.getTitle()  << '\n';
+        cout         << "ISBN: " <<  invbook.getISBN() << endl;
+        cout         << "Wholesale value: " << invbook.getWholesale() << "\n\n";
+
+    }
+    if(reportType == "Retail"){
+        cout << left << "Title: "  <<  invbook.getTitle()  << '\n';
+        cout         << "ISBN: " <<  invbook.getISBN() << endl;
+        cout         << "Retail Value: " << invbook.getRetail() << "\n\n";
+    }
+    if(reportType == "Quantity"){
+        cout << left << "Title: "  <<  invbook.getTitle()  << '\n';
+        cout         << "ISBN: " <<  invbook.getISBN() << endl;
+        cout         << "Quantity: " << invbook.getQty() << "\n\n";
+        
+    }   
+    if(reportType == "DateAdded"){
+        cout << left << "Title: "  <<  invbook.getTitle()  << '\n';
+        cout         << "ISBN: " <<  invbook.getISBN() << endl;
+        cout         << "Date: " << invbook.getDateAdded() << "\n\n";
+     
+    }
 }
 
 

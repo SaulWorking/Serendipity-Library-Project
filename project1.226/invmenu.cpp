@@ -6,13 +6,9 @@
 ** Course: CS226 CRN 32842
 ** Professor: Huseyin Aygun
 ** Student: Thien Dinh
-** Due Date: 04/20/2025
+** Due Date: 04/27/2025
 ******************************************************************/
 
-
-
-
-//thank you for fixing this 
 
 #include <iostream>
 #include <iomanip>
@@ -20,31 +16,18 @@
 #include "allheaders.h"
 using namespace std;
 
-void printError(){
-
-    static int counter{1};
-    cout << "\nERROR! input/output doesnt work/\n\n" << "\n counter: " << counter << endl;
-    counter++;
-}
-
-
 void invMenu(){
-
     int inventoryChoice{0};
     bool exitModule = false;
     
    while(exitModule == false){
-    cout << setw(20) << ' ' << " Serendipity Booksellers" << endl;
-    cout << setw(23) << ' ' << "Inventory Database\n\n";
-    cout << setw(15) << ' ' << "1.	Look Up a Book"        << endl;
-    cout << setw(15) << ' ' << "2.       Add a Book"      << endl;
-    cout << setw(15) << ' ' << "3.	Edit a Book's Record"  << endl;
-    cout << setw(15) << ' ' << "4.	Delete a Book"         << endl;
-    cout << setw(15) << ' ' << "5.	Return to the Main Menu"  << endl;
-    cout << '\n' << setw(15) << ' ' << "Enter your choice: ";
+
+    menuHelper.menuOutput("Inventory");
         
         cin >> inventoryChoice;
-        switch (inventoryChoice) {
+    menuHelper.separateText();
+
+        switch (inventoryChoice){
             case 1:
               lookUpBook();
               break;
@@ -64,33 +47,29 @@ void invMenu(){
               cout << "Please enter a number in the range 1-5" << endl;
               break;
             }
-
     }
-          
 }
 
 void lookUpBook() {
-
     int bookIndex = -1;
     string bookName;
         
-            cout << "Title of book to look up: ";
+        cout << "Title of book to look up: ";
 
-            cin.ignore();
+        cin.ignore();
             getline(cin, bookName);
- 
+
+        menuHelper.separateText();
 
             bookIndex = findBookIndex(bookName);
-                
-            if (bookIndex >=0) {
-                  // look up book
-                cout << "\n\nThe only book matching your title is...\n\n";
-                
-                bookIndexInformation(bookIndex);
-                cout << '\n';
-            } else {
-                  cout << "Book not in inventory\n\n"; 
-            }
+            
+        if (bookIndex >=0) {
+            cout << "\n\nThe only book matching your title is...\n\n";
+            invbook.bookIndexInformation();
+            cout << '\n';
+        } else {
+                cout << "Book not in inventory\n\n"; 
+        }
 }
 
 //simple choice checking for user Inventory Database options.
@@ -98,75 +77,67 @@ void lookUpBook() {
 //check if book space is available
 //if available add book
 //books can have the same title, unfortunately
+
+//make this function shorter soon
 void addBook() {
     double priceInput =0.0;
     int quantityInput =0;
     char userInput[51];
     bool writeCheck = false;
     cout << "\nAdding Book...\n" << endl;
-  
-    //set reading position to end of file
-    bookFile.seekp(0L, ios::end);
+    cout << "\nBooks in storage: " << bookFile.storageSize() << endl;
 
+    for (int i = 0; i < bookFile.storageSize(); i++) {
 
-    //find amount of books available
-    int totalRecords = bookFile.tellp()/ sizeof(invbook);
+        invbook = bookFile.bookRead(invbook, i);
 
-    cout << "\nBooks in storage: " << totalRecords << endl;
-
-    for (int i = 0; i < totalRecords; i++) {
-        //prepare for file reading
-        bookFile.clear();
-
-        //try and find an empty book space
-        bookFile.seekg(i*sizeof(invbook), ios::beg);
-
-        //read from file if not at end and read to struct -> BookData invbook
-        if (!bookFile.eof()) {
-            bookFile.read(reinterpret_cast<char *>(&invbook), sizeof(invbook));
-        }
-    
-
-        //check if invbook is empty
         if (invbook.isEmpty()){
 
             cin.ignore();
             cout << "ISBN: ";
             cin.getline(userInput, 14);
+            menuHelper.separateText();
             strUpper((userInput));
             invbook.setISBN(userInput);
             
             cout << "Title: ";
             cin.getline(userInput, 51);
+            menuHelper.separateText();
             strUpper((userInput));
             invbook.setTitle(userInput);
     
             cout << "Author: ";
             cin.getline(userInput, 31);
+            menuHelper.separateText();
             strUpper((userInput));
             invbook.setAuthor(userInput);
     
             cout << "Publisher: ";
             cin.getline(userInput, 31);
+            menuHelper.separateText();
             strUpper((userInput));
             invbook.setPub(userInput);
     
             cout << "Date: ";
             cin.getline(userInput, 11);
+            menuHelper.separateText();
             invbook.setDateAdded(userInput);
     
             cout << "Quantity: ";
             cin >> quantityInput;
+            menuHelper.separateText();
             cin.ignore();
             invbook.setQty(quantityInput);
     
             cout << "Wholesale cost: ";
             cin >> priceInput;
+            menuHelper.separateText();
             cin.ignore();
             invbook.setWholesale(priceInput);
     
             cout << "Retail cost: ";
             cin >> priceInput;
+            menuHelper.separateText();
             cin.ignore();
             invbook.setRetail(priceInput);
             
@@ -175,25 +146,14 @@ void addBook() {
 
             }
 
-            
-    
-
+        
     //https://stackoverflow.com/questions/38607754/how-to-force-file-flushing
 
             if(writeCheck){
-                bookFile.clear();
-                bookFile.seekp(0L, ios::end);
-                bookFile.write(reinterpret_cast<char *>(&invbook), sizeof(invbook));
-                bookFile.flush();
+                bookFile.bookWrite(invbook);
             }else{
-
                 invbook.removeBook();
-                
-                bookFile.clear();
-                bookFile.seekp(0L, ios::end);
-                bookFile.write(reinterpret_cast<char *>(&invbook), sizeof(invbook));
-                bookFile.flush();
-
+                bookFile.bookWrite(invbook);
                 "Failure to write...\n";
             }
             return;
@@ -202,71 +162,66 @@ void addBook() {
     }
 
 
-    if(totalRecords < 20){
+    if(bookFile.storageSize() < 20){
         cin.ignore();
 
         cout << "ISBN: ";
         cin.getline(userInput, 14);
+        menuHelper.separateText();
         strUpper((userInput));
         invbook.setISBN(userInput);
         
-
         cout << "Title: ";
         cin.getline(userInput, 51);
+        menuHelper.separateText();
         strUpper((userInput));
         invbook.setTitle(userInput);
 
         cout << "Author: ";
         cin.getline(userInput, 31);
+        menuHelper.separateText();
         strUpper((userInput));
         invbook.setAuthor(userInput);
 
         cout << "Publisher: ";
         cin.getline(userInput, 31);
+        menuHelper.separateText();
         strUpper((userInput));
         invbook.setPub(userInput);
 
         cout << "Date: ";
         cin.getline(userInput, 11);
+        menuHelper.separateText();
         invbook.setDateAdded(userInput);
 
         cout << "Quantity: ";
         cin >> quantityInput;
+        menuHelper.separateText();
         cin.ignore();
         invbook.setQty(quantityInput);
 
         cout << "Wholesale cost: ";
         cin >> priceInput;
+        menuHelper.separateText();
         cin.ignore();
         invbook.setWholesale(priceInput);
 
         cout << "Retail cost: ";
         cin >> priceInput;
+        menuHelper.separateText();
         cin.ignore();
         invbook.setRetail(priceInput);
 
     //https://stackoverflow.com/questions/37034247/ofstream-creating-file-but-not-writing-to-it-in-c
-        bookFile.clear();
-        bookFile.seekp(0L, ios::end);
-        bookFile.write(reinterpret_cast<char *>(&invbook), sizeof(invbook));
-        bookFile.flush();
+
+        bookFile.bookWrite(invbook);
     }
 }
-
-
-
-
-
-
-
-
-       
 
 
 // search to check if book is in
 //edit book if book exists
 void editBook(){
-
     string bookName;
     int bookIndex = -1;
 
@@ -275,16 +230,15 @@ void editBook(){
 
     cin.ignore();
     getline(cin, bookName);   
-
+    menuHelper.separateText();
         bookIndex = findBookIndex(bookName);
-
 
 
     if (bookIndex >=0) {
         // look up book
         cout << "\nYour book is...\n";
 
-        bookIndexInformation(bookIndex);
+        invbook.bookIndexInformation();
         editInventoryInput(bookIndex);
     } else {
         cout << "Book not in inventory\n\n";
@@ -292,8 +246,6 @@ void editBook(){
 
      //checks for one of eight categories for book Information 
 }
-
-
 
 
 //tests for book availability in storage and deletes book
@@ -308,8 +260,9 @@ void deleteBook(){
 
         cin.ignore();
         getline(cin, bookName);
+        menuHelper.separateText();
 
-        bookIndex = findBookIndex(bookName);
+            bookIndex = findBookIndex(bookName);
 
         if(bookIndex >=0){
             cout << '\n' << setw(20) << ' ' << "Do you really want to delete this?(Y/N): ";
@@ -322,15 +275,10 @@ void deleteBook(){
                 // at book Index and then Write to file
                 //book Index Byte
                     
+                bookFile.bookWrite(invbook, bookIndex);
                 
-            bookFile.clear();
-            bookFile.seekp(sizeof(invbook) * bookIndex, ios::beg);
-            bookFile.write(reinterpret_cast<char *>(&invbook), sizeof(invbook));
-            bookFile.flush();
-
             }else{
                 cout << setw(25) << ' ' << "Book doesnt exist.\n";
-
             }
          }  
     return;
@@ -338,7 +286,6 @@ void deleteBook(){
 
 
 void editInventoryInput(int index){
-
     char userInput[51];
     int userQuantity = 0;
     int userEditChoice = 0;
@@ -346,21 +293,14 @@ void editInventoryInput(int index){
     bool exitModule = false;
 
     while(exitModule == false){
-        cout << setw(20) << ' ' << " Serendipity Booksellers";
-        cout << setw(23) << ' ' << "Inventory Database\n";
-        cout << setw(15) << ' ' << "1   Title\n";
-        cout << setw(15) << ' ' << "2.  ISBN\n";
-        cout << setw(15) << ' ' << "3.	Author\n" ;
-        cout << setw(15) << ' ' << "4.	Publisher\n";
-        cout << setw(15) << ' ' << "5.	Date Added\n";
-        cout << setw(15) << ' ' << "6.	Quantity\n";
-        cout << setw(15) << ' ' << "7.	Wholesale price\n" ;
-        cout << setw(15) << ' ' << "8.	Retail Price\n";
-        cout << setw(15) << ' ' << "9.	Exit\n\n";
+
+        menuHelper.menuOutput("InventoryEdit");
 
 
         cout << "Which book value do you want to edit? ";
         cin >> userEditChoice;
+        menuHelper.separateText();
+
         cin.ignore();
 
     switch(userEditChoice){
@@ -368,12 +308,15 @@ void editInventoryInput(int index){
             cout <<"\n Changing TITLE to: ";
             cin.getline(userInput, 51);
             strUpper(userInput);
+            menuHelper.separateText();
             invbook.setTitle(userInput);
+            
             break;
         case 2:
             cout <<"\n Changing ISBN to: ";
             cin.getline(userInput, 14);
             strUpper(userInput);
+            menuHelper.separateText();
             invbook.setISBN(userInput);
 
             break;
@@ -381,6 +324,7 @@ void editInventoryInput(int index){
             cout <<"\n Changing author to: ";
             cin.getline(userInput, 31);
             strUpper(userInput);
+            menuHelper.separateText();
             invbook.setAuthor(userInput);
 
             break;
@@ -388,6 +332,7 @@ void editInventoryInput(int index){
             cout <<"\n Changing publisher to: ";
             cin.getline(userInput, 31);
             strUpper(userInput);
+            menuHelper.separateText();
             invbook.setPub(userInput);
 
             break;
@@ -395,21 +340,25 @@ void editInventoryInput(int index){
             cout <<"\n Changing date added to: ";
             cin.getline(userInput, 11);
             strUpper(userInput);
+            menuHelper.separateText();
             invbook.setDateAdded(userInput);
             break;
          case 6:
             cout <<"\n Changing quantity to: ";
             cin >> userQuantity;
+            menuHelper.separateText();
             invbook.setQty(userQuantity);
             break;
          case 7:
             cout <<"\n Changing wholesale value to: ";
             cin >> userPrice;
+            menuHelper.separateText();
             invbook.setWholesale(userPrice);
             break;
         case 8:
             cout <<"\n Changing retail value to: ";
             cin >> userPrice;
+            menuHelper.separateText();
             invbook.setRetail(userPrice);
             break;
         case 9:
@@ -421,16 +370,12 @@ void editInventoryInput(int index){
             cout << "\nTry again!\n";
     }   
 
-        bookFile.clear();
-        bookFile.seekp(sizeof(invbook) * index, ios::beg);
-        bookFile.write(reinterpret_cast<char *>(&invbook), sizeof(invbook));
-        bookFile.flush();
+
+        bookFile.bookWrite(invbook, index);
 
     }    
 
 }
-
-
 
 
 
@@ -460,21 +405,20 @@ int findBookIndex(string bookWant){
         strUpper(bookToBeSearched);
 
         //ending byte
-        bookFile.seekp(0L, ios::end);
-        int totalRecords = bookFile.tellp()/ sizeof(invbook);
 
-        cout << "\nBooks in storage: " << totalRecords << endl;
-        for(int i =0; i <totalRecords;i++){
-    
-            bookFile.clear();
-            bookFile.seekg(sizeof(invbook) * i, ios::beg);
-            if (!bookFile.eof()) {
-                bookFile.read(reinterpret_cast<char *>(&invbook), sizeof(invbook));
-            }
+        cout << "\nBooks in storage: " << bookFile.storageSize() << endl;
+        for(int i =0; i <bookFile.storageSize();i++){
+            
 
-            if(strstr(invbook.getTitle(), bookToBeSearched)){
+            
+            invbook = bookFile.bookRead(invbook, i);
+
+
+
+            if(invbook.bookMatch(bookToBeSearched)){
                 strncpy(found, strstr(invbook.getTitle(), bookToBeSearched), 51);
-                }else{
+            }else{
+            
                 continue;
             }
 
@@ -484,9 +428,11 @@ int findBookIndex(string bookWant){
                 if(!strcmp(found, invbook.getTitle()) && invbook.getTitle()[0] != '\0'){
 
                     bookIndex = i;
-                        bookIndexInformation(bookIndex);
+
+                        invbook.bookIndexInformation();
                         cout << "\nIs this your book(Y/N)?";
                             cin >> userInput;
+                            menuHelper.separateText();
                     //if book is intended book exit loop
                         if(isalpha(userInput) && userInput == 'Y' || userInput == 'y'){
                             return bookIndex;
@@ -509,28 +455,6 @@ int findBookIndex(string bookWant){
 
 
 
-
-
-
-
-
-
-/*The lookUpBook function currently requires the user to enter 
-                    the full name of the book to search for. 
-Modify it so the user only has to enter part of the book title. 
-Hint: Use the strstr function to search the title in the database.*/
-
-void bookIndexInformation(const int bookIndex){
-    bookInfo(
-    invbook.getTitle(), 
-    invbook.getISBN(),
-    invbook.getAuthor(),
-    invbook.getPub(),
-    invbook.getDateAdded(),
-    invbook.getQty(),
-    invbook.getWholesale(),
-    invbook.getRetail());
-}
 
 
 
