@@ -77,7 +77,7 @@ BookData invbook[20] = {
 */
 
 //Declaring global OBJECT... to be read in
-BookData invbook;
+InventoryBook invbook;
 BookStorage bookFile;
 Menu menuHelper;
 

@@ -227,7 +227,7 @@ void repAge(){
 
 void quantitySort(int indices[]){
 
-    BookData book;
+    InventoryBook book;
     int maxIndex = 0;
 
     //set up indexes  :3
@@ -271,7 +271,7 @@ void quantitySort(int indices[]){
   void costSort(int indices[]){
 
 
-    BookData book;
+    InventoryBook book;
     int maxIndex = 0;
 
     for(int i =0; i<bookFile.storageSize(); i++)
@@ -311,7 +311,7 @@ void quantitySort(int indices[]){
   //definitely fix this at some point -> program doesnt accurately sort by date.
   void dateSort(int indices[]){
 
-   BookData book;
+    InventoryBook book;
    int mindex = 0;
 
    for(int i =0; i<bookFile.storageSize(); i++)

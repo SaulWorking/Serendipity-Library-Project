@@ -45,11 +45,6 @@ class BookData{
         char bookISBN[14];    
         char bookAuthor[31];
         char bookPublisher[31];
-        char bookDateAdded[11]; 
-
-        int bookQtyOnHand;     
-        double bookWholesaleValue;
-        double bookRetailValue;
     public:
         //set functions for data
         void setTitle(char * title)
@@ -60,14 +55,6 @@ class BookData{
             {strncpy(bookAuthor, author, 31);}	 
         void setPub(char *publisher)
             {strncpy(bookPublisher, publisher, 31);}	
-        void setDateAdded(char *date)
-            {strncpy(bookDateAdded, date, 11);}
-        void setQty(int quantity) 
-            {bookQtyOnHand = quantity;}
-        void setWholesale(double wholesale)
-            {bookWholesaleValue = wholesale;}	 
-        void setRetail(double retail)
-            {bookRetailValue = retail;}
 
         //get functions
         //char * is c-string
@@ -79,14 +66,7 @@ class BookData{
             {return bookAuthor;}
         char * getPub()
             {return bookPublisher;}
-        char * getDateAdded() 
-            {return bookDateAdded;}
-        int getQty() const
-            {return bookQtyOnHand;}
-        double getWholesale() const
-            {return bookWholesaleValue;}
-        double getRetail() const
-            {return bookRetailValue;}
+
         
         //initialize with null values
         BookData(){
@@ -94,35 +74,10 @@ class BookData{
             bookISBN[0] = '\0'; 
             bookAuthor[0] = '\0';
             bookPublisher[0] = '\0';
-            bookDateAdded[0] = '\0';
-    
-            bookQtyOnHand = 0;    
-            bookWholesaleValue = 0.0;
-            bookRetailValue = 0.0;
         }
 
-        void removeBook()
-        {
-            //remember to write this change in file
-            bookTitle[0] = '\0';
-            bookISBN[0] = '\0';
-            bookAuthor[0]= '\0';
-            bookPublisher[0] = '\0';
-            bookDateAdded[0]= '\0';
-            bookQtyOnHand = 0;
-            bookRetailValue = 0.0;
-            bookWholesaleValue = 0.0;
-        }
 
-        bool isEmpty(){
-            //checks for first character of Title at specified book index
-            if(bookTitle[0] == '\0'){
-                return true;
-            }else{
-                return false;
-            }
-        }
-        
+
         bool bookMatch(string bookName){
             char userSearch[51];
             strcpy(userSearch, bookName.c_str());
@@ -136,18 +91,85 @@ class BookData{
 
         //print book information at book index
 
+
+        void printReport(string);
+};
+
+class InventoryBook: public BookData{
+    private:
+
+        BookData tempbook;
+        char bookDateAdded[11]; 
+        int bookQtyOnHand;     
+        double bookWholesaleValue;
+        double bookRetailValue;
+
+    public:
+
+
+        InventoryBook(): BookData(){
+
+            
+            bookDateAdded[0] = '\0';
+            bookQtyOnHand = 0;    
+            bookWholesaleValue = 0.0;
+            bookRetailValue = 0.0;
+
+        }
+
+        
+    
+        ~InventoryBook(){}
+        
+        char * getDateAdded() {return bookDateAdded;}
+        int getQty() const {return bookQtyOnHand;}
+        double getWholesale() const {return bookWholesaleValue;}
+        double getRetail() const {return bookRetailValue;}
+
+        void setDateAdded(char *date){strncpy(bookDateAdded, date, 11);}
+        void setQty(int quantity) {bookQtyOnHand = quantity;}
+        void setWholesale(double wholesale) {bookWholesaleValue = wholesale;}	 
+        void setRetail(double retail) {bookRetailValue = retail;}
+
+
+        bool isEmpty(){
+            //checks for first character of Title at specified book index
+            if(tempbook.getTitle()[0] == '\0'){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+
+        void removeBook()
+        {
+            //remember to write this change in file
+
+
+            bookDateAdded[0]= '\0';
+            bookQtyOnHand = 0;
+            bookRetailValue = 0.0;
+            bookWholesaleValue = 0.0;
+        }
+
         void bookIndexInformation(){
-            bookInfo(bookTitle, 
-                bookISBN, 
-                bookAuthor, 
-                bookPublisher, 
+            bookInfo(tempbook.getTitle(), 
+                tempbook.getISBN(), 
+                tempbook.getAuthor(), 
+                tempbook.getPub(), 
                 bookDateAdded, 
                 bookQtyOnHand, 
                 bookWholesaleValue, 
                 bookRetailValue);
         }
-        void printReport(string);
+
 };
+
+
+
+
+
 
 class BookStorage{
 
@@ -160,7 +182,7 @@ class BookStorage{
 
 
         // overwrite /\ write at any index
-        void bookWrite(BookData book, int bookIndex){
+        void bookWrite(InventoryBook book, int bookIndex){
             this->bookFile.clear();
             this->bookFile.seekp(sizeof(book) * bookIndex, ios::beg);
             this->bookFile.write(reinterpret_cast<char *>(&book), sizeof(book));
@@ -170,7 +192,7 @@ class BookStorage{
 
 
         //write to the end of the file
-        void bookWrite(BookData book){
+        void bookWrite(InventoryBook book){
             this->bookFile.clear();
             this->bookFile.seekp(0L, ios::end);
             this->bookFile.write(reinterpret_cast<char *>(&book), sizeof(book));
@@ -183,11 +205,11 @@ class BookStorage{
         int storageSize(){
             bookFile.clear();
             this->bookFile.seekp(0L, ios::end);
-            return this->bookFile.tellp()/sizeof(BookData);
+            return this->bookFile.tellp()/sizeof(InventoryBook);
         }
 
 
-        BookData bookRead(BookData book, int bookIndex){
+        InventoryBook bookRead(InventoryBook book, int bookIndex){
             this->bookFile.clear();
             this->bookFile.seekg(sizeof(book) * bookIndex, ios::beg);
             if (!this->bookFile.eof()) {
@@ -205,7 +227,7 @@ class BookStorage{
 };
 
 // Bookdata Object 
-extern BookData invbook;
+extern InventoryBook invbook;
 
 //Inventory File -> "reports.txt"
 extern BookStorage bookFile;
@@ -216,7 +238,7 @@ extern BookStorage bookFile;
 
 
 
-class Menu{
+class Menu: public InventoryBook{
     private:
     string userInput;
     public:
