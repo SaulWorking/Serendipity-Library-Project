@@ -70,8 +70,10 @@ void repListing(){
             invbook = bookFile.bookRead(invbook, bookIndex);
 
             if(!invbook.isEmpty()){
-                cout << "[Book " << bookIndex + 1  << ']' << endl;
+                
+                cout << "\t[Book " << bookIndex + 1  << ']' << endl;
                 invbook.bookIndexInformation();
+                
             }
         }
         menuHelper.separateText();

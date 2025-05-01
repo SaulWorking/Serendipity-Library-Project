@@ -23,19 +23,38 @@ using namespace std;
 void cashier(){
 
     bool exitModule = false;
-    double checkoutPrice = 0;
-    int checkoutQuantity{0}, ISBNIndex{-1};
+    int ISBNIndex{-1};
     char userInput = '\0';
+    int userQuantity{0};
+    SoldBook* customerPurchases = nullptr;
+
+
     string cashierISBN = "";
 
     while(exitModule == false){
 
+        menuHelper.separateText();
         menuHelper.menuOutput("Cashier");
+        
+            cin >> userQuantity;
+
+            if(customerPurchases <=0){
+                cout << "\nGoodbye!";
+                 exitModule = true;
+                 break;
+            }else{
+                customerPurchases = new SoldBook[userQuantity];
+            }
+
+        
+        cout << "\nBook ISBN: ";
+
+
             cin.ignore();
             getline(cin, cashierISBN);
+
+        
         menuHelper.separateText();
-
-
         ISBNIndex = ISBNLookup(cashierISBN);
 
         if(invbook.getQty() <= 0){
@@ -66,29 +85,35 @@ void cashier(){
     //ISBN is found ask user for quantity
             if(ISBNIndex >=0){
                 cout << "Book quantity? ";
-                cin >> checkoutQuantity;
+                cin >> userQuantity;
+
 
                 // 0 < userQuantity < actualBookQuantity
-                while(checkoutQuantity < 0 || checkoutQuantity > invbook.getQty() && !isdigit(checkoutQuantity)){
+                while(userQuantity < 0 || userQuantity > invbook.getQty() && !isdigit(userQuantity)){
                     cout <<"\nInvalid Quantity. Try again: ";
-                    cin >> checkoutQuantity;
+                    cin >> userQuantity;               
+                                        
                 }
-
+                customerPurchases[0].setQtySold(userQuantity);
+    
+                customerPurchases[0].setQtySold(invbook.getQty() - customerPurchases[0].getQtySold());
                 //subtract user quantity from store inventory
-                invbook.setQty(invbook.getQty()-checkoutQuantity);
 
                 //write new quantity to file
-                bookFile.bookWrite(invbook, ISBNIndex);
+                bookFile.bookWrite(customerPurchases[0], ISBNIndex);
             }
 
 
+
+
+
     //requesting multiple book purchasing functionality
+customerPurchases[0].setSubTotal(invbook.getRetail() * userQuantity);
 
-    checkoutPrice = (invbook.getRetail() * checkoutQuantity);
-
+    
 
     //output sale information for user
-    menuHelper.cashierOutput("Transaction", checkoutQuantity, checkoutPrice);
+    menuHelper.cashierOutput("Transaction", userQuantity, customerPurchases[0].getSubTotal());
 
         cout << "\n\n" << setw(15) << ' ' << "Thank you for shopping at Serendipity\n\n" << endl;
         cout << "\n" << setw(15) << ' ' << "Do you have another transaction? (Y/N): ";
@@ -102,6 +127,7 @@ void cashier(){
     }
         return;
     }
+
 }
 
 int ISBNLookup(string ISBN){

@@ -90,6 +90,8 @@ int main(){
      menuHelper.menuOutput("MainMenu");
 
         cin >> mainMenuChoice;
+
+
     menuHelper.separateText();
 
         switch(mainMenuChoice){

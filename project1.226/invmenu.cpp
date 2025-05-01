@@ -25,6 +25,7 @@ void invMenu(){
     menuHelper.menuOutput("Inventory");
         
         cin >> inventoryChoice;
+        
     menuHelper.separateText();
 
         switch (inventoryChoice){
