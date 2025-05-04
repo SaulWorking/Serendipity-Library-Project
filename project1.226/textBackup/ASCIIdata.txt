@@ -1,11 +1,15 @@
 ISBN,Title,Author,Publisher,Date added,Quantity-on-hand,Wholesale Cost,Retail Price 
+
+9780321125217,Refactoring,Martin Fowler,Addison-Wesley,5/5/2019,30,33.60,78.49  
+9780134494166,Effective Java,Joshua Bloch,Addison-Wesley,03/14/2009,15,38.25,65.31  
+9781449355739,Fluent Python,Luciano Ramalho,O'Reilly Media,05/12/2020,10,35.03,82.13  
+9780137081073,Introduction to the Theory of Computation,Michael Sipser,Cengage Learning,02/05/2025,12,40.40,62.06
+
 0374158460,Freedom,Jonathan Franzen,Farrar,03/05/2004,40,12.50,30.4  
 0596007124,Head First Design Patterns,Elisabeth Freeman,O'Reilly Media,01/13/2006,35,25.00,45.0  
 0596802471,Arduino Cookbook,Michael Margolis,O'Reilly Media,02/05/2025,50,34.5,56.7  
+
 9780132350884,Clean Code,Robert C. Martin,Prentice Hall,06/04/2008,25,30.00,50.0  
 9780201616224,The Pragmatic Programmer,Andrew Hunt,Addison-Wesley,02/05/2005,20,28.00,47.5  
-9781491950357,Learning Python,Mark Lutz,O'Reilly Media,12/4/2013,45,40.00,65.0  
-9780321125217,Refactoring,Martin Fowler,Addison-Wesley,5/5/2019,30,35.00,55.0  
-9780134494166,Effective Java,Joshua Bloch,Addison-Wesley,03/14/2009,15,38.00,60.0  
-9781449355739,Fluent Python,Luciano Ramalho,O'Reilly Media,05/12/2020,10,45.00,70.0  
-9780137081073,Introduction to the Theory of Computation,Michael Sipser,Cengage Learning,02/05/2025,12,50.00,80.0 
+9781491950357,Learning Python,Mark Lutz,O'Reilly Media,12/4/2013,45,140000,200001
+

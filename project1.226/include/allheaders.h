@@ -111,8 +111,6 @@ class BookData{
 class InventoryBook: public BookData{
     private:
 
-
-
         double bookWholesaleValue;
         double bookRetailValue;
         int bookQtyOnHand;  
@@ -243,7 +241,7 @@ class BookStorage{
         fstream bookFile;
         public:
 
-        BookStorage(){bookFile.open("test.txt", ios::binary | ios::out | ios::in);}
+        BookStorage(){bookFile.open("../text_storage/reports.txt", ios::binary | ios::out | ios::in);}
 
 
 
@@ -280,14 +278,6 @@ class BookStorage{
         }
 
 
-
-
-   
-
-        
-  
-
-
         ~BookStorage(){bookFile.close();}
 
 
@@ -311,11 +301,6 @@ extern BookStorage bookFile;
     void cashier();
     //finds index of book ISBN
     int ISBNLookup(string, SoldBook &);
-
-
-
-
-
 
 
 
@@ -417,7 +402,6 @@ class Menu: public SoldBook{
 
     void cashierOutput(string input){
 
-        double accumulator = 0.0;
 
         if(input == "Transaction"){
 
@@ -441,25 +425,6 @@ class Menu: public SoldBook{
 
 
 extern Menu menuHelper;
-
-
-
-
-
-
-
-/*
-previous data structure
-
-extern char bookTitle[20][51];
-extern char bookISBN[20][14];    
-extern char bookAuthor[20][31];
-extern char bookPublisher[20][31];
-extern char bookDateAdded[20][11]; 
-extern int bookQtyOnHand[20];
-extern double bookWholesaleValue[20];
-extern double bookRetailValue[20];
-*/
 
 
 
