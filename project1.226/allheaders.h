@@ -8,6 +8,7 @@
 #include <iostream>
 #include <iomanip>
 using namespace std;
+
 //general purpose functions/variables
     //swap
     void swap(int &, int &);
@@ -16,11 +17,6 @@ using namespace std;
 //bookinfo header 
     //regurgitates book information 
     void bookInfo(char[], char[], char[], char[], char[], int, double, double);
-//cashier header
-    //prompts user to purchase book
-    void cashier();
-    //finds index of book ISBN
-    int ISBNLookup(string);
 //inventory header
     //sorting quantity
     void quantitySort(int []);
@@ -36,15 +32,16 @@ using namespace std;
 
 
 
-
-
 class BookData{
     //Inventory book member variables/members
-    private:
+    protected:
         char bookTitle[51];
         char bookISBN[14];    
         char bookAuthor[31];
         char bookPublisher[31];
+
+
+        
     public:
         //set functions for data
         void setTitle(char * title)
@@ -105,15 +102,26 @@ class BookData{
         void printReport(string);
 };
 
+
+
+
+
+
+
 class InventoryBook: public BookData{
     private:
 
-        char bookDateAdded[11]; 
-        int bookQtyOnHand;     
+
+
         double bookWholesaleValue;
         double bookRetailValue;
+        int bookQtyOnHand;  
+        char bookDateAdded[11]; 
+   
+ 
 
-    public:
+        
+        public:
 
 
         InventoryBook(): BookData(){
@@ -130,14 +138,14 @@ class InventoryBook: public BookData{
         ~InventoryBook(){}
         
         char * getDateAdded() {return bookDateAdded;}
-        virtual int getQty() const {return bookQtyOnHand;}
+         int getQty() const {return bookQtyOnHand;}
         double getWholesale() const {return bookWholesaleValue;}
         double getRetail() const {return bookRetailValue;}
 
         void setDateAdded(char *date){strncpy(bookDateAdded, date, 11);}
         void setDateAdded(char date){bookDateAdded[0] = date;}
 
-        virtual void setQty(int quantity) {bookQtyOnHand = quantity;}
+        void setQty(int quantity) {bookQtyOnHand = quantity;}
         void setWholesale(double wholesale) {bookWholesaleValue = wholesale;}	 
         void setRetail(double retail) {bookRetailValue = retail;}
 
@@ -154,7 +162,8 @@ class InventoryBook: public BookData{
 
         void removeBook()
         {
-            //remember to write this change in file
+            //remember to 
+             
             setTitle('\0');
             setISBN('\0');
             setAuthor('\0');
@@ -166,96 +175,25 @@ class InventoryBook: public BookData{
             bookWholesaleValue = 0.0;
         }
 
+
         void bookIndexInformation(){
-            bookInfo(
-            getTitle(), 
-            getISBN(), 
-            getAuthor(),
-            getPub(),
-            
-            bookDateAdded,
-            bookQtyOnHand, 
-            bookWholesaleValue, 
-            bookRetailValue);
+            bookInfo(bookTitle, 
+                bookISBN, 
+                bookAuthor, 
+                bookDateAdded,
+                bookPublisher,
+                bookQtyOnHand, 
+                bookWholesaleValue, 
+                bookRetailValue);
         }
-
 };
 
-class BookStorage{
-
-        private:
-
-        fstream bookFile;
-        public:
-
-        BookStorage(){bookFile.open("reports.txt", ios::binary | ios::out | ios::in);}
-
-
-        // overwrite /\ write at any index
-        void bookWrite(BookData book, int bookIndex){
-            this->bookFile.clear();
-            this->bookFile.seekp(sizeof(book) * bookIndex, ios::beg);
-            this->bookFile.write(reinterpret_cast<char *>(&book), sizeof(book));
-            this->bookFile.flush();
-
-        } 
-
-
-        //write to the end of the file
-        void bookWrite(BookData book){
-            this->bookFile.clear();
-            this->bookFile.seekp(0L, ios::end);
-            this->bookFile.write(reinterpret_cast<char *>(&book), sizeof(book));
-            this->bookFile.flush();
-
-        } 
-
-
-
-        int storageSize(){
-            bookFile.clear();
-            this->bookFile.seekp(0L, ios::end);
-            return this->bookFile.tellp()/sizeof(InventoryBook);
-        }
-
-
-        BookData bookRead(BookData book, int bookIndex){
-            this->bookFile.clear();
-            this->bookFile.seekg(sizeof(book) * bookIndex, ios::beg);
-            if (!this->bookFile.eof()) {
-                this->bookFile.read(reinterpret_cast<char *>(&book), sizeof(book));
-                return book;
-            }
-            return book;
-        }
-        
-        InventoryBook bookRead(InventoryBook book, int bookIndex){
-            this->bookFile.clear();
-            this->bookFile.seekg(sizeof(book) * bookIndex, ios::beg);
-            if (!this->bookFile.eof()) {
-                this->bookFile.read(reinterpret_cast<char *>(&book), sizeof(book));
-                return book;
-            }
-            return book;
-        }
-
-
-        SoldBook bookRead(SoldBook book, int bookIndex){
-            this->bookFile.clear();
-            this->bookFile.seekg(sizeof(book) * bookIndex, ios::beg);
-            if (!this->bookFile.eof()) {
-                this->bookFile.read(reinterpret_cast<char *>(&book), sizeof(book));
-                return book;
-            }
-            return book;
-        }
-
-        ~BookStorage(){bookFile.close();}
 
 
 
 
-};
+
+
 
 class SoldBook : public InventoryBook{
 
@@ -268,7 +206,7 @@ class SoldBook : public InventoryBook{
     public:
 
 
-    SoldBook(){
+    SoldBook(): InventoryBook(){
         taxRate = 0.06;
         qtySold = 0;
         subtotal = 0.0;
@@ -295,11 +233,85 @@ class SoldBook : public InventoryBook{
 };
 
 
+
+
+
+class BookStorage{
+
+        private:
+
+        fstream bookFile;
+        public:
+
+        BookStorage(){bookFile.open("test.txt", ios::binary | ios::out | ios::in);}
+
+
+
+        void bookWrite(InventoryBook &book, int bookIndex){
+            this->bookFile.clear();
+            this->bookFile.seekp(sizeof(InventoryBook) * bookIndex, ios::beg);
+            this->bookFile.write(reinterpret_cast<char *>(&book), sizeof(InventoryBook));
+            this->bookFile.flush();
+        } 
+
+        void bookWrite(InventoryBook &book){
+            this->bookFile.clear();
+            this->bookFile.seekp(0L, ios::end);
+            this->bookFile.write(reinterpret_cast<char *>(&book), sizeof(InventoryBook));
+            this->bookFile.flush();
+
+        } 
+
+
+
+        int storageSize(){
+            this->bookFile.clear();
+            this->bookFile.seekp(0L, ios::end);
+            return this->bookFile.tellp()/sizeof(InventoryBook);
+        }
+
+
+  
+        void bookRead(InventoryBook &book, int bookIndex) {
+            this->bookFile.clear();
+            this->bookFile.seekg(sizeof(InventoryBook) * bookIndex, ios::beg);
+            if (this->bookFile.read(reinterpret_cast<char *>(&book), sizeof(InventoryBook))) {
+            }
+        }
+
+
+
+
+   
+
+        
+  
+
+
+        ~BookStorage(){bookFile.close();}
+
+
+
+
+};
+
+
 // Bookdata Object 
 extern InventoryBook invbook;
 
 //Inventory File -> "reports.txt"
 extern BookStorage bookFile;
+
+
+
+
+
+//cashier header
+    //prompts user to purchase book
+    void cashier();
+    //finds index of book ISBN
+    int ISBNLookup(string, SoldBook &);
+
 
 
 
@@ -359,7 +371,7 @@ class Menu: public SoldBook{
             cout << '\n' << setw(20) << ' ' << "Serenpidity Booksellers" << endl;
             cout <<         setw(25) << ' ' << "Cashier Module\n";
             cout << "How many books do you want?\n";
-            cout << "Book quantity: ";
+            cout << "# of books purchased today: ";
 
         }
         if(input == "Inventory"){
@@ -387,7 +399,7 @@ class Menu: public SoldBook{
 
         if(input == "InventoryEdit"){
             
-            cout << setw(20) << ' ' << " Serendipity Booksellers";
+            cout << setw(20) << ' ' << " Serendipity Booksellers\n";
             cout << setw(23) << ' ' << "Inventory Database\n";
             cout << setw(15) << ' ' << "1   Title\n";
             cout << setw(15) << ' ' << "2.  ISBN\n";
@@ -403,9 +415,9 @@ class Menu: public SoldBook{
 
     }
 
-    void cashierOutput(string input, int checkoutQuantity, double checkoutPrice){
+    void cashierOutput(string input){
 
-        const double salesTax = 0.06;
+        double accumulator = 0.0;
 
         if(input == "Transaction"){
 
@@ -415,14 +427,8 @@ class Menu: public SoldBook{
             cout  << left<< setw(5) << "Qty" << setw(20) << "ISBN" << setw(40) << "Title" << setw(10) << "Price"  << setw(3) << "Total"<< endl;
             separateText();
 
-            cout << '\n' << setw(4)  << left << fixed << setprecision(2) << getQtySold() << setw(20) << invbook.getISBN() << setw(40) << invbook.getTitle()  << " $" << setw(9) << invbook.getRetail() << "$"  << getSubTotal() << endl;
-            cout << "\n\n\n";
-
-            cout << setw(61)  << "\t\tSubtotal" << "$" << checkoutPrice << endl; 
-            cout << setw(61)  << "\t\tTax"      << "$" << checkoutPrice * salesTax << endl;
-            cout << setw(61)  << "\t\tTotal"    << "$" << checkoutPrice + (checkoutPrice * salesTax) << endl;        
+            
         }
-
     }
     
     void printError(){

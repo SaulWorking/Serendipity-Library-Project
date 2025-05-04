@@ -64,10 +64,13 @@ void repListing(){
     menuHelper.separateText();
             cout << '\n';
 
+
+            
+
         for(int bookIndex=0; bookIndex<bookFile.storageSize(); bookIndex++){
 
 
-            invbook = bookFile.bookRead(invbook, bookIndex);
+             bookFile.bookRead(invbook, bookIndex);
 
             if(!invbook.isEmpty()){
                 
@@ -90,7 +93,7 @@ void repWholesale(){
 
         for(int bookIndex=0; bookIndex<bookFile.storageSize(); bookIndex++){
 
-            invbook = bookFile.bookRead(invbook, bookIndex);
+             bookFile.bookRead(invbook, bookIndex);
 
             if(!invbook.isEmpty()){
 
@@ -119,7 +122,7 @@ void repRetail(){
     menuHelper.separateText();
         
         for(int bookIndex=0; bookIndex<bookFile.storageSize(); bookIndex++){
-            invbook = bookFile.bookRead(invbook, bookIndex);
+             bookFile.bookRead(invbook, bookIndex);
 
             if(!invbook.isEmpty()){
                 cout << "[Book " << bookIndex + 1  << ']' << endl;
@@ -153,7 +156,7 @@ void repQty(){
 
                 //print according to byte size
 
-                invbook = bookFile.bookRead(invbook, bookIndex);
+                 bookFile.bookRead(invbook, bookIndex);
 
                 if(!invbook.isEmpty()){
 
@@ -177,7 +180,7 @@ void repCost(){
         for (int i = 0; i <bookFile.storageSize(); i++) {
             int bookIndex = costIndexes[i];
 
-            invbook = bookFile.bookRead(invbook, bookIndex);
+             bookFile.bookRead(invbook, bookIndex);
 
 
             if(!invbook.isEmpty()){
@@ -205,7 +208,7 @@ void repAge(){
         for (int i = 0; i < bookFile.storageSize(); i++) {
             int bookIndex = ageIndexes[i];
 
-            invbook = bookFile.bookRead(invbook, bookIndex);
+             bookFile.bookRead(invbook, bookIndex);
 
                 if(!invbook.isEmpty()){
                     cout << "[Book " << bookIndex + 1  << ']' << endl;
@@ -244,8 +247,8 @@ void quantitySort(int indices[]){
         for (int j = i + 1; j < bookFile.storageSize(); j++) {
             // read invbook (current max)
 
-            invbook = bookFile.bookRead(invbook, indices[maxIndex]);
-            book  = bookFile.bookRead(book, indices[j]);
+             bookFile.bookRead(invbook, indices[maxIndex]);
+             bookFile.bookRead(book, indices[j]);
 
             // read book (candidate)
   
@@ -285,8 +288,8 @@ void quantitySort(int indices[]){
             for (int j = i + 1; j < bookFile.storageSize(); j++) {
                 // read invbook (current max)
 
-                invbook = bookFile.bookRead(invbook, indices[maxIndex]);
-                book = bookFile.bookRead(book, indices[j]);
+                 bookFile.bookRead(invbook, indices[maxIndex]);
+                 bookFile.bookRead(book, indices[j]);
 
             
                 // compare retail values
@@ -314,28 +317,28 @@ void quantitySort(int indices[]){
   void dateSort(int indices[]){
 
     InventoryBook book;
-   int mindex = 0;
+   int maxindex = 0;
 
    for(int i =0; i<bookFile.storageSize(); i++)
         indices[i] = i;
 
         for (int i = 0; i < bookFile.storageSize()-1; i++) {
-            mindex = i;
+            maxindex = i;
     
             //read max value
             for (int j = i+1 ; j < bookFile.storageSize(); j++) {
                 //read into invbook
 
-                invbook = bookFile.bookRead(invbook, indices[mindex]);
-                book = bookFile.bookRead(book, indices[j]);
+                 bookFile.bookRead(invbook, indices[maxindex]);
+                 bookFile.bookRead(book, indices[j]);
 
                 if (book.getDateAdded() < invbook.getDateAdded()) {
-                    mindex = j;
+                    maxindex = j;
                 }
             }
             //swap
 
-            swap(indices[i], indices[mindex]);
+            swap(indices[i], indices[maxindex]);
 
             cout << endl;
         }

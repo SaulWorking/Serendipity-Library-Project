@@ -79,9 +79,14 @@ BookData invbook[20] = {
 //Declaring global OBJECT... to be read in
 InventoryBook invbook;
 BookStorage bookFile;
+
+
 Menu menuHelper;
 
 int main(){
+
+    
+
     int mainMenuChoice{0};
     bool exitModule = false;
     
@@ -91,8 +96,8 @@ int main(){
 
         cin >> mainMenuChoice;
 
-
     menuHelper.separateText();
+    
 
         switch(mainMenuChoice){
             case 1:

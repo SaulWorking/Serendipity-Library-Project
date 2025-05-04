@@ -90,7 +90,7 @@ void addBook() {
 
     for (int i = 0; i < bookFile.storageSize(); i++) {
 
-        invbook = bookFile.bookRead(invbook, i);
+        bookFile.bookRead(invbook, i);
 
         if (invbook.isEmpty()){
 
@@ -296,6 +296,7 @@ void editInventoryInput(int index){
     while(exitModule == false){
 
         menuHelper.menuOutput("InventoryEdit");
+        invbook.bookIndexInformation();
 
 
         cout << "Which book value do you want to edit? ";
@@ -412,7 +413,7 @@ int findBookIndex(string bookWant){
             
 
             
-            invbook = bookFile.bookRead(invbook, i);
+            bookFile.bookRead(invbook, i);
 
 
 

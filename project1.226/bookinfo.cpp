@@ -15,7 +15,7 @@
 using namespace std;
 
 //prints out all book information like title and price
-void bookInfo(char Title[51], char ISBN[14], char Author[31], char Publisher[31], char Date[11], int Quantity, double WholesalePrice, double RetailPrice){
+void bookInfo(char Title[51], char ISBN[14], char Author[31], char Date[11], char Publisher[31], int Quantity, double WholesalePrice, double RetailPrice){
     
     
     cout << left << "Title: "  <<  Title;
@@ -27,7 +27,6 @@ void bookInfo(char Title[51], char ISBN[14], char Author[31], char Publisher[31]
     cout <<         "Wholesale value: " << WholesalePrice;
     cout <<'\n' <<  "Retail price: " << RetailPrice;
     cout << "\n\n"; 
-    
+    menuHelper.separateText();
         return; 
 }
-
