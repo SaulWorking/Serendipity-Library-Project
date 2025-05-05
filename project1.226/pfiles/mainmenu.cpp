@@ -12,7 +12,6 @@
 #include <iomanip>
 #include <cstring>
 #include "../include/allheaders.h"
-using namespace std;
 
 //example data
     /*
@@ -81,12 +80,6 @@ InventoryBook invbook;
 BookStorage bookFile;
 
 
-
-
-
-
-
-
 Menu menuHelper;
 
 int main(){
@@ -100,7 +93,7 @@ int main(){
 
      menuHelper.menuOutput("MainMenu");
 
-        cin >> mainMenuChoice;
+     std::cin >> mainMenuChoice;
 
     menuHelper.separateText();
     
@@ -116,7 +109,7 @@ int main(){
                 reports();
                 break;
             case 4:
-                cout << '\n' << setw(15) << ' ' << "Goodbye!\n";
+            std::cout << '\n' << std::setw(15) << ' ' << "Goodbye!\n";
 
                 //close file 
                 bookFile.~BookStorage();
@@ -124,7 +117,7 @@ int main(){
                 exitModule = true;
                 break;
             default:
-                cout << "Enter a number 1-4\n";
+            std::cout << "Enter a number 1-4\n";
                 break;
         }
     }

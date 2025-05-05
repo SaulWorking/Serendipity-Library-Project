@@ -7,13 +7,14 @@
 #include <fstream>
 #include <iostream>
 #include <iomanip>
-using namespace std;
 
 //general purpose functions/variables
     //swap
-    void swap(int &, int &);
-    void swap(double &, double &);
+template <typename T>
+    void swap(T&, T&);
+    
 
+    
 //bookinfo header 
     //regurgitates book information 
     void bookInfo(char[], char[], char[], char[], char[], int, double, double);
@@ -45,13 +46,13 @@ class BookData{
     public:
         //set functions for data
         void setTitle(char * title)
-            {strncpy(bookTitle, title, 51);}  
+            { std::strncpy(bookTitle, title, 51);}  
         void setISBN(char *ISBN)
-            {strncpy(bookISBN, ISBN, 14);}
+            { std::strncpy(bookISBN, ISBN, 14);}
         void setAuthor(char *author)
-            {strncpy(bookAuthor, author, 31);}	 
+            { std::strncpy(bookAuthor, author, 31);}	 
         void setPub(char *publisher)
-            {strncpy(bookPublisher, publisher, 31);}
+            { std::strncpy(bookPublisher, publisher, 31);}
 
         //overloaded functions for characters
             void setTitle(const char title)
@@ -76,7 +77,7 @@ class BookData{
 
         
         //initialize with null values
-        BookData(){
+        BookData() noexcept {
             bookTitle[0] = '\0';
             bookISBN[0] = '\0'; 
             bookAuthor[0] = '\0';
@@ -85,12 +86,12 @@ class BookData{
 
 
 
-        bool bookMatch(string bookName){
+        bool bookMatch(std::string bookName){
             char userSearch[51];
-            strcpy(userSearch, bookName.c_str());
-            strUpper(userSearch);
+            std::strcpy(userSearch, bookName.c_str());
+                strUpper(userSearch);
 
-            if (strstr(bookTitle, userSearch)){return true;}
+            if ( std::strstr(bookTitle, userSearch)){return true;}
 
             return false;
 
@@ -99,7 +100,7 @@ class BookData{
         //print book information at book index
 
 
-        void printReport(string);
+        void printReport(std::string);
 };
 
 
@@ -238,23 +239,23 @@ class BookStorage{
 
         private:
 
-        fstream bookFile;
+        std::fstream bookFile;
         public:
 
-        BookStorage(){bookFile.open("../text_storage/reports.txt", ios::binary | ios::out | ios::in);}
+        BookStorage(){bookFile.open("../text_storage/reports.txt", std::ios::binary | std::ios::out | std::ios::in);}
 
 
 
         void bookWrite(InventoryBook &book, int bookIndex){
             this->bookFile.clear();
-            this->bookFile.seekp(sizeof(InventoryBook) * bookIndex, ios::beg);
+            this->bookFile.seekp(sizeof(InventoryBook) * bookIndex, std::ios::beg);
             this->bookFile.write(reinterpret_cast<char *>(&book), sizeof(InventoryBook));
             this->bookFile.flush();
         } 
 
         void bookWrite(InventoryBook &book){
             this->bookFile.clear();
-            this->bookFile.seekp(0L, ios::end);
+            this->bookFile.seekp(0L, std::ios::end);
             this->bookFile.write(reinterpret_cast<char *>(&book), sizeof(InventoryBook));
             this->bookFile.flush();
 
@@ -264,7 +265,7 @@ class BookStorage{
 
         int storageSize(){
             this->bookFile.clear();
-            this->bookFile.seekp(0L, ios::end);
+            this->bookFile.seekp(0L, std::ios::end);
             return this->bookFile.tellp()/sizeof(InventoryBook);
         }
 
@@ -272,7 +273,7 @@ class BookStorage{
   
         void bookRead(InventoryBook &book, int bookIndex) {
             this->bookFile.clear();
-            this->bookFile.seekg(sizeof(InventoryBook) * bookIndex, ios::beg);
+            this->bookFile.seekg(sizeof(InventoryBook) * bookIndex, std::ios::beg);
             if (this->bookFile.read(reinterpret_cast<char *>(&book), sizeof(InventoryBook))) {
             }
         }
@@ -300,115 +301,115 @@ extern BookStorage bookFile;
     //prompts user to purchase book
     void cashier();
     //finds index of book ISBN
-    int ISBNLookup(string, SoldBook &);
+    int ISBNLookup(std::string, SoldBook &);
 
 
 
 class Menu: public SoldBook{
     private:
-    string userInput;
+    std::string userInput;
     public:
 
-    Menu(){
+    Menu() noexcept{
         userInput = "";
     }
 
 
 
-    void displayDate(){
+    void displayDate() noexcept{
         time_t day;
         time(&day);
-        cout << ctime(&day);
+        std::cout << ctime(&day);
     }
 
 
     
-    void separateText(){
-        for(int i =0; i< 100; i++){cout << '-';}
-        cout << '\n';
+    void separateText() noexcept {
+        for(int i =0; i< 100; i++){std::cout << '-';}
+        std::cout << '\n';
     }
 
 
 
     void forcedUserWait(){
-        string userInput;
-        cout << '\n';
-            cout << "\nPress enter to continue.";
-            getline(cin, userInput);
-        cout << "\n\n\n";
+        char userInput;
+        std::cout << '\n';
+        std::cout << "\nPress enter to continue.";
+            std::cin.get(userInput);
+            std:: cout << "\n\n\n";
       }
         
 
-    void menuOutput(string input){
+    void menuOutput(std::string input) noexcept {
 
         if(input == "MainMenu"){
-            cout << "\n\n\n";
-            cout << setw(20) << ' ' << "Serendipity Booksellers " << endl;
-            cout << setw(25) << ' ' << "Main Menu" << "\n\n";
-            cout << setw(15) << ' ' << "1.	Cashier Module" << endl;
-            cout << setw(15) << ' ' << "2.	Inventory Database Module" << endl;
-            cout << setw(15) << ' ' << "3.	Report Module" << endl;
-            cout << setw(15) << ' ' << "4.	Exit" << endl;
-            cout << "\n\n" << setw(15) << ' ' << "Enter your choice: ";
+            std::cout << "\n\n\n";
+            std::cout << std::setw(20) << ' ' << "Serendipity Booksellers " <<  std::endl;
+            std::cout << std::setw(25) << ' ' << "Main Menu" << "\n\n";
+            std::cout << std::setw(15) << ' ' << "1.	Cashier Module" <<  std::endl;
+            std::cout << std::setw(15) << ' ' << "2.	Inventory Database Module" <<  std::endl;
+            std::cout << std::setw(15) << ' ' << "3.	Report Module" <<  std::endl;
+            std::cout << std::setw(15) << ' ' << "4.	Exit" <<  std::endl;
+            std::cout << "\n\n" << std::setw(15) << ' ' << "Enter your choice: ";
         }
 
         if(input == "Cashier"){
-            cout << '\n' << setw(20) << ' ' << "Serenpidity Booksellers" << endl;
-            cout <<         setw(25) << ' ' << "Cashier Module\n";
-            cout << "How many books do you want?\n";
-            cout << "# of books purchased today: ";
+            std::cout << '\n' << std::setw(20) << ' ' << "Serenpidity Booksellers" <<  std::endl;
+            std::cout <<         std::setw(25) << ' ' << "Cashier Module" << std::endl;        
+            std::cout << "How many books do you want?"<<  std::endl;
+            std::cout << "# of books purchased today: ";
 
         }
         if(input == "Inventory"){
-            cout << setw(20) << ' ' << " Serendipity Booksellers" << endl;
-            cout << setw(23) << ' ' << "Inventory Database\n\n";
-            cout << setw(15) << ' ' << "1.	Look Up a Book"        << endl;
-            cout << setw(15) << ' ' << "2.       Add a Book"      << endl;
-            cout << setw(15) << ' ' << "3.	Edit a Book's Record"  << endl;
-            cout << setw(15) << ' ' << "4.	Delete a Book"         << endl;
-            cout << setw(15) << ' ' << "5.	Return to the Main Menu"  << endl;
-            cout << '\n' << setw(15) << ' ' << "Enter your choice: ";
+            std::cout << std::setw(20) << ' ' << " Serendipity Booksellers" <<  std::endl;
+            std::cout << std::setw(23) << ' ' << "Inventory Database\n\n";
+            std::cout << std::setw(15) << ' ' << "1.	Look Up a Book"        <<  std::endl;
+            std::cout << std::setw(15) << ' ' << "2.       Add a Book"      <<  std::endl;
+            std::cout << std::setw(15) << ' ' << "3.	Edit a Book's Record"  <<  std::endl;
+            std::cout << std::setw(15) << ' ' << "4.	Delete a Book"         <<  std::endl;
+            std::cout <<std:: setw(15) << ' ' << "5.	Return to the Main Menu"  <<  std::endl;
+            std::cout << '\n' << std::setw(15) << ' ' << "Enter your choice: ";
         }
         if(input == "Report"){
-            cout << setw(20) << ' ' << "Serendipity Booksellers\n";
-            cout << setw(25) << ' ' << "Reports\n\n";
-            cout << setw(15) << ' ' << "1.	Inventory Listing\n";
-            cout << setw(15) << ' ' << "2.\tInventory Wholesale Value\n";
-            cout << setw(15) << ' ' << "3.	Inventory Retail Value\n";
-            cout << setw(15) << ' ' << "4.	Listing by Quantity\n";
-            cout << setw(15) << ' ' << "5.	Listing by Cost\n";
-            cout << setw(15) << ' ' << "6.	Listing by Age\n";
-            cout << setw(15) << ' ' << "7.	Return to Main Menu\n";
-            cout << setw(15) << ' ' << "Enter Your Choice: ";
+            std::cout << std::setw(20) << ' ' << "Serendipity Booksellers" <<  std::endl;
+            std::cout << std::setw(25) << ' ' << "Reports\n\n";
+            std::cout << std::setw(15) << ' ' << "1.	Inventory Listing" <<  std::endl;
+            std::cout << std::setw(15) << ' ' << "2.\tInventory Wholesale Value" <<  std::endl;
+            std::cout << std::setw(15) << ' ' << "3.	Inventory Retail Value" <<  std::endl;
+            std::cout << std::setw(15) << ' ' << "4.	Listing by Quantity" <<  std::endl;
+            std::cout << std::setw(15) << ' ' << "5.	Listing by Cost" <<  std::endl;
+            std::cout << std::setw(15) << ' ' << "6.	Listing by Age" <<  std::endl;
+            std::cout << std::setw(15) << ' ' << "7.	Return to Main Menu" <<  std::endl;
+            std::cout << std::setw(15) << ' ' << "Enter Your Choice: ";
         }
 
         if(input == "InventoryEdit"){
             
-            cout << setw(20) << ' ' << " Serendipity Booksellers\n";
-            cout << setw(23) << ' ' << "Inventory Database\n";
-            cout << setw(15) << ' ' << "1   Title\n";
-            cout << setw(15) << ' ' << "2.  ISBN\n";
-            cout << setw(15) << ' ' << "3.	Author\n" ;
-            cout << setw(15) << ' ' << "4.	Publisher\n";
-            cout << setw(15) << ' ' << "5.	Date Added\n";
-            cout << setw(15) << ' ' << "6.	Quantity\n";
-            cout << setw(15) << ' ' << "7.	Wholesale price\n" ;
-            cout << setw(15) << ' ' << "8.	Retail Price\n";
-            cout << setw(15) << ' ' << "9.	Exit\n\n";
+            std::cout << std::setw(20) << ' ' << " Serendipity Booksellers" <<  std::endl;
+            std::cout << std::setw(23) << ' ' << "Inventory Database" <<  std::endl;
+            std::cout << std::setw(15) << ' ' << "1   Title" <<  std::endl;
+            std::cout << std::setw(15) << ' ' << "2.  ISBN" <<  std::endl;
+            std::cout << std::setw(15) << ' ' << "3.	Author" <<  std::endl;
+            std::cout << std::setw(15) << ' ' << "4.	Publisher" <<  std::endl;
+            std::cout << std::setw(15) << ' ' << "5.	Date Added" <<  std::endl;
+            std::cout << std::setw(15) << ' ' << "6.	Quantity" <<  std::endl;
+            std::cout << std::setw(15) << ' ' << "7.	Wholesale price" <<  std::endl;
+            std::cout << std::setw(15) << ' ' << "8.	Retail Price" <<  std::endl;
+            std::cout << std::setw(15) << ' ' << "9.	Exit\n\n";
     
         }
 
     }
 
-    void cashierOutput(string input){
+    void cashierOutput(std::string input) noexcept{
 
 
         if(input == "Transaction"){
 
-            cout << "\nDate:\t";
+            std::cout << "\nDate:\t";
             displayDate();
 
-            cout  << left<< setw(5) << "Qty" << setw(20) << "ISBN" << setw(40) << "Title" << setw(10) << "Price"  << setw(3) << "Total"<< endl;
+            std::cout <<std::left<< std::setw(5) << "Qty" <<std:: setw(20) << "ISBN" << std::setw(40) << "Title" << std::setw(10) << "Price"  << std::setw(3) << "Total"<< std::endl;
             separateText();
 
             
@@ -417,7 +418,7 @@ class Menu: public SoldBook{
     
     void printError(){
         static int counter{1};
-        cout << "\nERROR! input/output doesnt work/\n\n" << "\n This is error number " << counter << endl;
+        std::cout << "\nERROR! input/output doesnt work/\n\n" << "\n This is error number " << counter << std::endl;
         counter++;
     }
 
@@ -438,7 +439,7 @@ extern Menu menuHelper;
         void editBook();
         void deleteBook();
         void editInventoryInput(int);
-        int findBookIndex(string); 
+        int findBookIndex(std::string); 
     //report header
         void reports();
         void reportsCheck(int);

@@ -16,8 +16,8 @@
 #include <iostream>
 #include <iomanip>
 #include <cstring>
+#include <new>
 #include "../include/allheaders.h"
-using namespace std;
 
 double SoldBook::taxRate =0.06;
 double SoldBook::total = 0.0;
@@ -34,32 +34,42 @@ void cashier(){
     SoldBook* customerPurchases = nullptr;
 
 
-    string cashierISBN = "";
+    std::string cashierISBN = "";
 
     while(exitModule == false){
 
         menuHelper.separateText();
         menuHelper.menuOutput("Cashier");
         
-            cin >> purchasingQuanity;
+        std::cin >> purchasingQuanity;
 
             if(purchasingQuanity <=0){
-                cout << "\nGoodbye!";
+                std::cout << "\nGoodbye!";
                  exitModule = true;
                  break;
             }else{
+
+                try{
                 customerPurchases = new SoldBook[purchasingQuanity];
+                }
+                //fixed warning: catching polymorphic type 'class std::bad_alloc' by value [-Wcatch-value=]
+                catch(std::bad_alloc&){
+                      std::cout << "\nInsufficient memory, exiting program." << std::endl;
+                exitModule = true;
+
+                }
             }
+
 
         
 
     for(int i =0; i < purchasingQuanity; i++){
 
-          cout << "\nBook ISBN: ";
+        std::cout << "\nBook ISBN: ";
 
 
-            cin.ignore();
-            getline(cin, cashierISBN);
+        std::cin.ignore();
+        std::getline(std::cin, cashierISBN);
 
         
         menuHelper.separateText();
@@ -81,25 +91,25 @@ void cashier(){
 
 
         if(invbook.getQty() <= 0){
-            cout << "\n\n" << setw(15) << ' ' << "This book is not in stock." << setw(15) << ' ' << "\nExiting cashier module...\n";
+            std::cout << "\n\n" << std::setw(15) << ' ' << "This book is not in stock." << std::setw(15) << ' ' << "\nExiting cashier module...\n";
 
             return;
         }
 
     //locate ISBN if user's ISBN is invalid
         while(ISBNIndex == -1){
-            cout << "Cannot locate ISBN.";
-            cout << "\nDo you want to retry?(y/n)";
-                cin >> userInput;
+            std::cout << "Cannot locate ISBN.";
+            std::cout << "\nDo you want to retry?(y/n)";
+            std::cin >> userInput;
 
             if(toupper(userInput) == 'Y'){
-                cin.ignore();
-                cout << "\nISBN:";
-                getline(cin, cashierISBN);
+                std::cin.ignore();
+                std::cout << "\nISBN:";
+                std::getline(std::cin, cashierISBN);
                 ISBNIndex = ISBNLookup(cashierISBN, customerPurchases[i]);
             }else{
                 //exit
-                cout << "\nExiting cashier module...\n";
+                std::cout << "\nExiting cashier module...\n";
                 exitModule = true;
                 return;
             }
@@ -108,14 +118,14 @@ void cashier(){
 
     //ISBN is found ask user for quantity
             if(ISBNIndex >=0){
-                cout << "Book quantity? ";
-                cin >> bookQuantity;
+                std::cout << "Book quantity? ";
+                std::cin >> bookQuantity;
 
 
                 // 0 < userQuantity < actualBookQuantity
                 while( (bookQuantity < 0 || bookQuantity > customerPurchases[i].getQty()) && (!isdigit(bookQuantity)) ){
-                    cout <<"\nInvalid Quantity. Try again: ";
-                    cin >> bookQuantity;               
+                    std::cout <<"\nInvalid Quantity. Try again: ";
+                    std::cin >> bookQuantity;               
                                         
                 }
                 
@@ -162,26 +172,26 @@ for(int i =0; i<purchasingQuanity;i++){
 
 
 
-        cout << '\n' << setw(4)  << left << fixed << setprecision(2) << customerPurchases[i].getQtySold() << setw(20) << customerPurchases[i].getISBN() << setw(40) << customerPurchases[i].getTitle()  << " $" << setw(9) << customerPurchases[i].getRetail() << "$"  << customerPurchases[i].getSubTotal() << endl;
-        cout << "\n\n\n";
+    std::cout << '\n' << std::setw(4)  << std::left << std::fixed << std::setprecision(2) << customerPurchases[i].getQtySold() << std::setw(20) << customerPurchases[i].getISBN() << std::setw(40) << customerPurchases[i].getTitle()  << " $" << std::setw(9) << customerPurchases[i].getRetail() << "$"  << customerPurchases[i].getSubTotal() << std::endl;
+    std::cout << "\n\n\n";
         }
 
 
         customerPurchases[0].setTotal(accumulator + (accumulator * customerPurchases->getTaxRate()));
 
 
-        cout << setw(61)  << "\t\tSubtotal" << "$" << accumulator << endl; 
-        cout << setw(61)  << "\t\tTax"      << "$" << accumulator * customerPurchases->getTaxRate() << endl;
-        cout << setw(61)  << "\t\tTotal"    << "$" << customerPurchases[0].getTotal() << endl;  
+        std::cout << std::setw(61)  << "\t\tSubtotal" << "$" << accumulator << std::endl; 
+        std::cout << std::setw(61)  << "\t\tTax"      << "$" << accumulator * customerPurchases->getTaxRate() << std::endl;
+        std::cout << std::setw(61)  << "\t\tTotal"    << "$" << customerPurchases[0].getTotal() << std::endl;  
 
 
 
 
 
-        cout << "\n\n" << setw(15) << ' ' << "Thank you for shopping at Serendipity\n\n" << endl;
-        cout << "\n" << setw(15) << ' ' << "Do you have another transaction? (Y/N): ";
+        std::cout << "\n\n" << std::setw(15) << ' ' << "Thank you for shopping at Serendipity\n\n" << std::endl;
+        std::cout << "\n" << std::setw(15) << ' ' << "Do you have another transaction? (Y/N): ";
 
-        cin >> userInput;
+        std::cin >> userInput;
 
     if(toupper(userInput) == 'N'){
         exitModule = true;
@@ -195,7 +205,7 @@ for(int i =0; i<purchasingQuanity;i++){
 
 }
 
-int ISBNLookup(string ISBN, SoldBook & books){
+int ISBNLookup(std::string ISBN, SoldBook & books){
 
     for(int bookIndex =0; bookIndex<bookFile.storageSize(); bookIndex++){
 

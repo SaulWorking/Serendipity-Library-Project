@@ -14,7 +14,6 @@
 #include <iomanip>
 #include <cstring>
 #include "../include/allheaders.h"
-using namespace std;
 
 void invMenu(){
     int inventoryChoice{0};
@@ -24,7 +23,7 @@ void invMenu(){
 
     menuHelper.menuOutput("Inventory");
         
-        cin >> inventoryChoice;
+    std::cin >> inventoryChoice;
         
     menuHelper.separateText();
 
@@ -45,7 +44,7 @@ void invMenu(){
               exitModule = true;
               break;
             default:
-              cout << "Please enter a number in the range 1-5" << endl;
+            std::cout << "Please enter a number in the range 1-5" << std::endl;
               break;
             }
     }
@@ -53,23 +52,23 @@ void invMenu(){
 
 void lookUpBook() {
     int bookIndex = -1;
-    string bookName;
+    std::string bookName;
         
-        cout << "Title of book to look up: ";
+    std::cout << "Title of book to look up: ";
 
-        cin.ignore();
-            getline(cin, bookName);
+    std::cin.ignore();
+    std::getline(std::cin, bookName);
 
         menuHelper.separateText();
 
             bookIndex = findBookIndex(bookName);
             
         if (bookIndex >=0) {
-            cout << "\n\nThe only book matching your title is...\n\n";
+            std::cout << "\n\nThe only book matching your title is...\n\n";
             invbook.bookIndexInformation();
-            cout << '\n';
+            std::cout << '\n';
         } else {
-                cout << "Book not in inventory\n\n"; 
+            std::cout << "Book not in inventory\n\n"; 
         }
 }
 
@@ -85,8 +84,8 @@ void addBook() {
     int quantityInput =0;
     char userInput[51];
     bool writeCheck = false;
-    cout << "\nAdding Book...\n" << endl;
-    cout << "\nBooks in storage: " << bookFile.storageSize() << endl;
+    std::cout << "\nAdding Book...\n" << std::endl;
+    std::cout << "\nBooks in storage: " << bookFile.storageSize() << std::endl;
 
     for (int i = 0; i < bookFile.storageSize(); i++) {
 
@@ -94,52 +93,52 @@ void addBook() {
 
         if (invbook.isEmpty()){
 
-            cin.ignore();
-            cout << "ISBN: ";
-            cin.getline(userInput, 14);
+            std::cin.ignore();
+            std::cout << "ISBN: ";
+            std::cin.getline(userInput, 14);
             menuHelper.separateText();
             strUpper((userInput));
             invbook.setISBN(userInput);
             
-            cout << "Title: ";
-            cin.getline(userInput, 51);
+            std::cout << "Title: ";
+            std::cin.getline(userInput, 51);
             menuHelper.separateText();
             strUpper((userInput));
             invbook.setTitle(userInput);
     
-            cout << "Author: ";
-            cin.getline(userInput, 31);
+            std::cout << "Author: ";
+            std::cin.getline(userInput, 31);
             menuHelper.separateText();
             strUpper((userInput));
             invbook.setAuthor(userInput);
     
-            cout << "Publisher: ";
-            cin.getline(userInput, 31);
+            std::cout << "Publisher: ";
+            std::cin.getline(userInput, 31);
             menuHelper.separateText();
             strUpper((userInput));
             invbook.setPub(userInput);
     
-            cout << "Date: ";
-            cin.getline(userInput, 11);
+            std::cout << "Date: ";
+            std::cin.getline(userInput, 11);
             menuHelper.separateText();
             invbook.setDateAdded(userInput);
     
-            cout << "Quantity: ";
-            cin >> quantityInput;
+            std::cout << "Quantity: ";
+            std::cin >> quantityInput;
             menuHelper.separateText();
-            cin.ignore();
+            std::cin.ignore();
             invbook.setQty(quantityInput);
     
-            cout << "Wholesale cost: ";
-            cin >> priceInput;
+            std::cout << "Wholesale cost: ";
+            std::cin >> priceInput;
             menuHelper.separateText();
-            cin.ignore();
+            std::cin.ignore();
             invbook.setWholesale(priceInput);
     
-            cout << "Retail cost: ";
-            cin >> priceInput;
+            std::cout << "Retail cost: ";
+            std::cin >> priceInput;
             menuHelper.separateText();
-            cin.ignore();
+            std::cin.ignore();
             invbook.setRetail(priceInput);
             
         if((priceInput > -1 && priceInput <2147483647) && (quantityInput > -1) && (userInput[0] != '\0')){
@@ -154,7 +153,7 @@ void addBook() {
                 bookFile.bookWrite(invbook);
             }else{
                 invbook.removeBook();
-                "Failure to write...\n";
+                std::cout << "Failure to write...\n";
             }
             return;
         
@@ -163,53 +162,53 @@ void addBook() {
 
 
     if(bookFile.storageSize() < 20){
-        cin.ignore();
+        std::cin.ignore();
 
-        cout << "ISBN: ";
-        cin.getline(userInput, 14);
+        std::cout << "ISBN: ";
+        std::cin.getline(userInput, 14);
         menuHelper.separateText();
         strUpper((userInput));
         invbook.setISBN(userInput);
         
-        cout << "Title: ";
-        cin.getline(userInput, 51);
+        std::cout << "Title: ";
+        std::cin.getline(userInput, 51);
         menuHelper.separateText();
         strUpper((userInput));
         invbook.setTitle(userInput);
 
-        cout << "Author: ";
-        cin.getline(userInput, 31);
+        std::cout << "Author: ";
+        std::cin.getline(userInput, 31);
         menuHelper.separateText();
         strUpper((userInput));
         invbook.setAuthor(userInput);
 
-        cout << "Publisher: ";
-        cin.getline(userInput, 31);
+        std::cout << "Publisher: ";
+        std::cin.getline(userInput, 31);
         menuHelper.separateText();
         strUpper((userInput));
         invbook.setPub(userInput);
 
-        cout << "Date: ";
-        cin.getline(userInput, 11);
+        std::cout << "Date: ";
+        std::cin.getline(userInput, 11);
         menuHelper.separateText();
         invbook.setDateAdded(userInput);
 
-        cout << "Quantity: ";
-        cin >> quantityInput;
+        std::cout << "Quantity: ";
+        std::cin >> quantityInput;
         menuHelper.separateText();
-        cin.ignore();
+        std::cin.ignore();
         invbook.setQty(quantityInput);
 
-        cout << "Wholesale cost: ";
-        cin >> priceInput;
+        std::cout << "Wholesale cost: ";
+        std::cin >> priceInput;
         menuHelper.separateText();
-        cin.ignore();
+        std::cin.ignore();
         invbook.setWholesale(priceInput);
 
-        cout << "Retail cost: ";
-        cin >> priceInput;
+        std::cout << "Retail cost: ";
+        std::cin >> priceInput;
         menuHelper.separateText();
-        cin.ignore();
+        std::cin.ignore();
         invbook.setRetail(priceInput);
 
     //https://stackoverflow.com/questions/37034247/ofstream-creating-file-but-not-writing-to-it-in-c
@@ -227,7 +226,7 @@ void addBook() {
                 bookFile.bookWrite(invbook);
             }else{
                 invbook.removeBook();
-                "Failure to write...\n";
+                std::cout << "Failure to write...\n";
             }
             return;
         
@@ -241,26 +240,26 @@ void addBook() {
 // search to check if book is in
 //edit book if book exists
 void editBook(){
-    string bookName;
+    std::string bookName;
     int bookIndex = -1;
 
-    cout << '\n' << setw(15) << "You selected edit book\n\n";
-    cout << '\n' << setw(15) << "Title of book to edit: ";
+    std::cout << '\n' << std::setw(15) << "You selected edit book\n\n";
+    std::cout << '\n' << std::setw(15) << "Title of book to edit: ";
 
-    cin.ignore();
-    getline(cin, bookName);   
+    std::cin.ignore();
+    std::getline(std::cin, bookName);   
     menuHelper.separateText();
         bookIndex = findBookIndex(bookName);
 
 
     if (bookIndex >=0) {
         // look up book
-        cout << "\nYour book is...\n";
+        std::cout << "\nYour book is...\n";
 
         invbook.bookIndexInformation();
         editInventoryInput(bookIndex);
     } else {
-        cout << "Book not in inventory\n\n";
+        std::cout << "Book not in inventory\n\n";
     }
 
      //checks for one of eight categories for book Information 
@@ -269,25 +268,25 @@ void editBook(){
 
 //tests for book availability in storage and deletes book
 void deleteBook(){
-    string bookName;
+    std::string bookName;
     char user;
     int bookIndex = -1;
 
-    cout << '\n' << setw(15) << ' ' << "You selected delete book\n\n";
-    cout << '\n' << setw(15) << ' ' << "which book will you delete? : ";
+    std::cout << '\n' << std::setw(15) << ' ' << "You selected delete book\n\n";
+    std::cout << '\n' << std::setw(15) << ' ' << "which book will you delete? : ";
     
 
-        cin.ignore();
-        getline(cin, bookName);
+    std::cin.ignore();
+        std::getline(std::cin, bookName);
         menuHelper.separateText();
 
             bookIndex = findBookIndex(bookName);
 
         if(bookIndex >=0){
-            cout << '\n' << setw(20) << ' ' << "Do you really want to delete this?(Y/N): ";
+            std::cout << '\n' << std::setw(20) << ' ' << "Do you really want to delete this?(Y/N): ";
     
-                cin >> user;
-                    cin.ignore();
+            std::cin >> user;
+                std::cin.ignore();
 
             if(toupper(user) == 'Y'){
                 invbook.removeBook();
@@ -297,7 +296,7 @@ void deleteBook(){
                 bookFile.bookWrite(invbook, bookIndex);
                 
             }else{
-                cout << setw(25) << ' ' << "Book doesnt exist.\n";
+                std::cout << std::setw(25) << ' ' << "Book doesnt exist.\n";
             }
          }  
     return;
@@ -318,18 +317,18 @@ void editInventoryInput(int index){
         invbook.bookIndexInformation();
 
 
-        cout << "Which book value do you want to edit? ";
-        cin >> userEditChoice;
+        std::cout << "Which book value do you want to edit? ";
+        std::cin >> userEditChoice;
         menuHelper.separateText();
 
-        cin.ignore();
+        std::cin.ignore();
 
 
 
     switch(userEditChoice){
         case 1:
-            cout <<"\n Changing TITLE to: ";
-            cin.getline(userInput, 51);
+        std::cout <<"\n Changing TITLE to: ";
+            std::cin.getline(userInput, 51);
             strUpper(userInput);
             menuHelper.separateText();
             invbook.setTitle(userInput);      
@@ -338,8 +337,8 @@ void editInventoryInput(int index){
 
             break;
         case 2:
-            cout <<"\n Changing ISBN to: ";
-            cin.getline(userInput, 14);
+        std::cout <<"\n Changing ISBN to: ";
+            std::cin.getline(userInput, 14);
             strUpper(userInput);
             menuHelper.separateText();
             invbook.setISBN(userInput);
@@ -347,8 +346,8 @@ void editInventoryInput(int index){
 
             break;
         case 3:
-            cout <<"\n Changing AUTHOR to: ";
-            cin.getline(userInput, 31);
+        std::cout <<"\n Changing AUTHOR to: ";
+            std::cin.getline(userInput, 31);
             strUpper(userInput);
             menuHelper.separateText();
             invbook.setAuthor(userInput);
@@ -356,39 +355,39 @@ void editInventoryInput(int index){
 
             break;
         case 4:
-            cout <<"\n Changing DATE to: ";
-            cin.getline(userInput, 11);
+        std::cout <<"\n Changing DATE to: ";
+            std::cin.getline(userInput, 11);
             strUpper(userInput);
             menuHelper.separateText();
             invbook.setDateAdded(userInput); 
             if(userInput[0] != '\0'){writeCheck = true;}
             break;
          case 5:
-            cout <<"\n Changing PUBLISHER added to: ";
-            cin.getline(userInput, 31);
+         std::cout <<"\n Changing PUBLISHER added to: ";
+            std::cin.getline(userInput, 31);
             strUpper(userInput);
             menuHelper.separateText();
             invbook.setPub(userInput);
             if(userInput[0] != '\0'){writeCheck = true;}
             break;
          case 6:
-            cout <<"\n Changing QUANTITY to: ";
-            cin >> userQuantity;
+         std::cout <<"\n Changing QUANTITY to: ";
+            std::cin >> userQuantity;
             menuHelper.separateText();
             invbook.setQty(userQuantity);
                 if(userQuantity > -1){writeCheck = true;}
 
             break;
          case 7:
-            cout <<"\n Changing WHOLESALE value to: ";
-            cin >> userPrice;
+         std::cout <<"\n Changing WHOLESALE value to: ";
+            std::cin >> userPrice;
             menuHelper.separateText();
             invbook.setWholesale(userPrice);
             if(userPrice > -1 && userPrice <2147483647){writeCheck = true;}
             break;
         case 8:
-            cout <<"\n Changing RETAIL value to: ";
-            cin >> userPrice;
+            std::cout <<"\n Changing RETAIL value to: ";
+            std::cin >> userPrice;
             menuHelper.separateText();
             invbook.setRetail(userPrice);
             if(userPrice > -1 && userPrice <2147483647){writeCheck = true;}
@@ -401,14 +400,14 @@ void editInventoryInput(int index){
             bookFile.bookWrite(invbook, index);
         }else{
             invbook.removeBook();
-            "Failure to write...\n";
+            std::cout << "Failure to write...\n";
         }
 
             exitModule = true;
-            cout <<"goodbye!\n";
+        std::cout <<"goodbye!\n";
             break;
         default:
-            cout << "\nTry again!\n";
+        std::cout << "\nTry again!\n";
     }   
 }
 
@@ -424,13 +423,13 @@ void editInventoryInput(int index){
 
 void strUpper(char * wordToBeUppercase){
         int counter =0;
-        while( *(wordToBeUppercase+counter) != '0' && isalpha(*(wordToBeUppercase + counter))){
-            *(wordToBeUppercase+counter) = toupper(wordToBeUppercase[counter]);
+        while( *(wordToBeUppercase+counter) != '0' &&  std::isalpha(*(wordToBeUppercase + counter))){
+            *(wordToBeUppercase+counter) =  std::toupper(wordToBeUppercase[counter]);
                 counter++;
         }
 }
 
-int findBookIndex(string bookWant){
+int findBookIndex(std::string bookWant){
     //prepare bookfile for operation
 
     //i.e input free -> convert to FREE c-string 
@@ -443,12 +442,12 @@ int findBookIndex(string bookWant){
         //convert to uppercase
         //general tip-> use strncpy to prevent segfaults/something similar
 
-        strncpy(bookToBeSearched, bookWant.c_str(), 51);
+        std::strncpy(bookToBeSearched, bookWant.c_str(), 51);
         strUpper(bookToBeSearched);
 
         //ending byte
 
-        cout << "\nBooks in storage: " << bookFile.storageSize() << endl;
+        std::cout << "\nBooks in storage: " << bookFile.storageSize() << std::endl;
         for(int i =0; i <bookFile.storageSize();i++){
             
 
@@ -458,7 +457,7 @@ int findBookIndex(string bookWant){
 
 
             if(invbook.bookMatch(bookToBeSearched)){
-                strncpy(found, strstr(invbook.getTitle(), bookToBeSearched), 51);
+                std::strncpy(found,  std::strstr(invbook.getTitle(), bookToBeSearched), 51);
             }else{
             
                 continue;
@@ -472,15 +471,15 @@ int findBookIndex(string bookWant){
                     bookIndex = i;
 
                         invbook.bookIndexInformation();
-                        cout << "\nIs this your book(Y/N)?";
-                            cin >> userInput;
+                        std::cout << "\nIs this your book(Y/N)?";
+                        std::cin >> userInput;
                             menuHelper.separateText();
                     //if book is intended book exit loop
-                        if(isalpha(userInput) && userInput == 'Y' || userInput == 'y'){
+                        if((isalpha(userInput) && userInput == 'Y') ||(userInput == 'y')){
                             return bookIndex;
                         }else {
                             //else continue searching
-                            cout << "\nNext book...\n\n";
+                            std::cout << "\nNext book...\n\n";
                         }
                 }    
 
@@ -493,10 +492,3 @@ int findBookIndex(string bookWant){
 
     return bookIndex;
 }    //premature check
-
-
-
-
-
-
-
