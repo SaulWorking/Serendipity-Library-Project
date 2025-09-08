@@ -1,5 +1,7 @@
-#ifndef general_header
-#define general_header
+#ifndef GLOBAL_header
+#define GLOBAL_header
+
+using namespace std;
 
 #include <string>
 #include <cstring>
@@ -10,8 +12,7 @@
 
 //general purpose functions/variables
     //swap
-template <typename T>
-    void swap(T&, T&);
+
     
 
     
@@ -242,7 +243,7 @@ class BookStorage{
         std::fstream bookFile;
         public:
 
-        BookStorage(){bookFile.open("../text_storage/reports.txt", std::ios::binary | std::ios::out | std::ios::in);}
+        BookStorage(){bookFile.open("../bin/binbooks.txt", std::ios::binary | std::ios::out | std::ios::in);}
 
 
 

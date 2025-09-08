@@ -7,9 +7,9 @@ CXX := g++
 CXXFLAGS := -Wall -O2 -Iinclude
 
 #assign source files directory
-SRC_DIR := pfiles
+SRC_DIR := src
 #assign output files directory
-OUT_DIR := program
+OUT_DIR := output
 
 #assign target directory (../program/main)
 TARGET := $(OUT_DIR)/main

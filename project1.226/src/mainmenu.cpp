@@ -11,8 +11,7 @@
 #include <iostream>
 #include <iomanip>
 #include <cstring>
-#include "../include/allheaders.h"
-
+#include "../include/headers.h"
 //example data
     /*
     // Book titles - 20 rows, 51 characters per title
@@ -59,7 +58,6 @@
     */
 
     //arrays sorted by TITLE, ISBN, AUTHOR, PUBLISHER, DATE ADDED, QUANTITY, PRICE, and RETAIL PRICE
-
 /*
 BookData invbook[20] = {
         {"FREEDOM", "0374158460", "JONATHAN FRANZEN", "FARRAR", "03-05-2004", 40, 12.50, 30.4},
@@ -78,26 +76,17 @@ BookData invbook[20] = {
 //Declaring global OBJECT... to be read in
 InventoryBook invbook;
 BookStorage bookFile;
-
-
 Menu menuHelper;
 
 int main(){
-
-    
-
     int mainMenuChoice{0};
     bool exitModule = false;
     
     while(exitModule == false){
-
      menuHelper.menuOutput("MainMenu");
-
-     std::cin >> mainMenuChoice;
-
-    menuHelper.separateText();
+     cin >> mainMenuChoice;
+     menuHelper.separateText();
     
-
         switch(mainMenuChoice){
             case 1:
                 cashier();
@@ -109,15 +98,14 @@ int main(){
                 reports();
                 break;
             case 4:
-            std::cout << '\n' << std::setw(15) << ' ' << "Goodbye!\n";
-
+            cout << '\n' << setw(15) << ' ' << "Goodbye!\n";
                 //close file 
                 bookFile.~BookStorage();
                 //exit program
                 exitModule = true;
                 break;
             default:
-            std::cout << "Enter a number 1-4\n";
+            cout << "Enter a number 1-4\n";
                 break;
         }
     }

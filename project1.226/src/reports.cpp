@@ -11,7 +11,7 @@
 
 #include <iostream>
 #include <iomanip>
-#include "../include/allheaders.h"
+#include "../include/headers.h"
 
 const int maximumStock = 20;
 
@@ -20,12 +20,11 @@ void reports(){
     bool exitModule = false;
 
     while (exitModule == false) {
-
         menuHelper.menuOutput("Report");
 
-        std::cin >> reportsChoice;
+        cin >> reportsChoice;
             menuHelper.separateText();
-        std::cin.ignore();
+        cin.ignore();
         switch (reportsChoice){
             case 1:
                 repListing();
@@ -49,7 +48,7 @@ void reports(){
                 exitModule = true;
                 break;
             default:
-            std::cout << "\n\nEnter a number in the range 1-7" <<  std::endl;
+            cout << "\n\nEnter a number in the range 1-7" <<  endl;
                 break;
             }
         }
@@ -57,25 +56,17 @@ void reports(){
 }
 
 void repListing(){
-    std::cout << '\n' << std::setw(40) << ' ' << "Book Listing report\n";
+    cout << '\n' << setw(40) << ' ' << "Book Listing report\n";
 
     menuHelper.displayDate();
     menuHelper.separateText();
-    std::cout << '\n';
-
-
-            
-
+    cout << '\n';
         for(int bookIndex=0; bookIndex<bookFile.storageSize(); bookIndex++){
-
-
              bookFile.bookRead(invbook, bookIndex);
-
             if(!invbook.isEmpty()){
                 
-                std::cout << "\t[Book " << bookIndex + 1  << ']' <<  std::endl;
+                cout << "\t[Book " << bookIndex + 1  << ']' <<  endl;
                 invbook.bookIndexInformation();
-                
             }
         }
         menuHelper.separateText();
@@ -86,27 +77,22 @@ void repListing(){
 void repWholesale(){
     double totalWholesaleValue{0.0};
 
-    std::cout << '\n' << std::setw(40) << ' ' << "Book Wholesale Price report\n";
+    cout << '\n' << setw(40) << ' ' << "Book Wholesale Price report\n";
         menuHelper.displayDate();
         menuHelper.separateText();
 
         for(int bookIndex=0; bookIndex<bookFile.storageSize(); bookIndex++){
-
              bookFile.bookRead(invbook, bookIndex);
-
-            if(!invbook.isEmpty()){
-
-                std::cout << "[Book " << bookIndex + 1  << ']' <<  std::endl;
+            
+             if(!invbook.isEmpty()){
+                cout << "[Book " << bookIndex + 1  << ']' <<  endl;
                 invbook.printReport("Wholesale");
-                
-                totalWholesaleValue += invbook.getWholesale() * invbook.getQty();
-     
+                totalWholesaleValue += invbook.getWholesale() * invbook.getQty(); 
             }
         }
-
         menuHelper.separateText();
-            std::cout << '\n' << std::setw(55); 
-            std::cout << "Wholesale value: " << totalWholesaleValue;
+            cout << '\n' << setw(55); 
+            cout << "Wholesale value: " << totalWholesaleValue;
         menuHelper.forcedUserWait();
 }
 
@@ -116,40 +102,34 @@ void repWholesale(){
 void repRetail(){
     double totalRetailValue{0.0};
 
-    std::cout << '\n' << std::setw(40) << ' ' << "Book Retail Price report\n";
+    cout << '\n' << setw(40) << ' ' << "Book Retail Price report\n";
     menuHelper.displayDate();
     menuHelper.separateText();
         
         for(int bookIndex=0; bookIndex<bookFile.storageSize(); bookIndex++){
              bookFile.bookRead(invbook, bookIndex);
-
             if(!invbook.isEmpty()){
-                std::cout << "[Book " << bookIndex + 1  << ']' <<  std::endl;
+                cout << "[Book " << bookIndex + 1  << ']' <<  endl;
                 invbook.printReport("Retail");
                 totalRetailValue += invbook.getRetail() * invbook.getQty();
             }
 
         }
         menuHelper.separateText();
-        std::cout << '\n' << std::setw(55); 
-        std::cout << "Retail value: " << totalRetailValue;
+        cout << '\n' << setw(55); 
+        cout << "Retail value: " << totalRetailValue;
         menuHelper.forcedUserWait();
 }
 
 
 /// brief 
 void repQty(){
-
     int quantityIndexes[maximumStock];   
-
-    std::cout << '\n' << std::setw(40) << ' ' << "Book Quantity report\n";
+    cout << '\n' << setw(40) << ' ' << "Book Quantity report\n";
     menuHelper.displayDate();
     menuHelper.separateText();
 
-
         quantitySort(quantityIndexes);
-
-
             for (int i = 0; i < bookFile.storageSize(); i++) {
                 int bookIndex = quantityIndexes[i];
 
@@ -159,7 +139,7 @@ void repQty(){
 
                 if(!invbook.isEmpty()){
 
-                    std::cout << "[Book " << bookIndex + 1  << ']' <<  std::endl;
+                    cout << "[Book " << bookIndex + 1  << ']' <<  endl;
                     invbook.printReport("Quantity");
                 }
             }       
@@ -170,47 +150,38 @@ void repCost(){
 
     int costIndexes[maximumStock];   
 
-    std::cout << '\n' << std::setw(40) << ' ' << "Book Cost report\n";
+    cout << '\n' << setw(40) << ' ' << "Book Cost report\n";
         menuHelper.displayDate();
         menuHelper.separateText();
         costSort(costIndexes);
 
-
         for (int i = 0; i <bookFile.storageSize(); i++) {
             int bookIndex = costIndexes[i];
-
              bookFile.bookRead(invbook, bookIndex);
 
-
             if(!invbook.isEmpty()){
-                std::cout << "[Book " << bookIndex + 1  << ']' <<  std::endl;
- 
+                cout << "[Book " << bookIndex + 1  << ']' <<  endl;
                 invbook.printReport("Retail");
-
             }
-
-            
         }
         menuHelper.separateText();
         menuHelper.forcedUserWait();
 }
 void repAge(){
-
     int ageIndexes[maximumStock];  
 
-    std::cout << '\n' << std::setw(40) << ' ' << "Book Age report\n";
+    cout << '\n' << setw(40) << ' ' << "Book Age report\n";
     menuHelper.displayDate();
     menuHelper.separateText();
 
         dateSort(ageIndexes);
-
         for (int i = 0; i < bookFile.storageSize(); i++) {
             int bookIndex = ageIndexes[i];
 
              bookFile.bookRead(invbook, bookIndex);
 
                 if(!invbook.isEmpty()){
-                    std::cout << "[Book " << bookIndex + 1  << ']' <<  std::endl;
+                    cout << "[Book " << bookIndex + 1  << ']' <<  endl;
 
                     invbook.printReport("DateAdded");
 
@@ -220,24 +191,16 @@ void repAge(){
         menuHelper.forcedUserWait();
 }
 
-
-
-
 // https://www.w3schools.com/cpp/cpp_date.asp
 // guide for displaying date
-
-
-
-
 void quantitySort(int indices[]){
 
     InventoryBook book;
     int maxIndex = 0;
 
-    //set up indexes  :3
+    //set up indexes 
     for(int i =0; i<bookFile.storageSize(); i++)
         indices[i] = i;
-
 
     //start 
     for (int i = 0; i < bookFile.storageSize() - 1; i++) {
@@ -248,33 +211,19 @@ void quantitySort(int indices[]){
 
              bookFile.bookRead(invbook, indices[maxIndex]);
              bookFile.bookRead(book, indices[j]);
-
             // read book (candidate)
-  
             // compare retail values
             if (book.getQty() > invbook.getQty()) {
                 maxIndex = j;
             }
-
         }
-
-        
     if(maxIndex != i){
         swap(indices[i], indices[maxIndex]);
     }
-    std::cout <<  std::endl;
-
+        cout <<  endl;
     }   
-        
- 
 }
-
-
-
-
-  void costSort(int indices[]){
-
-
+void costSort(int indices[]){
     InventoryBook book;
     int maxIndex = 0;
 
@@ -300,22 +249,16 @@ void quantitySort(int indices[]){
         if(maxIndex != i){
             swap(indices[i], indices[maxIndex]);
         }
-        std::cout <<  std::endl;
+        cout <<  endl;
     }
     
   }
   
 
-
-
-
-
-
-
   //definitely fix this at some point -> program doesnt accurately sort by date.
-  void dateSort(int indices[]){
+void dateSort(int indices[]){
 
-    InventoryBook book;
+   InventoryBook book;
    int maxindex = 0;
 
    for(int i =0; i<bookFile.storageSize(); i++){
@@ -327,7 +270,6 @@ void quantitySort(int indices[]){
             //read max value
             for (int j = i+1 ; j < bookFile.storageSize(); j++) {
                 //read into invbook
-
                  bookFile.bookRead(invbook, indices[maxindex]);
                  bookFile.bookRead(book, indices[j]);
 
@@ -336,10 +278,8 @@ void quantitySort(int indices[]){
                 }
             }
             //swap
-
             swap(indices[i], indices[maxindex]);
-
-            std::cout <<  std::endl;
+            cout <<  endl;
         }
 } 
 
@@ -347,46 +287,33 @@ void quantitySort(int indices[]){
 
 
 
+7
 
 //report swap
 
 
-template <typename T>
-void swap(T &num1, T &num2){
-
-    T temp = num1;
-    num1 = num2;
-    num2 = temp;
-    
-
-}
-
-
-
-
-
-void BookData::printReport(std::string reportType){
+void BookData::printReport(string reportType){
     if(reportType == "Wholesale"){
-        std::cout << std::left << "Title: "  <<  invbook.getTitle()  << '\n';
-        std::cout         << "ISBN: " <<  invbook.getISBN() <<  std::endl;
-        std::cout         << "Wholesale value: " << invbook.getWholesale() << "\n\n";
+        cout << left << "Title: "  <<  invbook.getTitle()  << '\n';
+        cout         << "ISBN: " <<  invbook.getISBN() <<  endl;
+        cout         << "Wholesale value: " << invbook.getWholesale() << "\n\n";
 
     }
     if(reportType == "Retail"){
-        std::cout << std::left << "Title: "  <<  invbook.getTitle()  << '\n';
-        std::cout         << "ISBN: " <<  invbook.getISBN() <<  std::endl;
-        std::cout         << "Retail Value: " << invbook.getRetail() << "\n\n";
+        cout << left << "Title: "  <<  invbook.getTitle()  << '\n';
+        cout         << "ISBN: " <<  invbook.getISBN() <<  endl;
+        cout         << "Retail Value: " << invbook.getRetail() << "\n\n";
     }
     if(reportType == "Quantity"){
-        std::cout << std::left << "Title: "  <<  invbook.getTitle()  << '\n';
-        std::cout         << "ISBN: " <<  invbook.getISBN() <<  std::endl;
-        std::cout         << "Quantity: " << invbook.getQty() << "\n\n";
+        cout << left << "Title: "  <<  invbook.getTitle()  << '\n';
+        cout         << "ISBN: " <<  invbook.getISBN() <<  endl;
+        cout         << "Quantity: " << invbook.getQty() << "\n\n";
         
     }   
     if(reportType == "DateAdded"){
-        std::cout << std::left << "Title: "  <<  invbook.getTitle()  << '\n';
-        std::cout         << "ISBN: " <<  invbook.getISBN() <<  std::endl;
-        std::cout         << "Date: " << invbook.getDateAdded() << "\n\n";
+        cout << left << "Title: "  <<  invbook.getTitle()  << '\n';
+        cout         << "ISBN: " <<  invbook.getISBN() <<  endl;
+        cout         << "Date: " << invbook.getDateAdded() << "\n\n";
      
     }
 }
