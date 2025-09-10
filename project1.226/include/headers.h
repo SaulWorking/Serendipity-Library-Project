@@ -1,8 +1,6 @@
 #ifndef GLOBAL_header
 #define GLOBAL_header
 
-using namespace std;
-
 #include <string>
 #include <cstring>
 #include <ctime>
@@ -120,7 +118,7 @@ class InventoryBook: public BookData{
    
  
 
-        
+       
         public:
 
 

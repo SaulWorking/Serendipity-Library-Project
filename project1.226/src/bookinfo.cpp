@@ -8,6 +8,7 @@
 ** Student: Thien Dinh
 ** Due Date: 04/27/2025
 ******************************************************************/
+using namespace std;
 #include <iostream>
 #include "../include/headers.h"
 

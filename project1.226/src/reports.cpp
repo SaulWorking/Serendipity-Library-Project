@@ -8,7 +8,7 @@
 ** Student: Thien Dinh
 ** Due Date: 04/27/2025
 ******************************************************************/
-
+using namespace std;
 #include <iostream>
 #include <iomanip>
 #include "../include/headers.h"
@@ -286,8 +286,6 @@ void dateSort(int indices[]){
 
 
 
-
-7
 
 //report swap
 
